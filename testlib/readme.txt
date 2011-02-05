@@ -1,0 +1,1 @@
+binary java libraries needed only for unit tests

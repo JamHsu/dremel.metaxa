@@ -1,0 +1,32 @@
+Coding guidelines for Metaxa
+
+* Each module and in some cases sub-module will have an owner. Owner can decide on coding styling and other "cultural elements". Consider it as vehicle for expressing one's creativity.
+
+* However, some project-wide guidelines must be followed without excuses by everyone, they are brought below:
+
+Project-wide guidelines:
+
+1. Every module must have an well defined-interface in form of java interfaces. 
+2. Every module must have a test-suite that tests the module via its interfaces. Tests are used as a tutorial to understand how interface should be used properly and how classes that implement that interface must be instantinated. So tests must use very descriptive names and contain comments for non obvious code.
+3. Every module must have a stub or a simple dummy implementation, so other modules can be developed while the module is not yet battle-ready.
+4. Most module tests must pass with the stub/dummy implementation.
+5. Special impl package must be used to hold everything that is not visible or should be not visible to module user.
+6. Code must be optimized for modern editors. For example don't use prefixes to identifiers. They don't work well with auto-complete dropbox. For example if you name all your classes CDremelEngineXXX, you must type each time "CDremelEngine" and only then you can save something with auto-complete. If you like prefecing and cannot live without it consider suffixing like XXXCDremelEngine, then your sufficex will be conviniently autocompleted. Visual code styling: eclipse and others have auto-styling, they fix idents and positions of curly braces and etc.. please use it and more importnatly don't waste time to manual visual code beutification because next programmer habitually will auto-style it and you loose all your manual beutification and will get angry.
+7. In general refrain from code polution. Place all your experementation code in separate test file hierarcgy. It mirrors the fie structure so for you it is as convinient as writing experemention code in production "src" hierarchy. Even, better, turn every your experementation code and/or assumption into proper unit test. Much better and elegant than commented out snippets of code.
+8. Logging, tracing and exception hanlding: lets use AspectJ for this. It is saves so much time and gives very flexible solution. Someone will be volunteered to locate and bring in the AspectJ framework for logging, tracing and exception hanlding. For those who don't know, AspectJ allows you to instrument your code dynamically. So one can add very easily any logging, tracing and error handling code to any codebase that just doesn't have their own logging and exception handling staticly scattered over all the codebase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

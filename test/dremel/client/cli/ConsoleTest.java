@@ -1,0 +1,1 @@
+//actual class containing main method and using some java CLI framework to provide decent CLI interface. Apache Common CLI for example. May be it is good idea to survey apache java project and wee what they use for console functionality, for example what Hive uses

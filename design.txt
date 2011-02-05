@@ -1,0 +1,17 @@
+Highlevel Design
+
+1. Client module is used to provide command-line functionality and REST-server functionality. Client module receives the request/query from the user, communicates with server module and delegates all requests/queries to server, awaits and receives response and renders the response to the user.
+
+2. Server module implements a facade pattern, meaning it just delegates the requests for processing to various helper modules in the right order and sends back the final results to client module. 
+
+3. Requests almost always is a query to run but also can be a request to convert/import/export data stored in one file to another.
+
+4. Server's requests processing looks like following: Server accepts the requests, uses parser module to parse it, then uses compiler module to analyze it and compile it into piece of executable code (java object) and then uses planner to convert the compiled query into physical execution plan. Physical execution plan is just a compiled query with a list of the data locations and a bunch of configuration parameters that is passed to compiled query as arguments upon its execution. Then Server uses executor to execute or run the physical execution plan 
+
+5. Initially only expressions will be dynamically generated into hava code and dynamically compiled to java bytecode. The rest of query will be supplied as static compile-time java classes. They are mostly iterators and loops constraints and are not very dependent on query, so to ease debugging we will not du\ynamically generate and compile these constructs. Howvever in subsequent revisions of Metaxa, query can be turned into single piece of java code including the inner loops themselves as well as even all the code needed for nested query support. That single piece of java code will be compiled and run on executor.
+
+6. BY design executor must be agnostic to any dremel artifact such as columnarity and data format. Executor should know only how to take piece of compiled code, references/pointers for data and then load the data and run the piece of code, pick and return back the result data. In future revisions executor can be supplied with resource-consumption-constraints that it must enforce.
+
+7. Server module is also functioning as factory to create correct implemenation for all modules. All the rest of modules use each other only via interfaces.
+
+See also readme.txt files in java source directory for description of different modules and submodules

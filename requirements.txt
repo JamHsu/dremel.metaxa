@@ -1,0 +1,48 @@
+Requirements for Metaxa
+
+1. MUST: Single-JVM, atleast and atmost.
+2. MUST: 100% pure Java 6. 
+3. MUST: 100% compatible with Google BigQuery/Dremel system.
+4. MAY: Initially single-threaded. Multi-threading for executor can be considered.
+5. MUST: Atleast 1 MB/sec average physical scanrate. 
+6. SHELL: 10+ MB/sec average physical scanrate with 1GB effective scanrate over initial data (before columnization). Highly dependent on initial format of data, number of fields and query projectivity (number of requested columns) and query selectivity (number of rows that pass "where" clause predicate (filter/consition)).
+7. MUST: Avro support for import and export (query results included).
+8. SHELL: Protobuf support.
+9. MUST: Streaming support, must support querying files that are a lot larger than available memory.
+10. MUST: buffering support, must use confiuravle or all available memory to cache mostly and recently used datasets. Filesystem usually provides it automatically.
+11. MUST: Must be lightweight, lean and simple. Must not implement or require security/clustering/directory services access and etc..
+12. MUST: Metaxa application/frontend uses files as data-source and as data-sink. Metaxa application must no require any complex installation or depend on particular directory structire or make any environment assumption. Metaxa gets all file names either as arguments or via interaction with the user.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

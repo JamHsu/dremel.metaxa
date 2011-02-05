@@ -1,0 +1,1 @@
+Static data and other non-java files
