@@ -11,4 +11,4 @@ so just iterating the result iterator actually executes the physical query plan.
 module ownership
 ================
 
-1st February assigned to dgisrael@gmail.com to create from scratch   
+1st February assigned to pconstantine@gmail.com to create from scratch   

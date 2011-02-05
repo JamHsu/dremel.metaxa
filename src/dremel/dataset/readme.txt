@@ -8,8 +8,11 @@ columnar format.
 
 module ownership
 ================
+The best candidates are:
 
-1st February: assigned to pconstantine@gmail.com to create from scratch
+1. hongsan@gmail.com
+2. dgisrael@gmail.com
+
 
 
 

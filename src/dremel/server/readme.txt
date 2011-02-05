@@ -38,4 +38,4 @@ for supporting multiple users and maintaining sesssions and providing security/c
 Module ownership
 ================
 
-1st February: hongsan@gmail.com is assigned to creeate from scratch.
+1st February: pconstantine@gmail.com is assigned to creeate from scratch.

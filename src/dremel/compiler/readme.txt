@@ -14,5 +14,8 @@ That single piece of java code will be compiled and run on executor probably as 
 
 module ownership
 ================
-1st February assigned to hongsan@gmail.com
+The best candidates are:
+
+1. hongsan@gmail.com
+2. dgisrael@gmail.com
    
