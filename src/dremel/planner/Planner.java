@@ -15,7 +15,7 @@
  */
 package dremel.planner;
 
-import java.util.Set;
+import java.util.List;
 
 import dremel.compiler.Compiler.Query;
 import dremel.dataset.ReaderTree;
@@ -37,5 +37,5 @@ public interface Planner {
 	 * <P>
 	 * @return Iterator over result dataset
 	 */
-	ReaderTree plan(Query query, Set<Stream> streams);
+	ReaderTree plan(Query query, List<Stream> streams);
 }

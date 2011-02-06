@@ -15,6 +15,8 @@
  */
 package dremel.compiler;
 
+import java.util.List;
+
 import dremel.dataset.ReaderTree;
 import dremel.dataset.Schema;
 import dremel.parser.AstNode;
@@ -31,18 +33,18 @@ public interface Compiler {
 	/**
 	 * Represents compiled query.
 	 * <P>
-	 * Recursively links (connects script to source and sink) queries with sub queries.
+	 * Recursively links queries with sub queries and return single reader tree.
 	 */
 	public interface Query {
 		/**
-		 * Recursively links (connects script to source and sink) queries with sub queries.
+		 * Recursively links queries with sub queries and return single reader tree.
 		 * <P>
 		 * @see dremel.dataset.ReaderTree
 		 * <P>
 		 * @param source is a reference to source data iterator
 		 * @return iterator which when pulled executes the query, expression by expression
 		 */
-		ReaderTree link(ReaderTree source);		
+		ReaderTree link(List<ReaderTree> source);		
 	}
 	
 	/**
