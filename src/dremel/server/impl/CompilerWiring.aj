@@ -13,19 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dremel.dataset;
+package dremel.server.impl;
+
+import dremel.compiler.impl.Compiler;
 
 /**
- * Stores and retrieves datasets. Implementation can be for example localdirectory or some other 
- * form of storage like HDFS or openstack.swift
- * 
- * @see dremel.dataset.impl.LocalDirctory
+ * @author Constantine Peresypkin
  *
+ * Wiring for the Compiler interface
+ * It's here just for future purposes
+ * There are no other Compilers in design doc, but who knows...
+ * 
  */
-public interface Stream {
-	enum Codec {AVRO_JSON, AVRO_BIN};
-	ReaderTree openForRead(String dataLocator, String schemaLocator, Codec codec);
-	void write(ReaderTree source, String dataLocator, Codec codec);
-	void writeSchema(Schema schema, String schemaLocator, Codec codec);
-	Schema readSchema(String schemaLocator, Codec codec);
+public aspect CompilerWiring {
+	
+	private Compiler compiler;
+	
+	pointcut compilerCreation(INeedsCompilerImpl object) :
+		execution(INeedsCompilerImpl+.new(..))
+		&& this(object);
+
+	after(INeedsCompilerImpl object) 
+	returning : compilerCreation(object) {
+		compiler = new Compiler();
+		object.setCompiler(compiler);
+	}
 }
+
+

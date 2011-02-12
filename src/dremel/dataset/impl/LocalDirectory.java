@@ -54,4 +54,18 @@ public class LocalDirectory implements Stream {
 		// TODO Auto-generated method stub
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.Stream#readSchema(java.lang.String, dremel.dataset.Stream.Codec)
+	 */
+	@Override
+	public Schema readSchema(String schemaLocator, Codec codec) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	// simple 1:1 matching for now, may alter the name later...
+	public String getLocatorFromFileName(String fileName) {
+		return fileName;
+	}
 }

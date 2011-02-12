@@ -13,19 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dremel.dataset;
+package dremel.server.impl;
+
+import dremel.compiler.Compiler;
+import dremel.dataset.Stream;
 
 /**
- * Stores and retrieves datasets. Implementation can be for example localdirectory or some other 
- * form of storage like HDFS or openstack.swift
- * 
- * @see dremel.dataset.impl.LocalDirctory
+ * @author Kit
  *
  */
-public interface Stream {
-	enum Codec {AVRO_JSON, AVRO_BIN};
-	ReaderTree openForRead(String dataLocator, String schemaLocator, Codec codec);
-	void write(ReaderTree source, String dataLocator, Codec codec);
-	void writeSchema(Schema schema, String schemaLocator, Codec codec);
-	Schema readSchema(String schemaLocator, Codec codec);
+public interface ICreateServer {
+
+	/**
+	 * @param compiler the compiler to set
+	 */
+	public abstract void setCompiler(Compiler compiler);
+
+	/**
+	 * @param stream the stream to set
+	 */
+	public abstract void setStream(Stream stream);
+
 }
