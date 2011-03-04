@@ -15,22 +15,20 @@
  */
 package dremel.compiler.impl;
 
-import dremel.dataset.Schema;
-import dremel.parser.AstNode;
+import java.util.List;
 
 /**
- * @author camuelg
+ * @author Constantine Peresypkin
  *
  */
-public class Compiler implements dremel.compiler.Compiler {
+public class Descriptor {
 
-	/* (non-Javadoc)
-	 * @see dremel.compiler.Compiler#compile(dremel.parser.AstNode, dremel.dataset.Schema)
+	/**
+	 * @return
 	 */
-	@Override
-	public Query compile(AstNode root, Schema schema) {
+/*	public List<FieldDescriptor> getFields() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }

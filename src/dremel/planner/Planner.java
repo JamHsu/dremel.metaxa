@@ -17,7 +17,7 @@ package dremel.planner;
 
 import java.util.List;
 
-import dremel.compiler.Compiler.Query;
+import dremel.compiler.Query;
 import dremel.dataset.ReaderTree;
 import dremel.dataset.Stream;
 

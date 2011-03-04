@@ -19,14 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.antlr.runtime.RecognitionException;
+import org.codehaus.commons.compiler.IScriptEvaluator;
 
 import dremel.dataset.ReaderTree;
 import dremel.dataset.Stream.Codec;
 import dremel.parser.Parser;
 import dremel.server.Server;
 import dremel.compiler.Compiler;
-import dremel.compiler.Compiler.Query;
+import dremel.compiler.Query;
+import dremel.compiler.impl.MetaxaQuery;
 import dremel.dataset.Stream;
+import dremel.executor.Executor;
 
 /**
  * @author Constantine Peresypkin
@@ -41,6 +44,8 @@ public class ServerImpl implements Server, INeedsStreamImpl, INeedsCompilerImpl 
 	List<String> inputDataLocator;
 	String inputSchemaLocator;
 	Codec inputCodec;
+	Query compiledQuery;
+	Executor executor;
 	
 	// Construction is handled through aspects of Stream and Compiler wiring
 	public ServerImpl() {
@@ -64,7 +69,7 @@ public class ServerImpl implements Server, INeedsStreamImpl, INeedsCompilerImpl 
 	}
 	
 	@Override
-	public ReaderTree queryImmediate(String Query, String schemaFilename,
+	public ReaderTree queryImmediate(String query, String schemaFilename,
 			List<String> dataFilename) {
 
 		List<ReaderTree> rtreeList = new ArrayList<ReaderTree>();
@@ -74,13 +79,11 @@ public class ServerImpl implements Server, INeedsStreamImpl, INeedsCompilerImpl 
 		}
 		
 		ReaderTree result = null;
-		try {
-			Query compiledQuery = compiler.compile(Parser.parseBql(Query), 
-					stream.readSchema(inputSchemaLocator, inputCodec));
-			result = compiledQuery.link(rtreeList);
-		} catch (RecognitionException e) {
-			e.printStackTrace();
-		}
+		//Query compiledQuery = new MetaxaQuery(Parser.parseBql(query));
+		compiler.analyse(compiledQuery);
+		executor.setEvaluator(compiler.compileToScript(compiledQuery));
+		executor.execute();
+		//result = compiledQuery.link(rtreeList);
 		return result;
 	}
 

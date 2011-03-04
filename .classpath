@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="lib/jackson-core-asl-1.4.5.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.4.5.jar"/>
 	<classpathentry kind="lib" path="lib/janino.jar"/>
+	<classpathentry kind="lib" path="lib/protobuf.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
