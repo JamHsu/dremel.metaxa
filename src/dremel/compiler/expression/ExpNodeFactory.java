@@ -9,7 +9,7 @@ import dremel.compiler.Query;
 import dremel.compiler.impl.MetaxaQuery;
 import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.Parser;
-import dremel.parser.impl.BqlParser;
+import dremel.compiler.parser.impl.BqlParser;
 
 /**
  * 

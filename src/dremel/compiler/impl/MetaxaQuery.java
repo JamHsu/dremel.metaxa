@@ -6,7 +6,7 @@ import dremel.compiler.expression.ExpNodeFactory;
 import dremel.compiler.expression.Symbol;
 import dremel.compiler.parser.AstNode;
 import dremel.dataset.Table;
-import dremel.parser.impl.BqlParser;
+import dremel.compiler.parser.impl.BqlParser;
 
 /**
  * @author nhsan

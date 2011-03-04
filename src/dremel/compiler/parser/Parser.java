@@ -24,8 +24,8 @@ import org.antlr.runtime.TokenRewriteStream;
 import org.antlr.runtime.tree.CommonTreeAdaptor;
 import org.antlr.runtime.tree.TreeAdaptor;
 
-import dremel.parser.impl.BqlLexer;
-import dremel.parser.impl.BqlParser;
+import dremel.compiler.parser.impl.BqlLexer;
+import dremel.compiler.parser.impl.BqlParser;
 
 /**
  * 

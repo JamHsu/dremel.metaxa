@@ -1,5 +1,5 @@
 // $ANTLR 3.3 Nov 30, 2010 12:45:30 /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g 2011-02-12 23:31:24
-package dremel.parser.impl;
+package dremel.compiler.parser.impl;
 
 import org.antlr.runtime.*;
 import java.util.Stack;
