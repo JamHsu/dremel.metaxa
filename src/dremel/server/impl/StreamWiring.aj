@@ -20,7 +20,7 @@ import java.util.List;
 
 import dremel.dataset.Stream.Codec;
 import dremel.dataset.impl.LocalDirectory;
-import dremel.dataset.ReaderTree;
+import dremel.dataset.SliceScanner;
 
 /**
  * @author Constantine Peresypkin
@@ -46,7 +46,7 @@ public aspect StreamWiring {
 
 	// point cut that catches queryImmediate() execution
 	pointcut streamFromSchemaFile(String query, String schemaFile, List<String> dataList, INeedsStreamImpl object) :
-		execution(ReaderTree INeedsStreamImpl+.queryImmediate(String,String,List<String>))
+		execution(SliceScanner INeedsStreamImpl+.queryImmediate(String,String,List<String>))
 		&& args(query, schemaFile, dataList) && target(object);
 	
 	// this advice sets correct Stream implementation before queryImmediate() runs

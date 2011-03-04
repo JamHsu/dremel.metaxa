@@ -22,6 +22,7 @@ import org.antlr.runtime.RecognitionException;
 import org.codehaus.commons.compiler.IScriptEvaluator;
 
 import dremel.dataset.ReaderTree;
+import dremel.dataset.SliceScanner;
 import dremel.dataset.Stream.Codec;
 import dremel.server.Server;
 import dremel.compiler.Compiler;
@@ -52,24 +53,8 @@ public class ServerImpl implements Server, INeedsStreamImpl, INeedsCompilerImpl 
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see dremel.server.impl.ICreateServerImpl#setCompiler(dremel.compiler.Compiler)
-	 */
 	@Override
-	public void setCompiler(Compiler compiler) {
-		this.compiler = compiler;
-	}
-
-	/* (non-Javadoc)
-	 * @see dremel.server.impl.INeedsStreamImpl#setStream(dremel.dataset.Stream)
-	 */
-	@Override
-	public void setStream(Stream stream) {
-		this.stream = stream;
-	}
-	
-	@Override
-	public ReaderTree queryImmediate(String query, String schemaFilename,
+	public SliceScanner queryImmediate(String query, String schemaFilename,
 			List<String> dataFilename) {
 
 		List<ReaderTree> rtreeList = new ArrayList<ReaderTree>();
@@ -78,13 +63,58 @@ public class ServerImpl implements Server, INeedsStreamImpl, INeedsCompilerImpl 
 			rtreeList.add(rtree);
 		}
 		
-		ReaderTree result = null;
-		//Query compiledQuery = new MetaxaQuery(Parser.parseBql(query));
+		SliceScanner result = null;
+		try {
+			compiledQuery = new MetaxaQuery(Parser.parseBql(query));
+		} catch (RecognitionException e) {
+			e.printStackTrace();
+		}
 		compiler.analyse(compiledQuery);
 		executor.setEvaluator(compiler.compileToScript(compiledQuery));
 		executor.execute();
-		//result = compiledQuery.link(rtreeList);
 		return result;
+	}
+
+	/**
+	 * @return the compiledQuery
+	 */
+	public Query getCompiledQuery() {
+		return compiledQuery;
+	}
+
+	/**
+	 * @param compiledQuery the compiledQuery to set
+	 */
+	public void setCompiledQuery(Query compiledQuery) {
+		this.compiledQuery = compiledQuery;
+	}
+
+	/**
+	 * @return the executor
+	 */
+	public Executor getExecutor() {
+		return executor;
+	}
+
+	/**
+	 * @param executor the executor to set
+	 */
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
+	}
+
+	/**
+	 * @return the compiler
+	 */
+	public Compiler getCompiler() {
+		return compiler;
+	}
+
+	/**
+	 * @return the stream
+	 */
+	public Stream getStream() {
+		return stream;
 	}
 
 	/* (non-Javadoc)
@@ -149,4 +179,19 @@ public class ServerImpl implements Server, INeedsStreamImpl, INeedsCompilerImpl 
 		this.inputCodec = codec;
 	}
 
+	/* (non-Javadoc)
+	 * @see dremel.server.impl.ICreateServerImpl#setCompiler(dremel.compiler.Compiler)
+	 */
+	@Override
+	public void setCompiler(Compiler compiler) {
+		this.compiler = compiler;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.server.impl.INeedsStreamImpl#setStream(dremel.dataset.Stream)
+	 */
+	@Override
+	public void setStream(Stream stream) {
+		this.stream = stream;
+	}
 }

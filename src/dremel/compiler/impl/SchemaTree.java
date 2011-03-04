@@ -32,6 +32,8 @@ import org.apache.avro.Schema;
  * Later we might add support for the Dremel (or actually protobuf) attributes like Optional. 
  * @author David.Gruzman
  *
+ * @author Constantine Peresypkin
+ * 
  */
 public class SchemaTree
 {

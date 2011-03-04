@@ -18,6 +18,7 @@ package dremel.server;
 import java.util.List;
 
 import dremel.dataset.ReaderTree;
+import dremel.dataset.SliceScanner;
 import dremel.dataset.Stream.Codec;
 
 /**
@@ -32,7 +33,7 @@ import dremel.dataset.Stream.Codec;
  *
  */
 public interface Server {
-	ReaderTree queryImmediate(String Query, String schemaFilename, List<String> dataFileList);
+	SliceScanner queryImmediate(String Query, String schemaFilename, List<String> dataFileList);
 	void toFile(ReaderTree readerTree, 
 			List<String> destinationDataFileList, 
 			Codec destinationCodec, 

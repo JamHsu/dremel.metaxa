@@ -15,6 +15,7 @@
  */
 package dremel.compiler.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dremel.compiler.impl.Descriptor;
@@ -32,9 +33,12 @@ public class FieldDescriptor {
 	 */
 	SchemaTree schema;
 	
-//	public enum Type {
-//		GROUP
-//	}
+	/**
+	 * @param s
+	 */
+	public FieldDescriptor(SchemaTree s) {
+		this.schema = s;
+	}
 
 	/**
 	 * @return
@@ -55,39 +59,19 @@ public class FieldDescriptor {
 	/**
 	 * @return
 	 */
-	public Descriptor getMessageType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/**
-	 * @return
-	 */
 	public String getName() {
 		return schema.getName();
 	}
-
-//	/**
-//	 * @return
-//	 */
-//	public String getFullName() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 	/**
 	 * @return
 	 */
 	public List<FieldDescriptor> getFields() {
-		// TODO Auto-generated method stub
-		return null;
+		List<SchemaTree> list = schema.getFieldsList();
+		List<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
+		for (SchemaTree s : list)
+			result.add(new FieldDescriptor(s));
+		return result;
 	}
 	
-//	/**
-//	 * @return
-//	 */
-//	public FieldDescriptor getRecordType() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 }
