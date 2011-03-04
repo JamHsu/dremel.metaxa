@@ -10,12 +10,7 @@ import java.util.Map;
 import org.codehaus.commons.compiler.CompilerFactoryFactory;
 import org.codehaus.commons.compiler.IScriptEvaluator;
 
-//import schema.Schema.Document;
-
-//import dremel.compiler.impl.Descriptor;
-import dremel.compiler.impl.Descriptor;
 import dremel.compiler.impl.FieldDescriptor;
-//import dremel.compiler.impl.FieldDescriptor.Type;
 import dremel.compiler.impl.SchemaTree.NodeType;
 import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.Parser;
@@ -31,6 +26,7 @@ import dremel.executor.Executor;
 
 /**
  * @author nhsan
+ * @author Constantine Peresypkin
  * 
  */
 public class Compiler implements dremel.compiler.Compiler {

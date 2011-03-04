@@ -2,7 +2,6 @@ package dremel.dataset.impl;
 
 //import schema.Schema.Document;
 
-import dremel.compiler.impl.Descriptor;
 import dremel.compiler.impl.FieldDescriptor;
 
 public class Table implements dremel.dataset.Table {

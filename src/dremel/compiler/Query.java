@@ -3,7 +3,6 @@ package dremel.compiler;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import dremel.compiler.impl.Descriptor;
 import dremel.compiler.impl.FieldDescriptor;
 
 import dremel.compiler.expression.Function;
@@ -31,10 +30,10 @@ public interface Query {
 
 	public Expression getFilter(); // WHERE clause
 
-	public Descriptor getSourceSchema(); // common schema of tables or
+	public FieldDescriptor getSourceSchema(); // common schema of tables or
 											// sub-queries in FROM clause
 
-	public Descriptor getTargetSchema(); // schema for result set, can be source
+	public FieldDescriptor getTargetSchema(); // schema for result set, can be source
 											// schema for parent query if this
 											// query is sub-queries
 

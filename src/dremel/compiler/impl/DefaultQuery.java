@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import dremel.compiler.impl.Descriptor;
-
 import dremel.compiler.Expression;
 import dremel.compiler.Query;
 import dremel.compiler.expression.Function;
@@ -26,8 +24,8 @@ public class DefaultQuery implements Query {
 	Map<String, Symbol> symbolTable;
 	Expression filter;
 	int limit;
-	Descriptor sourceSchema;
-	Descriptor targetSchema;
+	FieldDescriptor sourceSchema;
+	FieldDescriptor targetSchema;
 	List<Function> aggregationFunctions;
 
 	public DefaultQuery() {
@@ -71,12 +69,12 @@ public class DefaultQuery implements Query {
 	}
 
 	@Override
-	public Descriptor getSourceSchema() {
+	public FieldDescriptor getSourceSchema() {
 		return sourceSchema;
 	}
 
 	@Override
-	public Descriptor getTargetSchema() {
+	public FieldDescriptor getTargetSchema() {
 		return targetSchema;
 	}
 
@@ -89,11 +87,11 @@ public class DefaultQuery implements Query {
 		this.limit = limit;
 	}
 
-	public void setSourceSchema(Descriptor sourceSchema) {
+	public void setSourceSchema(FieldDescriptor sourceSchema) {
 		this.sourceSchema = sourceSchema;
 	}
 
-	public void setTargetSchema(Descriptor targetSchema) {
+	public void setTargetSchema(FieldDescriptor targetSchema) {
 		this.targetSchema = targetSchema;
 	}
 

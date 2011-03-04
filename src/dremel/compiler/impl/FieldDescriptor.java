@@ -18,7 +18,6 @@ package dremel.compiler.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import dremel.compiler.impl.Descriptor;
 import dremel.compiler.impl.SchemaTree.NodeType;
 
 /**
