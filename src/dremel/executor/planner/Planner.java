@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dremel.planner;
+package dremel.executor.planner;
 
 import java.util.List;
 

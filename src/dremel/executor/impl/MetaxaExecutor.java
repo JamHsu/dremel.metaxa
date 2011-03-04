@@ -13,6 +13,11 @@ import dremel.dataset.Slice;
 import dremel.dataset.SliceScanner;
 import dremel.executor.Executor;
 
+/**
+ * @author nhsan
+ * @author Constantine Peresypkin
+ *
+ */
 public class MetaxaExecutor implements Executor {
 
 	List<FieldDescriptor> fields;
