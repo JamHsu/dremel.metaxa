@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dremel.compiler.ExpNode;
+import dremel.compiler.ParserTest;
 import dremel.compiler.Query;
 import dremel.compiler.impl.MetaxaQuery;
-import dremel.parser.AstNode;
-import dremel.parser.Parser;
-import dremel.parser.ParserTest;
+import dremel.compiler.parser.AstNode;
+import dremel.compiler.parser.Parser;
 import dremel.parser.impl.BqlParser;
 
 /**

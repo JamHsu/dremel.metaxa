@@ -1,4 +1,7 @@
-package dremel.parser;
+package dremel.compiler;
+
+import dremel.compiler.parser.AstNode;
+import dremel.compiler.parser.Parser;
 
 public class ParserTest {
 

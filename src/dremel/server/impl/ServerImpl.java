@@ -23,11 +23,11 @@ import org.codehaus.commons.compiler.IScriptEvaluator;
 
 import dremel.dataset.ReaderTree;
 import dremel.dataset.Stream.Codec;
-import dremel.parser.Parser;
 import dremel.server.Server;
 import dremel.compiler.Compiler;
 import dremel.compiler.Query;
 import dremel.compiler.impl.MetaxaQuery;
+import dremel.compiler.parser.Parser;
 import dremel.dataset.Stream;
 import dremel.executor.Executor;
 

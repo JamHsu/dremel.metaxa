@@ -2,7 +2,7 @@ package dremel.compiler.expression;
 
 import dremel.compiler.ExpNode;
 import dremel.compiler.Query;
-import dremel.parser.AstNode;
+import dremel.compiler.parser.AstNode;
 import dremel.parser.impl.BqlParser;
 
 /**
