@@ -22,7 +22,7 @@ import java.util.List;
  * @author Kit
  *
  */
-public interface ISchemaTree {
+public interface SchemaTree {
 
 	public abstract String getName();
 
@@ -41,6 +41,6 @@ public interface ISchemaTree {
 	/**
 	 * @return
 	 */
-	public abstract List<ISchemaTree> getFieldsList();
+	public abstract List<SchemaTree> getFieldsList();
 
 }

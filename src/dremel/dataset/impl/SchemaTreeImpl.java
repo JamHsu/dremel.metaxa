@@ -26,7 +26,7 @@ import java.util.Map;
 
 import org.apache.avro.Schema;
 
-import dremel.dataset.ISchemaTree;
+import dremel.dataset.SchemaTree;
 
 /**
  * This class can be see as wrapper around the AvroSchema, which is a place to add functionality we are missing.
@@ -37,7 +37,7 @@ import dremel.dataset.ISchemaTree;
  * @author Constantine Peresypkin
  * 
  */
-public class SchemaTree implements ISchemaTree
+public class SchemaTreeImpl implements SchemaTree
 {
 	
 	enum NodeType {RECORD,ARRAY,PRIMITIVE};
@@ -46,9 +46,9 @@ public class SchemaTree implements ISchemaTree
 	public final static String ARRAY_PREFIX = "ARRAY_OF_";
 	
 	// valid if type is record
-	private Map<String, SchemaTree> fields = null;
+	private Map<String, SchemaTreeImpl> fields = null;
 	// valid if type is array
-	private SchemaTree arrayElementType = null;
+	private SchemaTreeImpl arrayElementType = null;
 	// valid if type is primitive
 	private PrimitiveType primitiveType = PrimitiveType.NOT_EXISTING_TYPE;
 			
@@ -57,39 +57,39 @@ public class SchemaTree implements ISchemaTree
 	NodeType type;
 	
 
-	public SchemaTree(NodeType nodeType)
+	public SchemaTreeImpl(NodeType nodeType)
 	{			
 		type = nodeType;			
 	}
 	
-	public static SchemaTree createArray(SchemaTree elementType)
+	public static SchemaTreeImpl createArray(SchemaTreeImpl elementType)
 	{
-		SchemaTree newSchema = new SchemaTree(NodeType.ARRAY);
+		SchemaTreeImpl newSchema = new SchemaTreeImpl(NodeType.ARRAY);
 		newSchema.arrayElementType = elementType;
 		newSchema.name = getArrayName(elementType.getName());			
 		return newSchema;			
 	}
 	
-	public static SchemaTree createPrimitive(String forName, PrimitiveType forPrimitiveType)
+	public static SchemaTreeImpl createPrimitive(String forName, PrimitiveType forPrimitiveType)
 	{
-		SchemaTree newSchema = new SchemaTree(NodeType.PRIMITIVE);
+		SchemaTreeImpl newSchema = new SchemaTreeImpl(NodeType.PRIMITIVE);
 		newSchema.primitiveType = forPrimitiveType;
 		newSchema.name = forName;
 		return newSchema;
 		
 	}
 	
-	public static SchemaTree createPrimitive(String forName, Schema.Type primitiveAvroType)
+	public static SchemaTreeImpl createPrimitive(String forName, Schema.Type primitiveAvroType)
 	{
 		PrimitiveType primitveType = AvroToSchemaTreePrimitive(primitiveAvroType);
 		return createPrimitive(forName, primitveType);		
 	}
 			
-	public static SchemaTree createRecord(String forName)
+	public static SchemaTreeImpl createRecord(String forName)
 	{				
-		SchemaTree newSchema = new SchemaTree(NodeType.RECORD);
+		SchemaTreeImpl newSchema = new SchemaTreeImpl(NodeType.RECORD);
 		newSchema.name = forName;
-		newSchema.fields = new HashMap<String, SchemaTree>();
+		newSchema.fields = new HashMap<String, SchemaTreeImpl>();
 		
 		return newSchema;			
 	}
@@ -116,12 +116,12 @@ public class SchemaTree implements ISchemaTree
 	}
 				
 			
-	public void addField(SchemaTree field)
+	public void addField(SchemaTreeImpl field)
 	{
 		addField(field, field.getName());			
 	}
 	
-	public void addField(SchemaTree field, String fieldName)
+	public void addField(SchemaTreeImpl field, String fieldName)
 	{			
 		if(fields.containsKey(fieldName))
 		{
@@ -195,30 +195,30 @@ public class SchemaTree implements ISchemaTree
 	}
 	
 
-	public static ISchemaTree createFromAvroSchema(Schema inputSchema)
+	public static SchemaTree createFromAvroSchema(Schema inputSchema)
 	{
 		return createFromAvroSchema(inputSchema, inputSchema.getName());
 	}
 	
-	public static SchemaTree createFromAvroSchema(Schema inputSchema, String schemaName)
+	public static SchemaTreeImpl createFromAvroSchema(Schema inputSchema, String schemaName)
 		{
 				
-		SchemaTree result = null;
+		SchemaTreeImpl result = null;
 		
 		if(inputSchema.getType() == Schema.Type.ARRAY)
 		{
-		  	 SchemaTree elementType = createFromAvroSchema(inputSchema.getElementType(), schemaName);
-		  	 result = SchemaTree.createArray(elementType);		  	 
+		  	 SchemaTreeImpl elementType = createFromAvroSchema(inputSchema.getElementType(), schemaName);
+		  	 result = SchemaTreeImpl.createArray(elementType);		  	 
 		}
 		
 		if(inputSchema.getType() == Schema.Type.RECORD)
 		{
 			
-			result = SchemaTree.createRecord(inputSchema.getName());				
+			result = SchemaTreeImpl.createRecord(inputSchema.getName());				
 			List<Schema.Field> fields = inputSchema.getFields();
 			for(Schema.Field nextField : fields)
 			{
-				SchemaTree fieldSchemaTree = createFromAvroSchema(nextField.schema(), nextField.name());
+				SchemaTreeImpl fieldSchemaTree = createFromAvroSchema(nextField.schema(), nextField.name());
 				result.addField(fieldSchemaTree, nextField.name());
 			}
 		}
@@ -226,7 +226,7 @@ public class SchemaTree implements ISchemaTree
 		if(IsPrimitiveSchema(inputSchema))
 		{
 			//result = SchemaTree.createPrimitive(inputSchema.getName(), inputSchema.getType());
-			result = SchemaTree.createPrimitive(schemaName, inputSchema.getType());
+			result = SchemaTreeImpl.createPrimitive(schemaName, inputSchema.getType());
 			
 		}
 
@@ -275,7 +275,7 @@ public class SchemaTree implements ISchemaTree
 		return "\n"+ident+result;
 	}
 
-	public void mergeWithTree(SchemaTree pathTree) {
+	public void mergeWithTree(SchemaTreeImpl pathTree) {
 		
 		boolean merged = false;
 		// this and pathTree are arrays - merge elementTypes
@@ -308,7 +308,7 @@ public class SchemaTree implements ISchemaTree
 	}
 
 	private void mergeFields(
-			Map<String, SchemaTree> sourceFields) {
+			Map<String, SchemaTreeImpl> sourceFields) {
 		for(String fieldName : sourceFields.keySet())
 		{
 			if(!fields.containsKey(fieldName))
@@ -317,8 +317,8 @@ public class SchemaTree implements ISchemaTree
 			}else
 			{ // field already exists, so it should be merged
 				
-				SchemaTree thisField = fields.get(fieldName);
-				SchemaTree sourceField = sourceFields.get(fieldName);
+				SchemaTreeImpl thisField = fields.get(fieldName);
+				SchemaTreeImpl sourceField = sourceFields.get(fieldName);
 				thisField.mergeWithTree(sourceField);
 				
 			}
@@ -369,7 +369,7 @@ public class SchemaTree implements ISchemaTree
 			}
 			
 
-			SchemaTree fieldLeft = fields.get(head);
+			SchemaTreeImpl fieldLeft = fields.get(head);
 			if(fieldLeft.getType() == NodeType.ARRAY)
 			{
 				fieldLeft.makeProjection(namePartsList);
@@ -420,8 +420,8 @@ public class SchemaTree implements ISchemaTree
 	/**
 	 * @return the fields
 	 */
-	public List<ISchemaTree> getFieldsList() {
-		return Collections.unmodifiableList(Arrays.asList((ISchemaTree[])fields.values().toArray()));
+	public List<SchemaTree> getFieldsList() {
+		return Collections.unmodifiableList(Arrays.asList((SchemaTree[])fields.values().toArray()));
 	}
 	
 	/* (non-Javadoc)

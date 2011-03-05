@@ -18,7 +18,7 @@ package dremel.compiler.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import dremel.dataset.ISchemaTree;
+import dremel.dataset.SchemaTree;
 
 /**
  * @author Constantine Peresypkin
@@ -26,7 +26,7 @@ import dremel.dataset.ISchemaTree;
  */
 public class FieldDescriptor {
 
-	ISchemaTree schema;
+	SchemaTree schema;
 	
 /*	*//**
 	 * @param s

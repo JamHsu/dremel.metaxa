@@ -5,6 +5,6 @@ import dremel.compiler.impl.FieldDescriptor;
 public interface Table 
 {
 	String getTableName();
-	ISchemaTree getSchema();
+	SchemaTree getSchema();
 	//String getDataDir();
 }

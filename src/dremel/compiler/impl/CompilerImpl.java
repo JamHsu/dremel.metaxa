@@ -13,9 +13,9 @@ import dremel.compiler.ExpNode;
 import dremel.compiler.Query;
 import dremel.compiler.expression.Function;
 import dremel.compiler.expression.Symbol;
-import dremel.dataset.ISchemaTree;
+import dremel.dataset.SchemaTree;
 import dremel.dataset.Slice;
-import dremel.dataset.impl.SchemaTree;
+import dremel.dataset.impl.SchemaTreeImpl;
 import dremel.executor.Executor;
 
 /**
@@ -33,10 +33,10 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param level
 	 * @param maxLevels
 	 */
-	private void calMaxLevel(ISchemaTree descriptor, int level, Map<ISchemaTree, Integer> maxLevels) {
-		List<ISchemaTree> fs = descriptor.getFieldsList();
+	private void calMaxLevel(SchemaTree descriptor, int level, Map<SchemaTree, Integer> maxLevels) {
+		List<SchemaTree> fs = descriptor.getFieldsList();
 		for (int i = 0; i < fs.size(); i++) {
-			ISchemaTree fd = fs.get(i);
+			SchemaTree fd = fs.get(i);
 			if (fd.isRepeated()) {
 
 				if (fd.isRecord()) {
@@ -65,11 +65,11 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param maxLevels
 	 * @return
 	 */
-	int getRLevel(ExpNode node, int level, Map<ISchemaTree, Integer> maxLevels) {
+	int getRLevel(ExpNode node, int level, Map<SchemaTree, Integer> maxLevels) {
 		if (node instanceof Symbol) {
 			Symbol symbol = (Symbol) node;
 			Object o = symbol.getReference();
-			if (o instanceof SchemaTree) {
+			if (o instanceof SchemaTreeImpl) {
 				int l = maxLevels.get(o);
 				if (l > level)
 					level = l;
@@ -140,16 +140,16 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param maxLevels
 	 * @return
 	 */
-	int getWithinLevel(String nodeName, Map<ISchemaTree, Integer> maxLevels) {
+	int getWithinLevel(String nodeName, Map<SchemaTree, Integer> maxLevels) {
 		if (nodeName == null)
 			return -1;
 		if (nodeName.equalsIgnoreCase("record"))
 			return 0;
 
-		Iterator<ISchemaTree> it = maxLevels.keySet().iterator();
+		Iterator<SchemaTree> it = maxLevels.keySet().iterator();
 
 		while (it.hasNext()) {
-			ISchemaTree d = it.next();
+			SchemaTree d = it.next();
 
 			if (d.isRecord()) // within node must be group
 			{
@@ -199,14 +199,14 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	public void analyse(Query query) {
 		assert (query.getTables().size() == 1);// one table only
 		assert (query.getSubQueries().size() == 0);// no sub-queries
-		ISchemaTree descriptor = query.getTables().get(0).getSchema();
-		Map<ISchemaTree, Integer> maxLevels = new HashMap<ISchemaTree, Integer>();
+		SchemaTree descriptor = query.getTables().get(0).getSchema();
+		Map<SchemaTree, Integer> maxLevels = new HashMap<SchemaTree, Integer>();
 
 		// bind field+exp to symbols
 		calMaxLevel(descriptor, 0, maxLevels);
-		Iterator<ISchemaTree> fIt = maxLevels.keySet().iterator();
+		Iterator<SchemaTree> fIt = maxLevels.keySet().iterator();
 		while (fIt.hasNext()) {
-			ISchemaTree d = fIt.next();
+			SchemaTree d = fIt.next();
 			//String name = getFieldName(d.getFullName());
 			String name = d.getName();
 
@@ -265,7 +265,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			Symbol symbol = it.next();
 			if (symbol.getReference() instanceof FieldDescriptor) {
 				symbol.setSliceMappingIndex(i);
-				builder.append("// inSlice.getValue[" + (i++) + "] -> " + ((ISchemaTree) symbol.getReference()).getName() + "\n");
+				builder.append("// inSlice.getValue[" + (i++) + "] -> " + ((SchemaTree) symbol.getReference()).getName() + "\n");
 
 			}
 		}

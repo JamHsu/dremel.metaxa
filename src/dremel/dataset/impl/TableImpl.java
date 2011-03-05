@@ -1,11 +1,11 @@
 package dremel.dataset.impl;
 
-import dremel.dataset.ISchemaTree;
+import dremel.dataset.SchemaTree;
 
 public class TableImpl implements dremel.dataset.Table {
 
 	String name;
-	protected ISchemaTree schema;
+	protected SchemaTree schema;
 
 	public TableImpl(String name) {
 		this.name = name;
@@ -17,7 +17,7 @@ public class TableImpl implements dremel.dataset.Table {
 	}
 
 	@Override
-	public ISchemaTree getSchema() {
+	public SchemaTree getSchema() {
 		return schema;
 	}
 }
