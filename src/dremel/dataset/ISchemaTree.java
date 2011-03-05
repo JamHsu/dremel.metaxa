@@ -15,7 +15,8 @@
  */
 package dremel.dataset;
 
-import dremel.dataset.SchemaTree.NodeType;
+import java.util.List;
+
 
 /**
  * @author Kit
@@ -25,7 +26,7 @@ public interface ISchemaTree {
 
 	public abstract String getName();
 
-	public abstract NodeType getType();
+	//public abstract NodeType getType();
 
 	/**
 	 * @return
@@ -36,5 +37,10 @@ public interface ISchemaTree {
 	 * @return
 	 */
 	public abstract boolean isRecord();
+
+	/**
+	 * @return
+	 */
+	public abstract List<ISchemaTree> getFieldsList();
 
 }

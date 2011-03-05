@@ -15,7 +15,7 @@
  * limitations under the License.Ope
  */
 
-package dremel.dataset;
+package dremel.dataset.impl;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avro.Schema;
+
+import dremel.dataset.ISchemaTree;
 
 /**
  * This class can be see as wrapper around the AvroSchema, which is a place to add functionality we are missing.
@@ -107,7 +109,7 @@ public class SchemaTree implements ISchemaTree
 	/* (non-Javadoc)
 	 * @see dremel.dataset.ISchemaTree#getType()
 	 */
-	@Override
+	//@Override
 	public NodeType getType()
 	{
 		return type;
@@ -418,8 +420,8 @@ public class SchemaTree implements ISchemaTree
 	/**
 	 * @return the fields
 	 */
-	public List<SchemaTree> getFieldsList() {
-		return Collections.unmodifiableList(Arrays.asList((SchemaTree[])fields.values().toArray()));
+	public List<ISchemaTree> getFieldsList() {
+		return Collections.unmodifiableList(Arrays.asList((ISchemaTree[])fields.values().toArray()));
 	}
 	
 	/* (non-Javadoc)
