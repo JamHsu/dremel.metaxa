@@ -36,7 +36,7 @@ public class MetaxaQuery extends DefaultQuery {
 
 				assert (node2.getChildCount() == 1);
 				AstNode node3 = (AstNode) node2.getChild(0);
-				List<Table> tables = this.getTables();
+				//List<Table> tables = this.getTables();
 				tables.add(new dremel.dataset.impl.Table(node3.getText()));
 			} else if (node2.getType() == BqlParser.N_SELECT_STATEMENT) {
 				List<dremel.compiler.Query> queries = this.getSubQueries();

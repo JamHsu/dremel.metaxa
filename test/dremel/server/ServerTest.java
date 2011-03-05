@@ -14,7 +14,7 @@ public class ServerTest {
 	@Test
 	public void aspectTest1() {
 		ServerImpl srv = new ServerImpl();
-		assertTrue(srv.getCompiler() instanceof dremel.compiler.impl.Compiler);
+		assertTrue(srv.getCompiler() instanceof dremel.compiler.impl.CompilerImpl);
 		assertTrue(srv.getStream() instanceof dremel.dataset.impl.LocalDirectory);
 	}
 }

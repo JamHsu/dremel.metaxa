@@ -6,5 +6,5 @@ public interface Table
 {
 	String getTableName();
 	FieldDescriptor getSchema();
-	String getDataDir();
+	//String getDataDir();
 }

@@ -29,7 +29,7 @@ import dremel.executor.Executor;
  * @author Constantine Peresypkin
  * 
  */
-public class Compiler implements dremel.compiler.Compiler {
+public class CompilerImpl implements dremel.compiler.Compiler {
 
 	/**
 	 * calMaxLevel is a recursive function to calculate repetition level of

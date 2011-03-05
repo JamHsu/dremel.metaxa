@@ -24,10 +24,10 @@ public class Table implements dremel.dataset.Table {
 		return null;
 	}
 
-	@Override
-	public String getDataDir() {
-		if (name.equalsIgnoreCase("[document]")) //for test only
-			return "src/dremel/test/data";
-		return null;
-	}
+//	@Override
+//	public String getDataDir() {
+//		if (name.equalsIgnoreCase("[document]")) //for test only
+//			return "src/dremel/test/data";
+//		return null;
+//	}
 }

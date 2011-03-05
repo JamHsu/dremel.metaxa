@@ -15,7 +15,7 @@
  */
 package dremel.server.impl;
 
-import dremel.compiler.impl.Compiler;
+import dremel.compiler.impl.CompilerImpl;
 
 /**
  * @author Constantine Peresypkin
@@ -27,7 +27,7 @@ import dremel.compiler.impl.Compiler;
  */
 public aspect CompilerWiring {
 	
-	private Compiler compiler;
+	private CompilerImpl compiler;
 	
 	pointcut compilerCreation(INeedsCompilerImpl object) :
 		execution(INeedsCompilerImpl+.new(..))
@@ -35,7 +35,7 @@ public aspect CompilerWiring {
 
 	after(INeedsCompilerImpl object) 
 	returning : compilerCreation(object) {
-		compiler = new Compiler();
+		compiler = new CompilerImpl();
 		object.setCompiler(compiler);
 	}
 }
