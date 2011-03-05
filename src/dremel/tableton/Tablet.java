@@ -14,27 +14,31 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset;
+package dremel.tableton;
 
+import java.util.List;
 import java.util.Map;
 
-
-public interface TabletIterator {
-
+/**
+ * This class represents the interface to the tablet. The main user of the tablet interface is tableton - which performs
+ * the query execution over the given tablet.
+ * @author David.Gruzman
+ *
+ */
+public interface Tablet {
+	
 	/**
-	 * Returns the map of the column readers comprised the tablet or its projection
+	 * return iteration capable to produce Slices of the tablet.
 	 * @return
 	 */
-	public abstract Map<String, ColumnReader> getColumnsMap();
-
-	public byte getFetchLevel();
+	public TabletIterator getIterator();
 	/**
-	 * This is main method of the iterator. It moves all column reader to the next slice.
-	 * It doesn't not mean that all are moved to next, but only the necessary one. Can be stated that
-	 * at least one should be moved.
-	 * This method implements algorithm from the appendix D in the paper
-	 * @return true if there is a slice, and false if iteration is finished.
+	 * Return iterator over the subset of the tablet column
+	 * @param columnsInProjection
+	 * @return
 	 */
-	public abstract boolean fetch();
+	public TabletIterator getProjectionIterator(List<String> columnsInProjection);
 	public Schema getSchema();
+	// return the map from the column names to the column readers
+	public Map<String, ColumnReader> getColumns();
 }

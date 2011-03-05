@@ -14,31 +14,20 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset;
+package dremel.tableton;
 
-import java.util.List;
 import java.util.Map;
 
 /**
- * This class represents the interface to the tablet. The main user of the tablet interface is tableton - which performs
- * the query execution over the given tablet.
+ * In this stage it is not generic implementation but set of methods we need now for the dataset
  * @author David.Gruzman
  *
  */
-public interface Tablet {
-	
+public interface Schema {		
+	public ColumnMetaData getColumnMetaData(String columnName);
 	/**
-	 * return iteration capable to produce Slices of the tablet.
-	 * @return
+	 * @return map from the column name to their meta data
 	 */
-	public TabletIterator getIterator();
-	/**
-	 * Return iterator over the subset of the tablet column
-	 * @param columnsInProjection
-	 * @return
-	 */
-	public TabletIterator getProjectionIterator(List<String> columnsInProjection);
-	public Schema getSchema();
-	// return the map from the column names to the column readers
-	public Map<String, ColumnReader> getColumns();
+	public Map<String, ColumnMetaData> getColumnsMetaData();
+	public void addColumnMetaData(ColumnMetaData newColumn);
 }

@@ -14,13 +14,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl;
+package dremel.tableton.impl;
 
 import java.util.Map;
 
-import dremel.dataset.ColumnReader;
-import dremel.dataset.Schema;
-import dremel.dataset.TabletIterator;
+import dremel.tableton.ColumnReader;
+import dremel.tableton.Schema;
+import dremel.tableton.TabletIterator;
 
 public class TabletIteratorImpl implements TabletIterator {
 	Map<String, ColumnReader> columnsMap;

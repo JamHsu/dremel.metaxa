@@ -14,18 +14,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl;
+package dremel.tableton.impl;
 
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import dremel.dataset.ColumnMetaData;
-import dremel.dataset.ColumnMetaData.ColumnType;
-import dremel.dataset.impl.encoding.EncodingFactory;
-import dremel.dataset.impl.encoding.StreamDecoder;
-import dremel.dataset.ColumnReader;
+import dremel.tableton.ColumnMetaData;
+import dremel.tableton.ColumnReader;
+import dremel.tableton.ColumnMetaData.ColumnType;
+import dremel.tableton.impl.encoding.EncodingFactory;
+import dremel.tableton.impl.encoding.StreamDecoder;
 
 /**
  * It is basic implementation of the ColumnReader interface. The column is represented by three files:

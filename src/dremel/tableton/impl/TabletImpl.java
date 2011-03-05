@@ -14,16 +14,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl;
+package dremel.tableton.impl;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dremel.dataset.ColumnReader;
-import dremel.dataset.Schema;
-import dremel.dataset.Tablet;
-import dremel.dataset.TabletIterator;
+import dremel.tableton.ColumnReader;
+import dremel.tableton.Schema;
+import dremel.tableton.Tablet;
+import dremel.tableton.TabletIterator;
 
 public class TabletImpl implements Tablet {
 

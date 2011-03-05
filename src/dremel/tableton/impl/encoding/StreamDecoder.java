@@ -1,4 +1,4 @@
-package dremel.dataset.impl.encoding;
+package dremel.tableton.impl.encoding;
 
 import java.io.IOException;
 import java.io.InputStream;

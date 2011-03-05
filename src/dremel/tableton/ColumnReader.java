@@ -14,7 +14,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset;
+package dremel.tableton;
 
 /**
  * This interface of the ColumnReader. It enable both regular value by value access, and the compression aware access.

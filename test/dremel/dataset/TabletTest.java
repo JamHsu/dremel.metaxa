@@ -7,13 +7,18 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import dremel.dataset.ColumnMetaData.ColumnType;
-import dremel.dataset.ColumnMetaData.EncodingType;
-import dremel.dataset.impl.ColumnWriterImpl;
-import dremel.dataset.Schema;
-import dremel.dataset.impl.SchemaImpl;
-import dremel.dataset.impl.TabletBuilderImpl;
-import dremel.dataset.impl.TabletImpl;
+import dremel.tableton.ColumnMetaData;
+import dremel.tableton.ColumnReader;
+import dremel.tableton.ColumnWriter;
+import dremel.tableton.Schema;
+import dremel.tableton.Tablet;
+import dremel.tableton.TabletIterator;
+import dremel.tableton.ColumnMetaData.ColumnType;
+import dremel.tableton.ColumnMetaData.EncodingType;
+import dremel.tableton.impl.ColumnWriterImpl;
+import dremel.tableton.impl.SchemaImpl;
+import dremel.tableton.impl.TabletBuilderImpl;
+import dremel.tableton.impl.TabletImpl;
 
 public class TabletTest {
 	

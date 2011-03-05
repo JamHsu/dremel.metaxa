@@ -14,12 +14,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl.encoding.rle;
+package dremel.tableton.impl.encoding.rle;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import dremel.dataset.impl.encoding.StreamEncoder;
+import dremel.tableton.impl.encoding.StreamEncoder;
 
 
 

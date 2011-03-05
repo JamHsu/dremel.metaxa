@@ -15,6 +15,8 @@
  */
 package dremel.dataset;
 
+import dremel.tableton.Schema;
+
 /**
  * Stores and retrieves datasets. Implementation can be for example localdirectory or some other 
  * form of storage like HDFS or openstack.swift

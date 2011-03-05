@@ -14,20 +14,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset;
+package dremel.tableton;
 
-import java.util.Map;
+public interface ColumnWriter {
 
-/**
- * In this stage it is not generic implementation but set of methods we need now for the dataset
- * @author David.Gruzman
- *
- */
-public interface Schema {		
-	public ColumnMetaData getColumnMetaData(String columnName);
-	/**
-	 * @return map from the column name to their meta data
-	 */
-	public Map<String, ColumnMetaData> getColumnsMetaData();
-	public void addColumnMetaData(ColumnMetaData newColumn);
+	public void addIntDataTriple(int data, boolean isNull, byte repLevel, byte defLevel);
+	public void setNullValue(byte repLevel, byte defLevel);
+	public void close();
 }

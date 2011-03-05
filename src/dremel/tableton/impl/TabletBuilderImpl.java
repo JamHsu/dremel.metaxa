@@ -14,16 +14,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl;
+package dremel.tableton.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import dremel.dataset.ColumnMetaData;
-import dremel.dataset.ColumnReader;
-import dremel.dataset.ColumnWriter;
-import dremel.dataset.Schema;
-import dremel.dataset.TabletIterator;
+import dremel.tableton.ColumnMetaData;
+import dremel.tableton.ColumnReader;
+import dremel.tableton.ColumnWriter;
+import dremel.tableton.Schema;
+import dremel.tableton.TabletIterator;
 
 /**
  * This class is responsible for building tablet from the given tablet iterator

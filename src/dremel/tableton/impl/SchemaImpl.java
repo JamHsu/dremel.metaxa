@@ -14,13 +14,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl;
+package dremel.tableton.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import dremel.dataset.ColumnMetaData;
-import dremel.dataset.Schema;
+import dremel.tableton.ColumnMetaData;
+import dremel.tableton.Schema;
 
 public class SchemaImpl implements Schema {
 

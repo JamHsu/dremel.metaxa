@@ -15,10 +15,10 @@
  */
 package dremel.dataset.impl;
 
-import dremel.dataset.Schema;
 import dremel.dataset.Stream;
 import dremel.dataset.ReaderTree;
 import dremel.dataset.Stream.Codec;
+import dremel.tableton.Schema;
 
 /**
  * Stores and retrieves dataset to/from individual files within predefined directory. Locator is 

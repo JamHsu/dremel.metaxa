@@ -14,14 +14,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl.encoding;
+package dremel.tableton.impl.encoding;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import dremel.dataset.ColumnMetaData;
-import dremel.dataset.impl.encoding.rle.RleDecoderImpl;
-import dremel.dataset.impl.encoding.rle.RleEncoderImpl;
+import dremel.tableton.ColumnMetaData;
+import dremel.tableton.impl.encoding.rle.RleDecoderImpl;
+import dremel.tableton.impl.encoding.rle.RleEncoderImpl;
 
 public class EncodingFactory {
 	public static StreamEncoder getEncoder(ColumnMetaData columnMetaData, OutputStream outStream)

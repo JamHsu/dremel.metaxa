@@ -14,14 +14,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl.encoding.bit;
+package dremel.tableton.impl.encoding.bit;
 
 import static org.junit.Assert.assertFalse;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import dremel.dataset.impl.encoding.StreamDecoder;
+import dremel.tableton.impl.encoding.StreamDecoder;
 
 
 /**

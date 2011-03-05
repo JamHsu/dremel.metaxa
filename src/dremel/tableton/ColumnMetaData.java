@@ -14,9 +14,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset;
+package dremel.tableton;
 
-import dremel.dataset.impl.ColumnFileSet;
+import dremel.tableton.impl.ColumnFileSet;
 
 public class ColumnMetaData {
 	public enum EncodingType {NONE, RLE, BIT, DICTIONARY};

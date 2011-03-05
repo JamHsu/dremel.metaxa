@@ -14,18 +14,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.Ope
 */
-package dremel.dataset.impl;
+package dremel.tableton.impl;
 
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import dremel.dataset.ColumnMetaData;
-import dremel.dataset.ColumnMetaData.ColumnType;
-import dremel.dataset.ColumnWriter;
-import dremel.dataset.impl.encoding.EncodingFactory;
-import dremel.dataset.impl.encoding.StreamEncoder;
+import dremel.tableton.ColumnMetaData;
+import dremel.tableton.ColumnWriter;
+import dremel.tableton.ColumnMetaData.ColumnType;
+import dremel.tableton.impl.encoding.EncodingFactory;
+import dremel.tableton.impl.encoding.StreamEncoder;
 
 
 
