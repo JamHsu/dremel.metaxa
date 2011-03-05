@@ -26,8 +26,6 @@ public interface SchemaTree {
 
 	public abstract String getName();
 
-	//public abstract NodeType getType();
-
 	/**
 	 * @return
 	 */

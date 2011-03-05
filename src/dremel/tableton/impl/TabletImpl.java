@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dremel.dataset.SchemaTree;
 import dremel.tableton.ColumnReader;
 import dremel.tableton.SchemaColumnar;
 import dremel.tableton.Tablet;
@@ -27,11 +28,18 @@ import dremel.tableton.TabletIterator;
 
 public class TabletImpl implements Tablet {
 
-	SchemaColumnar schema;
+	SchemaColumnar schemaColumnar;
+	SchemaTree schemaTree;
 	Map<String, ColumnReader> columnReaders = null;
 	
 	public TabletImpl(SchemaColumnar forSchema) {
-		schema = forSchema;
+		schemaColumnar = forSchema;
+		initReaders();
+	}
+	
+	public TabletImpl(SchemaTree forSchemaTree, SchemaColumnar forSchemaColumnar) {
+		schemaTree = forSchemaTree;
+		schemaColumnar = forSchemaColumnar;
 		initReaders();
 	}
 
@@ -39,9 +47,9 @@ public class TabletImpl implements Tablet {
 		
 		columnReaders = new HashMap<String, ColumnReader>();
 		
-		for(String columnName : schema.getColumnsMetaData().keySet())
+		for(String columnName : schemaColumnar.getColumnsMetaData().keySet())
 		{
-			ColumnReader reader = new ColumnReaderImpl(schema.getColumnMetaData(columnName));
+			ColumnReader reader = new ColumnReaderImpl(schemaColumnar.getColumnMetaData(columnName));
 			columnReaders.put(columnName, reader);
 		}
 		
@@ -49,7 +57,7 @@ public class TabletImpl implements Tablet {
 
 	@Override
 	public TabletIterator getIterator() {
-		TabletIterator tabletIter = new TabletIteratorImpl(columnReaders, schema);
+		TabletIterator tabletIter = new TabletIteratorImpl(columnReaders, schemaColumnar);
 		return tabletIter;
 	}
 
@@ -60,9 +68,9 @@ public class TabletImpl implements Tablet {
 	}
 
 	@Override
-	public SchemaColumnar getSchema() {
+	public SchemaColumnar getSchemaColumnar() {
 		
-		return schema;
+		return schemaColumnar;
 	}
 
 	@Override
@@ -70,4 +78,11 @@ public class TabletImpl implements Tablet {
 		return columnReaders;
 	}
 
+	/* (non-Javadoc)
+	 * @see dremel.tableton.Tablet#getSchemaTree()
+	 */
+	@Override
+	public SchemaTree getSchemaTree() {
+		return schemaTree;
+	}
 }

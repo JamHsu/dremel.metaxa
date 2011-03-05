@@ -40,7 +40,7 @@ import dremel.dataset.SchemaTree;
 public class SchemaTreeImpl implements SchemaTree
 {
 	
-	enum NodeType {RECORD,ARRAY,PRIMITIVE};
+	public enum NodeType {RECORD,ARRAY,PRIMITIVE}; // need to move it to the SchemaTree interface
 	enum PrimitiveType {INT,BOOLEAN, LONG, FLOAT, DOUBLE, STRING, NOT_EXISTING_TYPE};
 	
 	public final static String ARRAY_PREFIX = "ARRAY_OF_";
@@ -60,6 +60,12 @@ public class SchemaTreeImpl implements SchemaTree
 	public SchemaTreeImpl(NodeType nodeType)
 	{			
 		type = nodeType;			
+	}
+	
+	public SchemaTreeImpl(String name) {
+		this.name = name;
+		this.type = NodeType.RECORD;
+		this.fields = new HashMap<String, SchemaTreeImpl>();
 	}
 	
 	public static SchemaTreeImpl createArray(SchemaTreeImpl elementType)

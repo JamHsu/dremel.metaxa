@@ -106,12 +106,12 @@ public class TabletTest {
 	private boolean compareTablets(Tablet firstTablet, Tablet secondTablet) {
 		boolean tabletEquals = true;
 		
-		if(firstTablet.getSchema().getColumnsMetaData().keySet().size() != secondTablet.getSchema().getColumnsMetaData().keySet().size())
+		if(firstTablet.getSchemaColumnar().getColumnsMetaData().keySet().size() != secondTablet.getSchemaColumnar().getColumnsMetaData().keySet().size())
 		{
 			return false;
 		}
 		
-		for(String columnName : firstTablet.getSchema().getColumnsMetaData().keySet())
+		for(String columnName : firstTablet.getSchemaColumnar().getColumnsMetaData().keySet())
 		{
 			ColumnReader firstColumnReader = firstTablet.getColumns().get(columnName);
 			ColumnReader secondColumnReader = secondTablet.getColumns().get(columnName);

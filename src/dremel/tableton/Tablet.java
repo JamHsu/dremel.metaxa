@@ -19,10 +19,13 @@ package dremel.tableton;
 import java.util.List;
 import java.util.Map;
 
+import dremel.dataset.SchemaTree;
+
 /**
  * This class represents the interface to the tablet. The main user of the tablet interface is tableton - which performs
  * the query execution over the given tablet.
  * @author David.Gruzman
+ * @author Constantine Peresypkin
  *
  */
 public interface Tablet {
@@ -38,7 +41,8 @@ public interface Tablet {
 	 * @return
 	 */
 	public TabletIterator getProjectionIterator(List<String> columnsInProjection);
-	public SchemaColumnar getSchema();
+	public SchemaColumnar getSchemaColumnar();
+	public SchemaTree getSchemaTree();
 	// return the map from the column names to the column readers
 	public Map<String, ColumnReader> getColumns();
 }

@@ -38,4 +38,17 @@ public class TablePB extends TableImpl {
 		if (name.equalsIgnoreCase("[document]"))
 			descriptor = Document.getDescriptor();
 	}
+	
+	String getFieldName(String name) {
+		// input schema.Document.*
+		// trim prefix: schema.Document.
+		int p = name.indexOf('.');
+		if (p > 0) {
+			p = name.indexOf('.', p + 1);
+			if (p > 0) {
+				name = name.substring(p + 1);
+			}
+		}
+		return name;
+	}
 }
