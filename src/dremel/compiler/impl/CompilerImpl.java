@@ -1,7 +1,6 @@
 package dremel.compiler.impl;
 
 import java.util.HashMap;
-
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,10 +9,6 @@ import java.util.Map;
 import org.codehaus.commons.compiler.CompilerFactoryFactory;
 import org.codehaus.commons.compiler.IScriptEvaluator;
 
-import dremel.compiler.impl.FieldDescriptor;
-import dremel.compiler.parser.AstNode;
-import dremel.compiler.parser.Parser;
-
 import dremel.compiler.ExpNode;
 import dremel.compiler.Query;
 import dremel.compiler.expression.Function;
@@ -21,8 +16,6 @@ import dremel.compiler.expression.Symbol;
 import dremel.dataset.ISchemaTree;
 import dremel.dataset.SchemaTree;
 import dremel.dataset.Slice;
-import dremel.dataset.SliceScanner;
-import dremel.dataset.impl.SimpleSliceScanner;
 import dremel.executor.Executor;
 
 /**
