@@ -18,7 +18,7 @@ package dremel.compiler.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import dremel.compiler.impl.SchemaTree.NodeType;
+import dremel.dataset.ISchemaTree;
 
 /**
  * @author Constantine Peresypkin
@@ -26,51 +26,45 @@ import dremel.compiler.impl.SchemaTree.NodeType;
  */
 public class FieldDescriptor {
 
-	/**
-	 * @author Constantine Peresypkin
-	 *
-	 */
-	SchemaTree schema;
+	ISchemaTree schema;
 	
-	/**
+/*	*//**
 	 * @param s
-	 */
+	 *//*
 	public FieldDescriptor(SchemaTree s) {
 		this.schema = s;
 	}
 
-	/**
+	*//**
 	 * @return
-	 */
+	 *//*
 	public boolean isRepeated() {
-		if (schema.getType() == NodeType.ARRAY)
-			return true;
-		return false;
+		return schema.isRepeated();
 	}
 
-	/**
+	*//**
 	 * @return
-	 */
+	 *//*
 	public Object getType() {
 		return schema.getType();
 	}
 
-	/**
+	*//**
 	 * @return
-	 */
+	 *//*
 	public String getName() {
 		return schema.getName();
 	}
 
-	/**
+	*//**
 	 * @return
-	 */
+	 *//*
 	public List<FieldDescriptor> getFields() {
 		List<SchemaTree> list = schema.getFieldsList();
 		List<FieldDescriptor> result = new ArrayList<FieldDescriptor>();
 		for (SchemaTree s : list)
 			result.add(new FieldDescriptor(s));
 		return result;
-	}
+	}*/
 	
 }

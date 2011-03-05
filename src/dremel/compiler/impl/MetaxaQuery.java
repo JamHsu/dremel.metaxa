@@ -6,6 +6,7 @@ import dremel.compiler.expression.ExpNodeFactory;
 import dremel.compiler.expression.Symbol;
 import dremel.compiler.parser.AstNode;
 import dremel.dataset.Table;
+import dremel.dataset.impl.TableImpl;
 import dremel.compiler.parser.impl.BqlParser;
 
 /**
@@ -37,7 +38,8 @@ public class MetaxaQuery extends DefaultQuery {
 				assert (node2.getChildCount() == 1);
 				AstNode node3 = (AstNode) node2.getChild(0);
 				//List<Table> tables = this.getTables();
-				tables.add(new dremel.dataset.impl.Table(node3.getText()));
+				Table tbl = new TableImpl(node3.getText());
+				tables.add(tbl);
 			} else if (node2.getType() == BqlParser.N_SELECT_STATEMENT) {
 				List<dremel.compiler.Query> queries = this.getSubQueries();
 				queries.add(new MetaxaQuery(node2));

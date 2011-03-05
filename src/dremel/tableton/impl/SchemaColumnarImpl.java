@@ -20,13 +20,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dremel.tableton.ColumnMetaData;
-import dremel.tableton.Schema;
+import dremel.tableton.SchemaColumnar;
 
-public class SchemaImpl implements Schema {
+public class SchemaColumnarImpl implements SchemaColumnar {
 
 	Map<String, ColumnMetaData> columnsMetaData = new HashMap<String, ColumnMetaData>();
 	
-	public SchemaImpl()
+	public SchemaColumnarImpl()
 	{
 		
 	}

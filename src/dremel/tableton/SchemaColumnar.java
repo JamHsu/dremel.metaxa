@@ -23,7 +23,7 @@ import java.util.Map;
  * @author David.Gruzman
  *
  */
-public interface Schema {		
+public interface SchemaColumnar {		
 	public ColumnMetaData getColumnMetaData(String columnName);
 	/**
 	 * @return map from the column name to their meta data

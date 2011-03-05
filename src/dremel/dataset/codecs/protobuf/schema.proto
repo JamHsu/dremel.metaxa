@@ -1,0 +1,22 @@
+package schema;
+
+message Document 
+{
+	required int64 DocId = 1;
+	optional group Links = 2
+	{
+		repeated int64 Backward = 1;
+		repeated int64 Forward = 2; 
+	}
+	repeated group Name =3
+	{
+		repeated group Language = 1 
+		{
+			required string Code = 1;
+			optional string Country = 2; 
+		}
+		optional string Url = 2 ; 
+	}
+}
+
+

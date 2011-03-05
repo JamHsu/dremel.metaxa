@@ -18,7 +18,7 @@ package dremel.dataset.impl;
 import dremel.dataset.Stream;
 import dremel.dataset.ReaderTree;
 import dremel.dataset.Stream.Codec;
-import dremel.tableton.Schema;
+import dremel.tableton.SchemaColumnar;
 
 /**
  * Stores and retrieves dataset to/from individual files within predefined directory. Locator is 
@@ -50,7 +50,7 @@ public class LocalDirectory implements Stream {
 	 * @see dremel.dataset.Stream#writeSchema(dremel.dataset.Schema, java.lang.String, dremel.dataset.Stream.Codec)
 	 */
 	@Override
-	public void writeSchema(Schema schema, String schemaLocator, Codec codec) {
+	public void writeSchema(SchemaColumnar schema, String schemaLocator, Codec codec) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -59,7 +59,7 @@ public class LocalDirectory implements Stream {
 	 * @see dremel.dataset.Stream#readSchema(java.lang.String, dremel.dataset.Stream.Codec)
 	 */
 	@Override
-	public Schema readSchema(String schemaLocator, Codec codec) {
+	public SchemaColumnar readSchema(String schemaLocator, Codec codec) {
 		// TODO Auto-generated method stub
 		return null;
 	}

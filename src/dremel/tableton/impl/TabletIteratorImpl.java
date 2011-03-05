@@ -19,15 +19,15 @@ package dremel.tableton.impl;
 import java.util.Map;
 
 import dremel.tableton.ColumnReader;
-import dremel.tableton.Schema;
+import dremel.tableton.SchemaColumnar;
 import dremel.tableton.TabletIterator;
 
 public class TabletIteratorImpl implements TabletIterator {
 	Map<String, ColumnReader> columnsMap;
 	byte fetchLevel=0;
-	Schema schema = null;
+	SchemaColumnar schema = null;
 	
-	public TabletIteratorImpl(Map<String, ColumnReader> forColumnsMap, Schema forSchema)
+	public TabletIteratorImpl(Map<String, ColumnReader> forColumnsMap, SchemaColumnar forSchema)
 	{
 		columnsMap = forColumnsMap;
 		schema = forSchema;
@@ -70,7 +70,7 @@ public class TabletIteratorImpl implements TabletIterator {
 	}
 
 	@Override
-	public Schema getSchema() {
+	public SchemaColumnar getSchema() {
 		return schema;
 	}				
 

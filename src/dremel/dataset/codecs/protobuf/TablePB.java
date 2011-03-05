@@ -13,21 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dremel.dataset;
+package dremel.dataset.codecs.protobuf;
 
-import dremel.tableton.SchemaColumnar;
+import com.google.protobuf.Descriptors.Descriptor;
+
+import dremel.compiler.impl.FieldDescriptor;
+import dremel.dataset.codecs.protobuf.Schema.Document;
+import dremel.dataset.impl.TableImpl;
 
 /**
- * Stores and retrieves datasets. Implementation can be for example localdirectory or some other 
- * form of storage like HDFS or openstack.swift
- * 
- * @see dremel.dataset.impl.LocalDirctory
+ * @author Constantine Peresypkin
  *
  */
-public interface Stream {
-	enum Codec {AVRO_JSON, AVRO_BIN};
-	ReaderTree openForRead(String dataLocator, String schemaLocator, Codec codec);
-	void write(ReaderTree source, String dataLocator, Codec codec);
-	void writeSchema(SchemaColumnar schema, String schemaLocator, Codec codec);
-	SchemaColumnar readSchema(String schemaLocator, Codec codec);
+public class TablePB extends TableImpl {
+
+	
+	private Descriptor descriptor;
+
+	/**
+	 * @param name
+	 */
+	public TablePB(String name) {
+		super(name);
+		if (name.equalsIgnoreCase("[document]"))
+			descriptor = Document.getDescriptor();
+	}
 }

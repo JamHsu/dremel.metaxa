@@ -36,5 +36,5 @@ public interface TabletIterator {
 	 * @return true if there is a slice, and false if iteration is finished.
 	 */
 	public abstract boolean fetch();
-	public Schema getSchema();
+	public SchemaColumnar getSchema();
 }

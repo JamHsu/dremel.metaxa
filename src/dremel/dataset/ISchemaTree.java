@@ -15,19 +15,26 @@
  */
 package dremel.dataset;
 
-import dremel.tableton.SchemaColumnar;
+import dremel.dataset.SchemaTree.NodeType;
 
 /**
- * Stores and retrieves datasets. Implementation can be for example localdirectory or some other 
- * form of storage like HDFS or openstack.swift
- * 
- * @see dremel.dataset.impl.LocalDirctory
+ * @author Kit
  *
  */
-public interface Stream {
-	enum Codec {AVRO_JSON, AVRO_BIN};
-	ReaderTree openForRead(String dataLocator, String schemaLocator, Codec codec);
-	void write(ReaderTree source, String dataLocator, Codec codec);
-	void writeSchema(SchemaColumnar schema, String schemaLocator, Codec codec);
-	SchemaColumnar readSchema(String schemaLocator, Codec codec);
+public interface ISchemaTree {
+
+	public abstract String getName();
+
+	public abstract NodeType getType();
+
+	/**
+	 * @return
+	 */
+	public abstract boolean isRepeated();
+
+	/**
+	 * @return
+	 */
+	public abstract boolean isRecord();
+
 }

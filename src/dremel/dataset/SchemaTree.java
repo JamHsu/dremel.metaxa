@@ -15,7 +15,7 @@
  * limitations under the License.Ope
  */
 
-package dremel.compiler.impl;
+package dremel.dataset;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,7 +35,7 @@ import org.apache.avro.Schema;
  * @author Constantine Peresypkin
  * 
  */
-public class SchemaTree
+public class SchemaTree implements ISchemaTree
 {
 	
 	enum NodeType {RECORD,ARRAY,PRIMITIVE};
@@ -96,10 +96,18 @@ public class SchemaTree
 		return ARRAY_PREFIX+elementName;
 	}
 
+	/* (non-Javadoc)
+	 * @see dremel.dataset.ISchemaTree#getName()
+	 */
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	/* (non-Javadoc)
+	 * @see dremel.dataset.ISchemaTree#getType()
+	 */
+	@Override
 	public NodeType getType()
 	{
 		return type;
@@ -185,7 +193,7 @@ public class SchemaTree
 	}
 	
 
-	public static SchemaTree createFromAvroSchema(Schema inputSchema)
+	public static ISchemaTree createFromAvroSchema(Schema inputSchema)
 	{
 		return createFromAvroSchema(inputSchema, inputSchema.getName());
 	}
@@ -414,5 +422,21 @@ public class SchemaTree
 		return Collections.unmodifiableList(Arrays.asList((SchemaTree[])fields.values().toArray()));
 	}
 	
+	/* (non-Javadoc)
+	 * @see dremel.dataset.ISchemaTree#isRepeated()
+	 */
+	@Override
+	public boolean isRepeated() {
+		if (type == NodeType.ARRAY)
+			return true;
+		return false;
+	}
+	
+	@Override
+	public boolean isRecord() {
+		if (type == NodeType.RECORD)
+			return true;
+		return false;
+	}
 }
 

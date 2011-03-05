@@ -22,7 +22,7 @@ import java.util.Map;
 import dremel.tableton.ColumnMetaData;
 import dremel.tableton.ColumnReader;
 import dremel.tableton.ColumnWriter;
-import dremel.tableton.Schema;
+import dremel.tableton.SchemaColumnar;
 import dremel.tableton.TabletIterator;
 
 /**
@@ -34,7 +34,7 @@ public class TabletBuilderImpl {
 	String tabletName = null;	
 	Map<String, ColumnWriter > columnWriters = null;
 	TabletIterator inputIterator;
-	Schema resultSchema = null;
+	SchemaColumnar resultSchema = null;
 	
 	public void buildTablet(String forTabletName, TabletIterator forInputTabletIterator)
 	{
@@ -43,14 +43,14 @@ public class TabletBuilderImpl {
 		initColumnWriters();
 	}
 	
-	public Schema getSchema()
+	public SchemaColumnar getSchema()
 	{
 		return resultSchema;
 	}
 	
-	private static Schema buildOutputSchemaFromInputSchema(Schema inputSchema, String outputTabletName)
+	private static SchemaColumnar buildOutputSchemaFromInputSchema(SchemaColumnar inputSchema, String outputTabletName)
 	{
-		Schema localResultShema = new SchemaImpl();
+		SchemaColumnar localResultShema = new SchemaColumnarImpl();
 		
 		// iterate over column readers
 	//	Map<String, ColumnReader > inputColumns = inputIterator.getColumnsMap();		
@@ -102,7 +102,7 @@ public class TabletBuilderImpl {
 	
 	public void pushSlice(byte selectLevel)
 	{
-		Schema schema = inputIterator.getSchema();
+		SchemaColumnar schema = inputIterator.getSchema();
 		// for each column in the tablet iterator
 		for(String columnName : inputIterator.getColumnsMap().keySet())		
 		{

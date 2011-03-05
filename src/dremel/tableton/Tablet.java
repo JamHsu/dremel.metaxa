@@ -38,7 +38,7 @@ public interface Tablet {
 	 * @return
 	 */
 	public TabletIterator getProjectionIterator(List<String> columnsInProjection);
-	public Schema getSchema();
+	public SchemaColumnar getSchema();
 	// return the map from the column names to the column readers
 	public Map<String, ColumnReader> getColumns();
 }

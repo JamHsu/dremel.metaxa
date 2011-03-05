@@ -21,16 +21,16 @@ import java.util.List;
 import java.util.Map;
 
 import dremel.tableton.ColumnReader;
-import dremel.tableton.Schema;
+import dremel.tableton.SchemaColumnar;
 import dremel.tableton.Tablet;
 import dremel.tableton.TabletIterator;
 
 public class TabletImpl implements Tablet {
 
-	Schema schema;
+	SchemaColumnar schema;
 	Map<String, ColumnReader> columnReaders = null;
 	
-	public TabletImpl(Schema forSchema) {
+	public TabletImpl(SchemaColumnar forSchema) {
 		schema = forSchema;
 		initReaders();
 	}
@@ -60,7 +60,7 @@ public class TabletImpl implements Tablet {
 	}
 
 	@Override
-	public Schema getSchema() {
+	public SchemaColumnar getSchema() {
 		
 		return schema;
 	}

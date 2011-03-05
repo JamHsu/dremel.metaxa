@@ -10,13 +10,13 @@ import org.junit.Test;
 import dremel.tableton.ColumnMetaData;
 import dremel.tableton.ColumnReader;
 import dremel.tableton.ColumnWriter;
-import dremel.tableton.Schema;
+import dremel.tableton.SchemaColumnar;
 import dremel.tableton.Tablet;
 import dremel.tableton.TabletIterator;
 import dremel.tableton.ColumnMetaData.ColumnType;
 import dremel.tableton.ColumnMetaData.EncodingType;
 import dremel.tableton.impl.ColumnWriterImpl;
-import dremel.tableton.impl.SchemaImpl;
+import dremel.tableton.impl.SchemaColumnarImpl;
 import dremel.tableton.impl.TabletBuilderImpl;
 import dremel.tableton.impl.TabletImpl;
 
@@ -58,7 +58,7 @@ public class TabletTest {
 		ColumnMetaData linksForwardMetaData= new ColumnMetaData("Links.LinksForward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksForward", (byte)1, (byte)2);
 		buildLinksForwardData(linksForwardMetaData);
 				
-		Schema schema = new SchemaImpl();
+		SchemaColumnar schema = new SchemaColumnarImpl();
 		schema.addColumnMetaData(linksBackwardMetaData);
 		schema.addColumnMetaData(linksForwardMetaData);
 		
@@ -75,7 +75,7 @@ public class TabletTest {
 		buildLinkBackwardData(columnMetaData);
 		
 		
-		Schema schema = new SchemaImpl();
+		SchemaColumnar schema = new SchemaColumnarImpl();
 		schema.addColumnMetaData(columnMetaData);
 		
 		Tablet tablet = new TabletImpl(schema);
@@ -83,7 +83,7 @@ public class TabletTest {
 		checkNullCopy(schema, tablet);
 	}
 
-	private void checkNullCopy(Schema schema, Tablet tablet) {
+	private void checkNullCopy(SchemaColumnar schema, Tablet tablet) {
 		TabletIterator tabletIterator = tablet.getIterator();		
 		
 		// create output tablet
@@ -96,7 +96,7 @@ public class TabletTest {
 		}
 		outputTablet.close();		
 		// create input tablet over the output
-		Schema resultSchema = outputTablet.getSchema();
+		SchemaColumnar resultSchema = outputTablet.getSchema();
 		Tablet resultTablet = new TabletImpl(resultSchema);
 		// compare input and output data
 		Tablet originalTablet = new TabletImpl(schema);

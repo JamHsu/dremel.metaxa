@@ -11,7 +11,6 @@ import org.codehaus.commons.compiler.CompilerFactoryFactory;
 import org.codehaus.commons.compiler.IScriptEvaluator;
 
 import dremel.compiler.impl.FieldDescriptor;
-import dremel.compiler.impl.SchemaTree.NodeType;
 import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.Parser;
 
@@ -19,6 +18,8 @@ import dremel.compiler.ExpNode;
 import dremel.compiler.Query;
 import dremel.compiler.expression.Function;
 import dremel.compiler.expression.Symbol;
+import dremel.dataset.ISchemaTree;
+import dremel.dataset.SchemaTree;
 import dremel.dataset.Slice;
 import dremel.dataset.SliceScanner;
 import dremel.dataset.impl.SimpleSliceScanner;
@@ -39,20 +40,20 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param level
 	 * @param maxLevels
 	 */
-	private void calMaxLevel(FieldDescriptor desc, int level, Map<FieldDescriptor, Integer> maxLevels) {
-		List<FieldDescriptor> fs = desc.getFields();
+	private void calMaxLevel(SchemaTree desc, int level, Map<SchemaTree, Integer> maxLevels) {
+		List<SchemaTree> fs = desc.getFieldsList();
 		for (int i = 0; i < fs.size(); i++) {
-			FieldDescriptor fd = fs.get(i);
+			SchemaTree fd = fs.get(i);
 			if (fd.isRepeated()) {
 
-				if (fd.getType() == NodeType.RECORD) {
+				if (fd.isRecord()) {
 					calMaxLevel(fd, level + 1, maxLevels);
 					maxLevels.put(fd, level + 1);
 				} else {
 					maxLevels.put(fd, level + 1);
 				}
 			} else {
-				if (fd.getType() == NodeType.RECORD) {
+				if (fd.isRecord()) {
 					calMaxLevel(fd, level, maxLevels);
 					maxLevels.put(fd, level);
 				} else {
@@ -71,11 +72,11 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param maxLevels
 	 * @return
 	 */
-	int getRLevel(ExpNode node, int level, Map<FieldDescriptor, Integer> maxLevels) {
+	int getRLevel(ExpNode node, int level, Map<SchemaTree, Integer> maxLevels) {
 		if (node instanceof Symbol) {
 			Symbol symbol = (Symbol) node;
 			Object o = symbol.getReference();
-			if (o instanceof FieldDescriptor) {
+			if (o instanceof SchemaTree) {
 				int l = maxLevels.get(o);
 				if (l > level)
 					level = l;
@@ -146,18 +147,18 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param maxLevels
 	 * @return
 	 */
-	int getWithinLevel(String nodeName, Map<FieldDescriptor, Integer> maxLevels) {
+	int getWithinLevel(String nodeName, Map<SchemaTree, Integer> maxLevels) {
 		if (nodeName == null)
 			return -1;
 		if (nodeName.equalsIgnoreCase("record"))
 			return 0;
 
-		Iterator<FieldDescriptor> it = maxLevels.keySet().iterator();
+		Iterator<SchemaTree> it = maxLevels.keySet().iterator();
 
 		while (it.hasNext()) {
-			FieldDescriptor d = it.next();
+			ISchemaTree d = it.next();
 
-			if (d.getType() == NodeType.RECORD) // within node must be group
+			if (d.isRecord()) // within node must be group
 			{
 				//String name = getFieldName(d.getFullName());
 				String name = d.getName();
@@ -205,14 +206,14 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	public void analyse(Query query) {
 		assert (query.getTables().size() == 1);// one table only
 		assert (query.getSubQueries().size() == 0);// no sub-queries
-		FieldDescriptor descriptor = query.getTables().get(0).getSchema();
-		Map<FieldDescriptor, Integer> maxLevels = new HashMap<FieldDescriptor, Integer>();
+		SchemaTree descriptor = query.getTables().get(0).getSchema();
+		Map<SchemaTree, Integer> maxLevels = new HashMap<SchemaTree, Integer>();
 
 		// bind field+exp to symbols
 		calMaxLevel(descriptor, 0, maxLevels);
-		Iterator<FieldDescriptor> fIt = maxLevels.keySet().iterator();
+		Iterator<SchemaTree> fIt = maxLevels.keySet().iterator();
 		while (fIt.hasNext()) {
-			FieldDescriptor d = fIt.next();
+			ISchemaTree d = fIt.next();
 			//String name = getFieldName(d.getFullName());
 			String name = d.getName();
 
@@ -271,7 +272,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			Symbol symbol = it.next();
 			if (symbol.getReference() instanceof FieldDescriptor) {
 				symbol.setSliceMappingIndex(i);
-				builder.append("// inSlice.getValue[" + (i++) + "] -> " + ((FieldDescriptor) symbol.getReference()).getName() + "\n");
+				builder.append("// inSlice.getValue[" + (i++) + "] -> " + ((ISchemaTree) symbol.getReference()).getName() + "\n");
 
 			}
 		}
