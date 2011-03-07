@@ -155,8 +155,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 			if (d.isRecord()) // within node must be group
 			{
-				//String name = getFieldName(d.getFullName());
-				String name = getFieldName(d.getName());
+				//String name = getFieldName(d.getName());
+				String name = d.getName();
 				// System.out.println(name);
 				if (name.equalsIgnoreCase(nodeName))
 					return maxLevels.get(d);
@@ -165,7 +165,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		return -1;
 	}
 
-	String getFieldName(String name) {
+/*	String getFieldName(String name) {
 		// input schema.Document.*
 		// trim prefix: schema.Document.
 		int p = name.indexOf('.');
@@ -176,7 +176,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			}
 		}
 		return name;
-	}
+	}*/
 
 	/*
 	 * Validation rules: - check table name: enclose by [] - check field names
@@ -209,8 +209,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Iterator<SchemaTree> fIt = maxLevels.keySet().iterator();
 		while (fIt.hasNext()) {
 			SchemaTree d = fIt.next();
-			//String name = getFieldName(d.getFullName());
-			String name = getFieldName(d.getName());
+			//String name = getFieldName(d.getName());
+			String name = d.getName();
 
 			Symbol symbol = query.getSymbolTable().get(name.toLowerCase());
 			if (symbol != null) {
