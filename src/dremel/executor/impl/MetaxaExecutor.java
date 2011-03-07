@@ -6,9 +6,8 @@ import java.util.List;
 
 import org.codehaus.commons.compiler.IScriptEvaluator;
 
-import dremel.compiler.impl.FieldDescriptor;
-
 import dremel.compiler.Query;
+import dremel.dataset.SchemaTree;
 import dremel.dataset.Slice;
 import dremel.dataset.SliceScanner;
 import dremel.executor.Executor;
@@ -20,7 +19,7 @@ import dremel.executor.Executor;
  */
 public class MetaxaExecutor implements Executor {
 
-	List<FieldDescriptor> fields;
+	List<SchemaTree> fields;
 	Query query;
 	SliceScanner scanner;
 	IScriptEvaluator se;
@@ -28,7 +27,7 @@ public class MetaxaExecutor implements Executor {
 	private SliceScanner resultScanner;
 
 	public MetaxaExecutor(Query query, SliceScanner scanner, IScriptEvaluator se) {
-		fields = new LinkedList<FieldDescriptor>();
+		fields = new LinkedList<SchemaTree>();
 		this.query = query;
 		this.se = se;
 		this.scanner = scanner;

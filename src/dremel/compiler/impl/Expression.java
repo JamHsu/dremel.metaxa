@@ -3,9 +3,8 @@ package dremel.compiler.impl;
 import java.util.LinkedList;
 import java.util.List;
 
-import dremel.compiler.impl.FieldDescriptor;
-
 import dremel.compiler.ExpNode;
+import dremel.dataset.SchemaTree;
 
 /**
  * @author nhsan
@@ -17,10 +16,10 @@ public class Expression implements dremel.compiler.Expression {
 	String alias;
 	int rLevel;
 	int withinLevel;
-	List<FieldDescriptor> fields;
+	List<SchemaTree> fields;
 
 	public Expression() {
-		fields = new LinkedList<FieldDescriptor>();
+		fields = new LinkedList<SchemaTree>();
 	}
 
 	@Override
@@ -69,7 +68,7 @@ public class Expression implements dremel.compiler.Expression {
 	}
 
 	@Override
-	public List<FieldDescriptor> getRelatedFields() {
+	public List<SchemaTree> getRelatedFields() {
 		return fields;
 	}
 

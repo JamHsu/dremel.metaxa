@@ -17,6 +17,7 @@
 
 package dremel.dataset.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,10 +42,11 @@ public class SchemaTreeImpl implements SchemaTree
 {
 	
 	public enum NodeType {RECORD,ARRAY,PRIMITIVE}; // need to move it to the SchemaTree interface
-	enum PrimitiveType {INT,BOOLEAN, LONG, FLOAT, DOUBLE, STRING, NOT_EXISTING_TYPE};
+	public enum PrimitiveType {INT,BOOLEAN, LONG, FLOAT, DOUBLE, STRING, NOT_EXISTING_TYPE};
 	
 	public final static String ARRAY_PREFIX = "ARRAY_OF_";
 	
+	private List<SchemaTree> fieldList = null;
 	// valid if type is record
 	private Map<String, SchemaTreeImpl> fields = null;
 	// valid if type is array
@@ -66,6 +68,7 @@ public class SchemaTreeImpl implements SchemaTree
 		this.name = name;
 		this.type = NodeType.RECORD;
 		this.fields = new HashMap<String, SchemaTreeImpl>();
+		this.fieldList = new ArrayList<SchemaTree>();
 	}
 	
 	public static SchemaTreeImpl createArray(SchemaTreeImpl elementType)
@@ -96,7 +99,7 @@ public class SchemaTreeImpl implements SchemaTree
 		SchemaTreeImpl newSchema = new SchemaTreeImpl(NodeType.RECORD);
 		newSchema.name = forName;
 		newSchema.fields = new HashMap<String, SchemaTreeImpl>();
-		
+		newSchema.fieldList = new ArrayList<SchemaTree>();
 		return newSchema;			
 	}
 	
@@ -134,6 +137,7 @@ public class SchemaTreeImpl implements SchemaTree
 			throw new RuntimeException("Field "+fieldName+ " is duplicated in the record named "+name);
 		}
 		fields.put(fieldName, field);
+		fieldList.add(field);
 	}
 			
 	/**
@@ -427,7 +431,8 @@ public class SchemaTreeImpl implements SchemaTree
 	 * @return the fields
 	 */
 	public List<SchemaTree> getFieldsList() {
-		return Collections.unmodifiableList(Arrays.asList((SchemaTree[])fields.values().toArray()));
+		return fieldList;
+		//return Collections.unmodifiableList(Arrays.asList((SchemaTree[])fields.values().toArray()));
 	}
 	
 	/* (non-Javadoc)

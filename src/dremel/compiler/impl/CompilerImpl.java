@@ -15,8 +15,10 @@ import dremel.compiler.expression.Function;
 import dremel.compiler.expression.Symbol;
 import dremel.dataset.SchemaTree;
 import dremel.dataset.Slice;
+import dremel.dataset.SliceScanner;
 import dremel.dataset.impl.SchemaTreeImpl;
 import dremel.executor.Executor;
+import dremel.executor.impl.MetaxaExecutor;
 
 /**
  * @author nhsan
@@ -88,20 +90,20 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		return level;
 	}
 
-	void getRelatedFields(ExpNode node, List<FieldDescriptor> fields) {
+	void getRelatedFields(ExpNode node, List<SchemaTree> fields) {
 		if (node instanceof Symbol) {
 			Symbol symbol = (Symbol) node;
 			Object o = symbol.getReference();
-			if (o instanceof FieldDescriptor) {
+			if (o instanceof SchemaTree) {
 				if (!fields.contains(o))
-					fields.add((FieldDescriptor) o);
+					fields.add((SchemaTree) o);
 			} else if (o instanceof Expression) {
 				Expression exp = (Expression) o;
-				List<FieldDescriptor> lst = exp.getRelatedFields();
-				Iterator<FieldDescriptor> it = lst.iterator();
+				List<SchemaTree> lst = exp.getRelatedFields();
+				Iterator<SchemaTree> it = lst.iterator();
 
 				while (it.hasNext()) {
-					FieldDescriptor d = it.next();
+					SchemaTree d = it.next();
 					if (!fields.contains(d))
 						fields.add(d);
 				}
@@ -263,7 +265,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		int i = 0;
 		while (it.hasNext()) {
 			Symbol symbol = it.next();
-			if (symbol.getReference() instanceof FieldDescriptor) {
+			if (symbol.getReference() instanceof SchemaTree) {
 				symbol.setSliceMappingIndex(i);
 				builder.append("// inSlice.getValue[" + (i++) + "] -> " + ((SchemaTree) symbol.getReference()).getName() + "\n");
 
@@ -333,6 +335,14 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		return null;
 	}
 	
+	public Executor compile(Query query, SliceScanner scanner)
+	{
+		IScriptEvaluator se = compileToScript(query);
+		Executor executor = new MetaxaExecutor(query, scanner, se);
+		return executor;
+		
+	}
+	
 	public static void main(String[] args) {
 		
 	}
@@ -343,7 +353,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	@Override
 	public IScriptEvaluator compileToScript(Query query) {
 		
-		List<FieldDescriptor> fields = new LinkedList<FieldDescriptor>();
+		List<SchemaTree> fields = new LinkedList<SchemaTree>();
 
 		StringBuilder builder = new StringBuilder();
 		try {
@@ -351,9 +361,9 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			int i = 0;
 			while (it.hasNext()) {
 				Symbol symbol = it.next();
-				if (symbol.getReference() instanceof FieldDescriptor) {
+				if (symbol.getReference() instanceof SchemaTree) {
 					symbol.setSliceMappingIndex(i++);
-					fields.add((FieldDescriptor) symbol.getReference());
+					fields.add((SchemaTree) symbol.getReference());
 				}
 			}
 

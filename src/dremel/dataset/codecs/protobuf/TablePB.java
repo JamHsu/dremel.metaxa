@@ -17,7 +17,6 @@ package dremel.dataset.codecs.protobuf;
 
 import com.google.protobuf.Descriptors.Descriptor;
 
-import dremel.compiler.impl.FieldDescriptor;
 import dremel.dataset.codecs.protobuf.Schema.Document;
 import dremel.dataset.impl.TableImpl;
 

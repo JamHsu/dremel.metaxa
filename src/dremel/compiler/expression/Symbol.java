@@ -1,10 +1,9 @@
 package dremel.compiler.expression;
 
-import dremel.compiler.impl.FieldDescriptor;
-
 import dremel.compiler.ExpNode;
 import dremel.compiler.Expression;
 import dremel.compiler.Query;
+import dremel.dataset.SchemaTree;
 
 /**
  * @author nhsan
@@ -38,7 +37,7 @@ public class Symbol extends AbstractNode{
 			Expression exp=(Expression)reference;
 			return exp.getRoot().generateCode();
 		}
-		else if ((reference instanceof FieldDescriptor) && (sliceMappingIndex!=-1))
+		else if ((reference instanceof SchemaTree) && (sliceMappingIndex!=-1))
 		{
 			return "inSlice.getValue("+sliceMappingIndex+")";
 		}

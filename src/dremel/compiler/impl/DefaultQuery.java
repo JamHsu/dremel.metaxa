@@ -9,6 +9,7 @@ import dremel.compiler.Expression;
 import dremel.compiler.Query;
 import dremel.compiler.expression.Function;
 import dremel.compiler.expression.Symbol;
+import dremel.dataset.SchemaTree;
 import dremel.dataset.Table;
 
 /**
@@ -24,8 +25,8 @@ public class DefaultQuery implements Query {
 	Map<String, Symbol> symbolTable;
 	Expression filter;
 	int limit;
-	FieldDescriptor sourceSchema;
-	FieldDescriptor targetSchema;
+	SchemaTree sourceSchema;
+	SchemaTree targetSchema;
 	List<Function> aggregationFunctions;
 
 	public DefaultQuery() {
@@ -69,12 +70,12 @@ public class DefaultQuery implements Query {
 	}
 
 	@Override
-	public FieldDescriptor getSourceSchema() {
+	public SchemaTree getSourceSchema() {
 		return sourceSchema;
 	}
 
 	@Override
-	public FieldDescriptor getTargetSchema() {
+	public SchemaTree getTargetSchema() {
 		return targetSchema;
 	}
 
@@ -87,11 +88,11 @@ public class DefaultQuery implements Query {
 		this.limit = limit;
 	}
 
-	public void setSourceSchema(FieldDescriptor sourceSchema) {
+	public void setSourceSchema(SchemaTree sourceSchema) {
 		this.sourceSchema = sourceSchema;
 	}
 
-	public void setTargetSchema(FieldDescriptor targetSchema) {
+	public void setTargetSchema(SchemaTree targetSchema) {
 		this.targetSchema = targetSchema;
 	}
 

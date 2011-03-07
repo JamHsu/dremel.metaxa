@@ -2,7 +2,7 @@ package dremel.compiler;
 
 import java.util.List;
 
-import dremel.compiler.impl.FieldDescriptor;
+import dremel.dataset.SchemaTree;
 
 /**
  * Expression contains informations about an expression in SELECT/WHERE/GROUPBY/ORDER BY clause.
@@ -20,6 +20,6 @@ public interface Expression {
 	public int getWithinLevel();
 	
 	public int getRepetitionLevel();
-	public List<FieldDescriptor> getRelatedFields();
+	public List<SchemaTree> getRelatedFields();
 
 }
