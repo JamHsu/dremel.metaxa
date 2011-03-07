@@ -40,24 +40,31 @@ public class MetaxaExecutor implements Executor {
 
 	@Override
 	public void execute() {
-		start();
+		Integer[] context1 = new Integer[3];
+		context1[0] = 0;
 		while (scanner.hasMore()) {
-			Slice outSlice = step();
+			Slice inSlice = scanner.next();
+			Slice outSlice = new dremel.dataset.impl.Slice(query.getSelectExpressions().size());
+			try {
+				se.evaluate(new Object[] { inSlice, outSlice, context1 });
 
-			//just print to stdout
-			//				System.out.print("ISLICE:\t");
-			//				for (int i = 0; i < inSlice.count(); i++) {
-			//					System.out.print(inSlice.getValue(i) + "\t\t");
-			//				}
-			//System.out.println();
-			if (outSlice.isNull())
-				System.out.println("OSLICE:\tNULL");
-			else {
-				System.out.print("OSLICE:\t");
-				for (int i = 0; i < outSlice.count(); i++) {
-					System.out.print(outSlice.getValue(i) + "\t\t");
+				//just print to stdout
+				System.out.print("ISLICE:\t");
+				for (int i = 0; i < inSlice.count(); i++) {
+					System.out.print(inSlice.getValue(i) + "\t\t");
 				}
 				System.out.println();
+				if (outSlice.isNull())
+					System.out.println("OSLICE:\tNULL");
+				else {
+					System.out.print("OSLICE:\t");
+					for (int i = 0; i < outSlice.count(); i++) {
+						System.out.print(outSlice.getValue(i) + "\t\t");
+					}
+					System.out.println();
+				}
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -65,6 +72,12 @@ public class MetaxaExecutor implements Executor {
 	public Slice step() {
 		if (scanner.hasMore()) {
 			Slice inSlice = scanner.next();
+			// left for now, for debug
+			System.out.print("ISLICE:\t");
+			for (int i = 0; i < inSlice.count(); i++) {
+				System.out.print(inSlice.getValue(i) + "\t\t");
+			}
+			System.out.println();
 			Slice outSlice = new dremel.dataset.impl.Slice(query.getSelectExpressions().size());
 			try {
 				se.evaluate(new Object[] { inSlice, outSlice, context1 });
@@ -72,13 +85,6 @@ public class MetaxaExecutor implements Executor {
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
 			}
-			
-			// left for now, for debug
-			System.out.print("ISLICE:\t");
-			for (int i = 0; i < inSlice.count(); i++) {
-				System.out.print(inSlice.getValue(i) + "\t\t");
-			}
-			System.out.println();
 		}
 		return null;
 	}

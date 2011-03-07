@@ -156,7 +156,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			if (d.isRecord()) // within node must be group
 			{
 				//String name = getFieldName(d.getFullName());
-				String name = d.getName();
+				String name = getFieldName(d.getName());
 				// System.out.println(name);
 				if (name.equalsIgnoreCase(nodeName))
 					return maxLevels.get(d);
@@ -210,7 +210,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		while (fIt.hasNext()) {
 			SchemaTree d = fIt.next();
 			//String name = getFieldName(d.getFullName());
-			String name = d.getName();
+			String name = getFieldName(d.getName());
 
 			Symbol symbol = query.getSymbolTable().get(name.toLowerCase());
 			if (symbol != null) {

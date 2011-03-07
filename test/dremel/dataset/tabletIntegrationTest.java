@@ -69,10 +69,10 @@ public class tabletIntegrationTest {
 	public TabletIterator getPaperSchemaTabletIterator()
 	{
 		// build single column tablet for the input
-		ColumnMetaData linksBackwardMetaData= new ColumnMetaData("Backward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksBackward", (byte)1, (byte)2);
+		ColumnMetaData linksBackwardMetaData= new ColumnMetaData("links.Backward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksBackward", (byte)1, (byte)2);
 		buildLinkBackwardData(linksBackwardMetaData);
 		
-		ColumnMetaData linksForwardMetaData= new ColumnMetaData("Forward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksForward", (byte)1, (byte)2);
+		ColumnMetaData linksForwardMetaData= new ColumnMetaData("links.Forward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksForward", (byte)1, (byte)2);
 		buildLinksForwardData(linksForwardMetaData);
 		
 		ColumnMetaData docidMetaData= new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata\\docid", (byte)0, (byte)0);

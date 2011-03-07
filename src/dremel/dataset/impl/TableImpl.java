@@ -28,9 +28,9 @@ public class TableImpl implements dremel.dataset.Table {
 		SchemaTreeImpl f = SchemaTreeImpl.createPrimitive("DocId", PrimitiveType.INT);
 		schema.addField(f);
 		f = SchemaTreeImpl.createRecord("links");
-		SchemaTreeImpl f1 = SchemaTreeImpl.createPrimitive("Backward", PrimitiveType.INT);
+		SchemaTreeImpl f1 = SchemaTreeImpl.createPrimitive("links.Backward", PrimitiveType.INT);
 		f.addField(f1);
-		f1 = SchemaTreeImpl.createPrimitive("Forward", PrimitiveType.INT);
+		f1 = SchemaTreeImpl.createPrimitive("links.Forward", PrimitiveType.INT);
 		f.addField(f1);
 		schema.addField(f);
 		//f = SchemaTreeImpl.createArray(NodeType.RECORD);
