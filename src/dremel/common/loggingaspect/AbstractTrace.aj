@@ -14,7 +14,7 @@
  * limitations under the License.Ope
  */
 
-package dremel.common;
+package dremel.common.loggingaspect;
 
 import java.io.PrintStream;
 import org.aspectj.lang.JoinPoint;
