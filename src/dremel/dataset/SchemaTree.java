@@ -41,4 +41,24 @@ public interface SchemaTree {
 	 */
 	public abstract List<SchemaTree> getFieldsList();
 
+	/**
+	 * @return
+	 */
+	public abstract boolean isTypeInt64();
+
+	/**
+	 * @return
+	 */
+	public abstract boolean isTypeString();
+
+	/**
+	 * @return
+	 */
+	public abstract boolean isTypeFloat();
+
+	/**
+	 * @return
+	 */
+	public abstract boolean isTypeBool();
+
 }

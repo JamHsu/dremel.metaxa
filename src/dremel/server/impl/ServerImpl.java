@@ -27,7 +27,8 @@ import dremel.dataset.Stream.Codec;
 import dremel.server.Server;
 import dremel.compiler.Compiler;
 import dremel.compiler.Query;
-import dremel.compiler.impl.MetaxaQuery;
+import dremel.compiler.impl.DefaultQuery;
+import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.Parser;
 import dremel.dataset.Stream;
 import dremel.executor.Executor;
@@ -65,12 +66,13 @@ public class ServerImpl implements Server, INeedsStreamImpl, INeedsCompilerImpl 
 		
 		SliceScanner result = null;
 		try {
-			compiledQuery = new MetaxaQuery(Parser.parseBql(query));
+			AstNode nodes = Parser.parseBql(query);
+			compiledQuery = compiler.parse(nodes);
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		}
 		compiler.analyse(compiledQuery);
-		executor.setEvaluator(compiler.compileToScript(compiledQuery));
+		//executor.setEvaluator(compiler.compileToScript(compiledQuery));
 		executor.execute();
 		return result;
 	}

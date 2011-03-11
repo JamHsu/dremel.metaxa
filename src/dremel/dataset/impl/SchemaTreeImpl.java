@@ -42,7 +42,7 @@ public class SchemaTreeImpl implements SchemaTree
 {
 	
 	public enum NodeType {RECORD,ARRAY,PRIMITIVE}; // need to move it to the SchemaTree interface
-	public enum PrimitiveType {INT,BOOLEAN, LONG, FLOAT, DOUBLE, STRING, NOT_EXISTING_TYPE};
+	public enum PrimitiveType {INT, BOOLEAN, LONG, FLOAT, DOUBLE, STRING, NOT_EXISTING_TYPE};
 	
 	public final static String ARRAY_PREFIX = "ARRAY_OF_";
 	
@@ -448,6 +448,46 @@ public class SchemaTreeImpl implements SchemaTree
 	@Override
 	public boolean isRecord() {
 		if (type == NodeType.RECORD)
+			return true;
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#isTypeInt64()
+	 */
+	@Override
+	public boolean isTypeInt64() {
+		if (type == NodeType.PRIMITIVE && primitiveType == PrimitiveType.INT)
+			return true;
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#isTypeString()
+	 */
+	@Override
+	public boolean isTypeString() {
+		if (type == NodeType.PRIMITIVE && primitiveType == PrimitiveType.STRING)
+			return true;
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#isTypeFloat()
+	 */
+	@Override
+	public boolean isTypeFloat() {
+		if (type == NodeType.PRIMITIVE && primitiveType == PrimitiveType.FLOAT)
+			return true;
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#isTypeBool()
+	 */
+	@Override
+	public boolean isTypeBool() {
+		if (type == NodeType.PRIMITIVE && primitiveType == PrimitiveType.BOOLEAN)
 			return true;
 		return false;
 	}

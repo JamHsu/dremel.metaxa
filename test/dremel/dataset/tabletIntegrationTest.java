@@ -7,11 +7,11 @@ import java.util.List;
 import org.antlr.runtime.RecognitionException;
 import org.junit.Test;
 
-import com.google.protobuf.Descriptors.FieldDescriptor;
-
 import dremel.executor.Executor;
-import dremel.compiler.expression.Symbol;
-import dremel.compiler.impl.MetaxaQuery;
+import dremel.executor.Executor.Script;
+import dremel.executor.impl.MetaxaExecutor;
+//import dremel.compiler.expression.Symbol;
+//import dremel.compiler.impl.MetaxaQuery;
 import dremel.tableton.ColumnMetaData;
 import dremel.tableton.ColumnReader;
 import dremel.dataset.SliceScanner;
@@ -24,6 +24,11 @@ import dremel.tableton.impl.ColumnWriterImpl;
 import dremel.tableton.impl.SchemaColumnarImpl;
 import dremel.tableton.impl.TabletImpl;
 import dremel.dataset.impl.TabletIteratorAdapter;
+import dremel.compiler.Compiler;
+import dremel.compiler.Query;
+import dremel.compiler.impl.CompilerImpl;
+import dremel.compiler.impl.DefaultQuery;
+import dremel.compiler.Expression.Symbol;
 import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.Parser;
 
@@ -96,8 +101,9 @@ public class tabletIntegrationTest {
 		
 		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as fwd, links.backward as bwd, links.forward+links.backward FROM [document] WHERE fwd>60;");
 						
-		MetaxaQuery query = new MetaxaQuery(nodes);
-		dremel.compiler.impl.CompilerImpl compiler = new dremel.compiler.impl.CompilerImpl();
+		//DefaultQuery query = new DefaultQuery(nodes);
+		Compiler compiler = new CompilerImpl();
+		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		
 		TabletIterator tabletIterator = getPaperSchemaTabletIterator();
@@ -108,11 +114,17 @@ public class tabletIntegrationTest {
 					
 		SliceScanner scanner = new TabletIteratorAdapter(tabletIterator, fieldsOrder);
 		
-		Executor executor=compiler.compile(query, scanner);
-		executor.execute();
+		try {
+			Script script = new MetaxaExecutor.JavaLangScript(compiler.compileToScript(query));
+			Executor executor = new MetaxaExecutor(query, scanner, script);
+			executor.execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private void buildFieldsOrder(MetaxaQuery query, List<String> fieldsOrder) {
+	private void buildFieldsOrder(Query query, List<String> fieldsOrder) {
 		Iterator<Symbol> it = query.getSymbolTable().values().iterator();
 		int i = 0;
 		while (it.hasNext()) {

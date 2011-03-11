@@ -1,0 +1,31 @@
+int selectLevel=(Integer)context1[0]; //selectLevel is allocated in first element of context1
+int fetchLevel=inSlice.getFetchLevel();
+#if ($query.getFilter())
+
+if ((selectLevel <= $query.getFilter().getRepetitionLevel()) && ($query.getFilter().getRoot().generateCode()))
+{
+#set($i = 0)
+#foreach ($exp in $query.getSelectExpressions())
+	if(selectLevel<= $exp.getRepetitionLevel()) outSlice.setValue($i, $exp.getRoot().generateCode());
+#set($i = $i+1)
+#end
+	context1[0] = fetchLevel;
+	outSlice.setSelectLevel(fetchLevel);
+	outSlice.setNull(false);
+} 
+else 
+{
+	outSlice.setNull(true);
+	if(selectLevel > fetchLevel) context1[0]=fetchLevel;
+}
+
+#else
+#set($i = 0)
+#foreach ($exp in $query.getSelectExpressions())
+	if(selectLevel<= $exp.getRepetitionLevel()) outSlice.setValue($i, $exp.getRoot().generateCode());
+#set($i = $i+1)
+#end
+	context1[0] = fetchLevel;
+	outSlice.setSelectLevel(fetchLevel);
+	outSlice.setNull(false);
+#end
