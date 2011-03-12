@@ -61,4 +61,14 @@ public interface SchemaTree {
 	 */
 	public abstract boolean isTypeBool();
 
+	/**
+	 * @return
+	 */
+	boolean isRequired();
+
+	/**
+	 * @return
+	 */
+	boolean isOptional();
+
 }

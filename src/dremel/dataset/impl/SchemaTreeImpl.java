@@ -491,5 +491,23 @@ public class SchemaTreeImpl implements SchemaTree
 			return true;
 		return false;
 	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#isRequired()
+	 */
+	@Override
+	public boolean isRequired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#isOptional()
+	 */
+	@Override
+	public boolean isOptional() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
 

@@ -1,16 +1,15 @@
 package dremel.dataset.impl;
 
 import dremel.dataset.SchemaTree;
-import dremel.dataset.impl.SchemaTreeImpl.PrimitiveType;
 
 public class TableImpl implements dremel.dataset.Table {
 
 	String name;
-	protected SchemaTreeImpl schema;
+	protected SchemaTree schema;
 
 	public TableImpl(String name) {
 		this.name = name;
-		createSchemaTree();
+		this.schema = SchemaTreeLoader.loadSchema(name);
 	}
 
 	@Override
@@ -23,7 +22,7 @@ public class TableImpl implements dremel.dataset.Table {
 		return schema;
 	}
 	
-	public void createSchemaTree() {
+/*	public void createSchemaTree() {
 		schema = new SchemaTreeImpl("document");
 		SchemaTreeImpl f = SchemaTreeImpl.createPrimitive("DocId", PrimitiveType.INT);
 		schema.addField(f);
@@ -35,5 +34,5 @@ public class TableImpl implements dremel.dataset.Table {
 		schema.addField(f);
 		//f = SchemaTreeImpl.createArray(NodeType.RECORD);
 		//System.out.println(schema.toString());
-	}
+	}*/
 }
