@@ -13,7 +13,7 @@ import dremel.dataset.impl.Slice;
  * 
  */
 public class AggResult {
-	Slice marker;
+	dremel.dataset.Slice marker;
 	Object value;
 	Function function;
 	int index; //index of aggregation function in output slice
@@ -23,8 +23,20 @@ public class AggResult {
 		this.value = value;
 	}
 
-	public void emit() {
+	public Object getValue() {
+		return value;
+	}
 
+	public void setValue(Object val) {
+		value = val;
+	}
+
+	public void reset(dremel.dataset.Slice marker) {
+		this.marker = marker;
+		if (value instanceof Integer)
+			value = 0;
+		else if (value instanceof Float)
+			value = 0.0;
 	}
 
 	public int intValue() {
@@ -35,7 +47,7 @@ public class AggResult {
 		this.marker = marker;
 	}
 
-	public Slice getMarker() {
+	public dremel.dataset.Slice getMarker() {
 		return marker;
 	}
 

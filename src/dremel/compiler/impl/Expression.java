@@ -6,6 +6,8 @@ import java.util.Map;
 
 import java.util.List;
 
+import com.google.protobuf.Descriptors.FieldDescriptor;
+
 import dremel.compiler.Query;
 import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.impl.BqlParser;
@@ -60,6 +62,8 @@ public class Expression implements dremel.compiler.Expression {
 
 		if (name.equalsIgnoreCase("length")) {
 			return new StringLengthFunc(node, query);
+		} else if (name.equalsIgnoreCase("count")) {
+			return new CountFunc(node, query);
 		} else
 			return new Function(node, query);
 	}
@@ -356,6 +360,23 @@ public class Expression implements dremel.compiler.Expression {
 		@Override
 		public String generateCode() {
 			return nodes.get(0).generateCode() + ".toString().length()";
+		}
+	}
+
+	static public class CountFunc extends Function {
+		dremel.compiler.Expression.Symbol symbol;
+
+		public CountFunc(AstNode node, Query query) {
+			super(node, query);
+			assert (nodes.size() == 1);
+			assert (nodes.get(0) instanceof dremel.compiler.Expression.Symbol);
+			symbol = (dremel.compiler.Expression.Symbol) nodes.get(0);
+			assert (symbol.getReference() instanceof FieldDescriptor);
+		}
+
+		@Override
+		public String generateCode() {
+			return "r.setValue(new Integer(r.intValue()+1))";
 		}
 	}
 

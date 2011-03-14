@@ -99,7 +99,7 @@ public class tabletIntegrationTest {
 	{
 		//test with data in the paper for below BQL
 		
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as fwd, links.backward as bwd, links.forward+links.backward FROM [document] WHERE fwd>60;");
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(links.forward) within record, count(links.backward) within links, links.forward as fwd, links.backward as bwd, links.forward+links.backward FROM [document] where \ndocid>0;");
 						
 		//DefaultQuery query = new DefaultQuery(nodes);
 		Compiler compiler = new CompilerImpl();

@@ -7,11 +7,13 @@ public class Slice implements dremel.dataset.Slice {
 	boolean is_null;
 	int fetchLevel;
 	int selectLevel;
+	int mCount;
 
 	public Slice(int count) {
 		values = new Object[count];
 		this.count = count;
 		is_null = true;
+		mCount=0;
 	}
 
 	@Override
@@ -104,5 +106,15 @@ public class Slice implements dremel.dataset.Slice {
 	public void setValue(int index, boolean val) {
 		Boolean bVal = val;
 		values[index]=bVal;
+	}
+
+	@Override
+	public int missingCount() {
+		return mCount;
+	}
+
+	@Override
+	public void setMissingCount(int count) {
+		mCount=count;
 	}
 }

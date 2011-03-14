@@ -436,17 +436,6 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		return sw.toString();
 	}
 
-	public IScriptEvaluator createScript(String code) throws Exception {
-		IScriptEvaluator se = CompilerFactoryFactory.getDefaultCompilerFactory().newScriptEvaluator();
-		se.setReturnType(void.class);
-		se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*" });
-
-		se.setParameters(new String[] { "inSlice", "outSlice", "context1" }, new Class[] { Slice.class, Slice.class, Integer[].class });
-
-		se.cook(code);
-		return se;
-	}
-
 	@Override
 	public Executor compile(Query query) {
 		return null;

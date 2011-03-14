@@ -1,31 +1,45 @@
 int selectLevel=(Integer)context1[0]; //selectLevel is allocated in first element of context1
 int fetchLevel=inSlice.getFetchLevel();
-#if ($query.getFilter())
 
+#if ($query.getFilter())
 if ((selectLevel <= $query.getFilter().getRepetitionLevel()) && ($query.getFilter().getRoot().generateCode()))
 {
+#end
+
 #set($i = 0)
 #foreach ($exp in $query.getSelectExpressions())
-	if(selectLevel<= $exp.getRepetitionLevel()) outSlice.setValue($i, $exp.getRoot().generateCode());
+	if(selectLevel<= $exp.getRepetitionLevel()) 
+	{
+#if($exp.getWithin())
+#set($index=$query.getAggregationFunctions().indexOf($exp.getRoot())+1)
+		AggResult r = (AggResult)context1[$index];
+		if($exp.getWithinLevel()>=selectLevel)
+		{
+			//emit value
+			outStream.updateWithinValue(r.getIndex(),r.getValue(), r.getMarker());
+			r.reset(outSlice);				
+		}
+		
+		if (inSlice.getValue($index) != null)
+		{
+			$exp.getRoot().generateCode();
+		}
+#else
+		outSlice.setValue($i, $exp.getRoot().generateCode());
+#end
+	}
 #set($i = $i+1)
 #end
 	context1[0] = fetchLevel;
 	outSlice.setSelectLevel(fetchLevel);
 	outSlice.setNull(false);
+	outStream.put(outSlice);
+
+#if ($query.getFilter())	
 } 
 else 
 {
 	outSlice.setNull(true);
 	if(selectLevel > fetchLevel) context1[0]=fetchLevel;
 }
-
-#else
-#set($i = 0)
-#foreach ($exp in $query.getSelectExpressions())
-	if(selectLevel<= $exp.getRepetitionLevel()) outSlice.setValue($i, $exp.getRoot().generateCode());
-#set($i = $i+1)
-#end
-	context1[0] = fetchLevel;
-	outSlice.setSelectLevel(fetchLevel);
-	outSlice.setNull(false);
 #end

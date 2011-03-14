@@ -150,55 +150,55 @@ public class CompilerTest {
 		assertTrue(((Symbol) query.getSelectExpressions().get(0).getRoot()).getReference() == null);
 	}
 
-	@Test
-	public void testJaninoScript() throws Exception {
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as fwd, links.forward+links.backward FROM [document] WHERE fwd>30;");
-		Compiler compiler = new CompilerImpl();
-		Query query = compiler.parse(nodes);
-		compiler.analyse(query);
-		String code = ((CompilerImpl) compiler).generateCode(query);
-		// System.out.println(code);
-		IScriptEvaluator se = ((CompilerImpl) compiler).createScript(code);
-
-		dremel.dataset.impl.Slice inSlice = new dremel.dataset.impl.Slice(3);
-
-		inSlice.setValue(0, 100);
-		
-		inSlice.setValue(1, null); // null as 0
-		inSlice.setValue(2, 300);
-
-		dremel.dataset.impl.Slice outSlice = new dremel.dataset.impl.Slice(3);
-		Integer[] context1 = new Integer[3];
-		context1[0] = 0;
-
-		se.evaluate(new Object[] { inSlice, outSlice, context1 });
-
-		assertTrue(outSlice.getValue(0) == inSlice.getValue(0));
-		assertTrue(outSlice.intValue(1) == inSlice.intValue(2));
-		assertTrue(outSlice.intValue(2) == inSlice.intValue(2) + inSlice.intValue(1));
-
-		inSlice.setValue(0, 123);
-		inSlice.setValue(1, 4);
-		inSlice.setValue(2, 5);// filter is false
-		context1[0] = 0;
-
-		outSlice = new dremel.dataset.impl.Slice(3);
-		se.evaluate(new Object[] { inSlice, outSlice, context1 });
-		assertTrue(outSlice.intValue(0) == 0);
-		assertTrue(outSlice.intValue(1) == 0);
-		assertTrue(outSlice.intValue(2) == 0);
-
-		inSlice.setValue(0, 123);
-		inSlice.setValue(1, 5);
-		inSlice.setValue(2, 100);
-		context1[0] = 1; // select level
-
-		outSlice = new dremel.dataset.impl.Slice(3);
-		se.evaluate(new Object[] { inSlice, outSlice, context1 });
-		assertTrue(outSlice.intValue(0) == 0);
-		assertTrue(outSlice.intValue(1) == 100);
-		assertTrue(outSlice.intValue(2) == 105);
-	}
+//	@Test
+//	public void testJaninoScript() throws Exception {
+//		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as fwd, links.forward+links.backward FROM [document] WHERE fwd>30;");
+//		Compiler compiler = new CompilerImpl();
+//		Query query = compiler.parse(nodes);
+//		compiler.analyse(query);
+//		String code = ((CompilerImpl) compiler).generateCode(query);
+//		// System.out.println(code);
+//		IScriptEvaluator se = ((CompilerImpl) compiler).createScript(code);
+//
+//		dremel.dataset.impl.Slice inSlice = new dremel.dataset.impl.Slice(3);
+//
+//		inSlice.setValue(0, 100);
+//		
+//		inSlice.setValue(1, null); // null as 0
+//		inSlice.setValue(2, 300);
+//
+//		dremel.dataset.impl.Slice outSlice = new dremel.dataset.impl.Slice(3);
+//		Integer[] context1 = new Integer[3];
+//		context1[0] = 0;
+//
+//		se.evaluate(new Object[] { inSlice, outSlice, context1 });
+//
+//		assertTrue(outSlice.getValue(0) == inSlice.getValue(0));
+//		assertTrue(outSlice.intValue(1) == inSlice.intValue(2));
+//		assertTrue(outSlice.intValue(2) == inSlice.intValue(2) + inSlice.intValue(1));
+//
+//		inSlice.setValue(0, 123);
+//		inSlice.setValue(1, 4);
+//		inSlice.setValue(2, 5);// filter is false
+//		context1[0] = 0;
+//
+//		outSlice = new dremel.dataset.impl.Slice(3);
+//		se.evaluate(new Object[] { inSlice, outSlice, context1 });
+//		assertTrue(outSlice.intValue(0) == 0);
+//		assertTrue(outSlice.intValue(1) == 0);
+//		assertTrue(outSlice.intValue(2) == 0);
+//
+//		inSlice.setValue(0, 123);
+//		inSlice.setValue(1, 5);
+//		inSlice.setValue(2, 100);
+//		context1[0] = 1; // select level
+//
+//		outSlice = new dremel.dataset.impl.Slice(3);
+//		se.evaluate(new Object[] { inSlice, outSlice, context1 });
+//		assertTrue(outSlice.intValue(0) == 0);
+//		assertTrue(outSlice.intValue(1) == 100);
+//		assertTrue(outSlice.intValue(2) == 105);
+//	}
 
 	@Test
 	public void testExecutor() throws RecognitionException {

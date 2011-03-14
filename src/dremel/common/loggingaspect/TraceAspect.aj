@@ -22,7 +22,7 @@ public aspect TraceAspect {
 
 	after(Object[] objs): execution(void dremel.executor.impl.MetaxaExecutor.JavaLangScript.evaluate(Object[]))&& args(objs)
 	{
-		assert (objs.length==3);
+		assert (objs.length==4);
 		assert (objs[0] instanceof Slice);
 		assert (objs[1] instanceof Slice);
 		Slice inSlice = (Slice)objs[0];
