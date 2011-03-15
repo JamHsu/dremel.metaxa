@@ -61,6 +61,7 @@ public class TabletIteratorImpl implements TabletIterator {
 			}
 			nextLevel = Math.max(nextLevel, nextReader.nextRepetitionLevel());
 		}
+		fetchLevel = (byte)nextLevel;
 		return hasMoreSlices;
 	}
 
