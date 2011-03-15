@@ -13,8 +13,12 @@ import org.apache.velocity.app.Velocity;
 import org.codehaus.commons.compiler.CompilerFactoryFactory;
 import org.codehaus.commons.compiler.IScriptEvaluator;
 
+import com.google.protobuf.Descriptors.Descriptor;
+import com.google.protobuf.Descriptors.FieldDescriptor;
+
 import dremel.compiler.Expression.Function;
 import dremel.compiler.Expression.Node;
+import dremel.compiler.Expression.ReturnType;
 import dremel.compiler.Expression.Symbol;
 import dremel.compiler.Query;
 import dremel.compiler.parser.AstNode;
@@ -37,7 +41,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 */
 	@Override
 	public Query parse(AstNode root) {
-		Query query = new DefaultQuery();
+		Query query = new QueryImpl();
 		parseSelectStatement(root, query);
 		return query;
 	}
@@ -101,7 +105,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	void parseWhereClause(AstNode node, Query query) {
 		if (node == null) {
-			((DefaultQuery) query).setFilter(null);
+			((QueryImpl) query).setFilter(null);
 			return;
 		}
 		assert (node.getType() == BqlParser.N_WHERE);
@@ -110,7 +114,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Node filterNode = Expression.buildNode((AstNode) node.getChild(0), query);
 		dremel.compiler.impl.Expression f = new dremel.compiler.impl.Expression();
 		f.setRoot(filterNode);
-		((DefaultQuery) query).setFilter(f);
+		((QueryImpl) query).setFilter(f);
 	}
 
 	void parseCreateColumn(AstNode node, Query query) {
@@ -289,7 +293,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	void getAggregationFunction(Node node, List<Function> aggFuncs) {
 		if (node instanceof Function) {
 			Function func = (Function) node;
-			if (func.getName().equalsIgnoreCase("count") || func.getName().equalsIgnoreCase("sum"))
+			if (func.isAggregate())
 				aggFuncs.add(func);
 		} else {
 			for (int i = 0; i < node.getChildCount(); i++) {
@@ -319,8 +323,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 			if (d.isRecord()) // within node must be group
 			{
-				String name = getFieldName(d.getName());
-				// System.out.println(name);
+				String name = d.getName();
 				if (name.equalsIgnoreCase(nodeName))
 					return maxLevels.get(d);
 			}
@@ -328,17 +331,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		return -1;
 	}
 
-	String getFieldName(String name) {
-		// input schema.Document.*
-		// trim prefix: schema.Document.
-		int p = name.indexOf('.');
-		if (p > 0) {
-			p = name.indexOf('.', p + 1);
-			if (p > 0) {
-				name = name.substring(p + 1);
-			}
-		}
-		return name;
+	SchemaTree getCommonRoot(List<SchemaTree> fields) {
+		return null;
 	}
 
 	/*
@@ -372,7 +366,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Iterator<SchemaTree> fIt = maxLevels.keySet().iterator();
 		while (fIt.hasNext()) {
 			SchemaTree d = fIt.next();
-			String name = getFieldName(d.getName());
+			String name = d.getName();
 
 			Symbol symbol = query.getSymbolTable().get(name.toLowerCase());
 			if (symbol != null) {
@@ -387,8 +381,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Iterator<Symbol> it = query.getSymbolTable().values().iterator();
 		while (it.hasNext()) {
 			Symbol symbol = it.next();
-			// assert (symbol.getReference() != null);// no symbol without
-			// reference
+			assert (symbol.getReference() != null);// no symbol without
+													// reference
 		}
 
 		Iterator eIt = query.getSelectExpressions().iterator();
@@ -400,6 +394,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			int scopeLevel = getWithinLevel(exp.getWithin(), maxLevels);
 			exp.setWithinLevel(scopeLevel);
 			getRelatedFields(exp.getRoot(), exp.getRelatedFields());
+
+			assert (exp.getReturnType() != ReturnType.INVALID);
 		}
 
 		Expression exp = (Expression) query.getFilter();
@@ -407,40 +403,21 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			int level = getRLevel(exp.getRoot(), 0, maxLevels);
 			exp.setRLevel(level);
 			getAggregationFunction(exp.getRoot(), query.getAggregationFunctions());
+			assert (exp.getReturnType() == ReturnType.BOOL); // filter must be
+																// logical
+																// expression
 		}
 	}
 
-	public String generateCode(Query query) {
-		Iterator<Symbol> it = query.getSymbolTable().values().iterator();
-
-		int i = 0;
-		while (it.hasNext()) {
-			Symbol symbol = it.next();
-			if (symbol.getReference() instanceof SchemaTree) {
-				symbol.setSliceMappingIndex(i++);
-			}
-		}
-		VelocityContext context = new VelocityContext();
-		context.put("query", query);
-
-		Template template = null;
-
-		try {
-			template = Velocity.getTemplate("src/dremel/executor/executor.vm");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		StringWriter sw = new StringWriter();
-		template.merge(context, sw);
-		return sw.toString();
+	public SchemaTree generateResultSchema(Query query) {
+		return null;
 	}
 
 	@Override
 	public Executor compile(Query query) {
 		return null;
 	}
-	
+
 	@Override
 	public String compileToScript(Query query) {
 		VelocityContext context = new VelocityContext();
@@ -458,9 +435,6 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				}
 			}
 
-			//assert (query.getTables().get(0).getSchema() == Document.getSchemaTree());
-			//SliceScanner scanner = new SimpleSliceScanner(fields, query.getTables().get(0).getDataDir());
-
 			context.put("query", query);
 
 			Template template = null;
@@ -473,26 +447,11 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 			StringWriter sw = new StringWriter();
 			template.merge(context, sw);
-			
-			//Script script= new MetaxaExecutor.JavaLangScript(sw.toString());
-			//Executor executor = new MetaxaExecutor(query, scanner, script);
-			//return executor;
+
 			return sw.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-/*	public static void main(String[] args) throws RecognitionException {
-
-		Velocity.init();
-		CompilerImpl compiler = new dremel.compiler.impl.CompilerImpl();
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, name.language.code,length(name.language.code), links.forward as fwd, links.forward+links.backward FROM [document] WHERE fwd>0;");
-
-		Query query = compiler.parse(nodes);
-		compiler.analyse(query);
-		Executor executor = compiler.compile(query);
-		executor.execute();
-	}*/
 }

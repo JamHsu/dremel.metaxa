@@ -27,7 +27,7 @@ import dremel.dataset.impl.TabletIteratorAdapter;
 import dremel.compiler.Compiler;
 import dremel.compiler.Query;
 import dremel.compiler.impl.CompilerImpl;
-import dremel.compiler.impl.DefaultQuery;
+import dremel.compiler.impl.QueryImpl;
 import dremel.compiler.Expression.Symbol;
 import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.Parser;

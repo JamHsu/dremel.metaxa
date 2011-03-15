@@ -27,7 +27,7 @@ import dremel.dataset.Stream.Codec;
 import dremel.server.Server;
 import dremel.compiler.Compiler;
 import dremel.compiler.Query;
-import dremel.compiler.impl.DefaultQuery;
+import dremel.compiler.impl.QueryImpl;
 import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.Parser;
 import dremel.dataset.Stream;

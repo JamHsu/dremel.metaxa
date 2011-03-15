@@ -65,7 +65,7 @@ public class Expression implements dremel.compiler.Expression {
 		} else if (name.equalsIgnoreCase("count")) {
 			return new CountFunc(node, query);
 		} else
-			return new Function(node, query);
+			throw new RuntimeException("Not support function:" + name);
 	}
 
 	/**
@@ -164,7 +164,52 @@ public class Expression implements dremel.compiler.Expression {
 
 		@Override
 		public ReturnType getReturnType() {
-			return ReturnType.INVALID;
+			ReturnType r1 = left.getReturnType();
+			ReturnType r2 = right.getReturnType();
+
+			if (r1 == ReturnType.INVALID || r2 == ReturnType.INVALID)
+				return ReturnType.INVALID;
+
+			switch (type) {
+			case BqlParser.N_LOGICAL_AND:
+			case BqlParser.N_LOGICAL_OR:
+				if (r1 != ReturnType.BOOL || r2 != ReturnType.BOOL)
+					return ReturnType.INVALID;
+				else
+					return ReturnType.BOOL;
+			case BqlParser.N_EQUAL:
+			case BqlParser.N_LESS_THAN:
+			case BqlParser.N_LESS_THAN_OR_EQUAL:
+			case BqlParser.N_GREATER_THAN:
+			case BqlParser.N_GREATER_THAN_OR_EQUAL:
+			case BqlParser.N_NOT_EQUAL:
+				if ((r1 == ReturnType.STRING || r2 == ReturnType.STRING) && (r1 != r2))
+					return ReturnType.INVALID;
+				return ReturnType.BOOL;
+			case BqlParser.N_BITWISE_AND:
+			case BqlParser.N_BITWISE_LEFT_SHIFT:
+			case BqlParser.N_BITWISE_OR:
+			case BqlParser.N_BITWISE_RIGHT_SHIFT:
+			case BqlParser.N_BITWISE_XOR:
+				if (r1 != ReturnType.INT || r2 != ReturnType.INT)
+					return ReturnType.INVALID;
+				else
+					return ReturnType.INT;
+			case BqlParser.N_ADD:
+			case BqlParser.N_SUBSTRUCT:
+			case BqlParser.N_MULTIPLY:
+			case BqlParser.N_DIVIDE:
+				if (r1 == ReturnType.STRING || r2 == ReturnType.STRING)
+					return ReturnType.INVALID;
+				else if (r1 == ReturnType.BOOL || r2 == ReturnType.BOOL)
+					return ReturnType.INVALID;
+				else if (r1 == ReturnType.FLOAT || r2 == ReturnType.FLOAT)
+					return ReturnType.FLOAT;
+				else
+					return ReturnType.INT;
+			default:
+				return ReturnType.INVALID;
+			}
 		}
 
 		@Override
@@ -219,6 +264,20 @@ public class Expression implements dremel.compiler.Expression {
 
 		@Override
 		public ReturnType getReturnType() {
+			ReturnType r = exp.getReturnType();
+			if (r == ReturnType.INVALID)
+				return ReturnType.INVALID;
+			if (type == BqlParser.N_BITWISE_NOT) {
+				if (r != ReturnType.INT)
+					return ReturnType.INVALID;
+				else
+					return ReturnType.INT;
+			} else if (type == BqlParser.N_LOGICAL_NOT) {
+				if (r != ReturnType.BOOL)
+					return ReturnType.INVALID;
+				else
+					return ReturnType.BOOL;
+			}
 			return ReturnType.INVALID;
 		}
 
@@ -244,13 +303,18 @@ public class Expression implements dremel.compiler.Expression {
 			switch (node.getType()) {
 			case BqlParser.N_INT:
 				value = new Integer(node.getChild(0).getText());
+				type = ReturnType.INT;
 				break;
 			case BqlParser.N_FLOAT:
 				value = new Double(node.getChild(0).getText());
+				type = ReturnType.FLOAT;
 				break;
 			case BqlParser.N_STRING:
 				value = new String(node.getChild(0).getText());
+				type = ReturnType.STRING;
 				break;
+			default:
+				type = ReturnType.INVALID;
 			}
 		}
 
@@ -280,7 +344,7 @@ public class Expression implements dremel.compiler.Expression {
 		}
 	}
 
-	static public class Function extends AbstractNode implements dremel.compiler.Expression.Function {
+	static public abstract class Function extends AbstractNode implements dremel.compiler.Expression.Function {
 
 		List<Node> nodes;
 		String functionName;
@@ -312,30 +376,6 @@ public class Expression implements dremel.compiler.Expression {
 		}
 
 		@Override
-		public String generateCode() {
-			StringBuilder builder = new StringBuilder();
-			builder.append(functionName);
-			builder.append("(");
-
-			if (nodes.size() > 0) {
-				builder.append(nodes.get(0).generateCode());
-			}
-
-			for (int i = 1; i < nodes.size(); i++) {
-				builder.append(", ");
-				builder.append(nodes.get(i).generateCode());
-			}
-
-			builder.append(")");
-			return builder.toString();
-		}
-
-		@Override
-		public ReturnType getReturnType() {
-			return null;
-		}
-
-		@Override
 		public String getName() {
 			return functionName;
 		}
@@ -351,6 +391,9 @@ public class Expression implements dremel.compiler.Expression {
 		}
 	}
 
+	/*
+	 * some build-in function: length, count, sum....
+	 */
 	static public class StringLengthFunc extends Function {
 		public StringLengthFunc(AstNode node, Query query) {
 			super(node, query);
@@ -359,7 +402,33 @@ public class Expression implements dremel.compiler.Expression {
 
 		@Override
 		public String generateCode() {
-			return nodes.get(0).generateCode() + ".toString().length()";
+			return nodes.get(0).generateCode() + ".toString().length()"; // temporary
+																			// use
+																			// java
+																			// string
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Node#getReturnType()
+		 */
+		@Override
+		public ReturnType getReturnType() {
+			ReturnType r = nodes.get(0).getReturnType();
+			if (r != ReturnType.STRING)
+				return ReturnType.INVALID;
+			return ReturnType.INT;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Function#isAggregate()
+		 */
+		@Override
+		public boolean isAggregate() {
+			return false;
 		}
 	}
 
@@ -376,7 +445,27 @@ public class Expression implements dremel.compiler.Expression {
 
 		@Override
 		public String generateCode() {
-			return "r.setValue(new Integer(r.intValue()+1))";
+			return "count_" + ((Symbol) nodes.get(0)).getJavaName() + "++";
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Node#getReturnType()
+		 */
+		@Override
+		public ReturnType getReturnType() {
+			return ReturnType.INT;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Function#isAggregate()
+		 */
+		@Override
+		public boolean isAggregate() {
+			return true;
 		}
 	}
 
@@ -403,28 +492,26 @@ public class Expression implements dremel.compiler.Expression {
 
 		@Override
 		public String generateCode() {
-			if (reference instanceof Expression) {
-				Expression exp = (Expression) reference;
-				return exp.getRoot().generateCode();
-			} else if ((reference instanceof SchemaTree) && (sliceMappingIndex != -1)) {
-				SchemaTree d = (SchemaTree) reference;
-				if (d.isTypeInt64()) {
-					return "inSlice.intValue(" + sliceMappingIndex + ")";
-				} else if (d.isTypeString()) {
-					return "inSlice.stringValue(" + sliceMappingIndex + ")";
-				} else if (d.isTypeFloat()) {
-					return "inSlice.floatValue(" + sliceMappingIndex + ")";
-				} else if (d.isTypeBool()) {
-					return "inSlice.boolValue(" + sliceMappingIndex + ")";
-				}
-
-			}
-			return symbol;
+			return getJavaName();
 		}
 
 		@Override
 		public ReturnType getReturnType() {
-			return null;
+			if (reference instanceof SchemaTree) {
+				SchemaTree d = (SchemaTree) reference;
+				if (d.isTypeInt64())
+					return ReturnType.INT;
+				else if (d.isTypeBool())
+					return ReturnType.BOOL;
+				else if (d.isTypeFloat())
+					return ReturnType.FLOAT;
+				else if (d.isTypeString())
+					return ReturnType.STRING;
+			} else if (reference instanceof Expression) {
+				Expression exp = (Expression) reference;
+				return exp.getRoot().getReturnType();
+			}
+			return ReturnType.INVALID;
 		}
 
 		public String getSymbol() {
@@ -450,6 +537,16 @@ public class Expression implements dremel.compiler.Expression {
 		public void setSliceMappingIndex(int sliceMappingIndex) {
 			this.sliceMappingIndex = sliceMappingIndex;
 		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Symbol#getJavaName()
+		 */
+		@Override
+		public String getJavaName() {
+			return symbol.replaceAll("\\.", "_");
+		}
 	}
 
 	Node root;
@@ -458,9 +555,11 @@ public class Expression implements dremel.compiler.Expression {
 	int rLevel;
 	int withinLevel;
 	List<SchemaTree> fields;
+	ReturnType type;
 
 	public Expression() {
 		fields = new LinkedList<SchemaTree>();
+		type = ReturnType.NULL;
 	}
 
 	@Override
@@ -511,5 +610,31 @@ public class Expression implements dremel.compiler.Expression {
 	@Override
 	public List<SchemaTree> getRelatedFields() {
 		return fields;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see dremel.compiler.Expression#getReturnType()
+	 */
+	@Override
+	public ReturnType getReturnType() {
+		if (type == ReturnType.NULL)
+			type = getRoot().getReturnType();
+		return type;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see dremel.compiler.Expression#getJavaName()
+	 */
+	@Override
+	public String getJavaName() {
+		if (alias != null)
+			return alias.replaceAll("\\.", "_");
+		else {
+			return "noname_" + Integer.toHexString(this.hashCode());
+		}
 	}
 }

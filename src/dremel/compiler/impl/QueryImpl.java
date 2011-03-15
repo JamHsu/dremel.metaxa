@@ -16,7 +16,7 @@ import dremel.dataset.Table;
  * @author nhsan
  * 
  */
-public class DefaultQuery implements Query {
+public class QueryImpl implements Query {
 	List<Table> tables;
 	List<dremel.compiler.Query> subQueries;
 	List<Expression> selectExps;
@@ -29,7 +29,7 @@ public class DefaultQuery implements Query {
 	SchemaTree targetSchema;
 	List<dremel.compiler.Expression.Function> aggregationFunctions;
 
-	public DefaultQuery() {
+	public QueryImpl() {
 		tables = new LinkedList<Table>();
 		subQueries = new LinkedList<dremel.compiler.Query>();
 		selectExps = new LinkedList<Expression>();
