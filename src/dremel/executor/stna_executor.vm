@@ -1,0 +1,125 @@
+/**
+ * This template for single thread, no aggregation function query
+ */
+ 
+int selectLevel = 0;
+int fetchLevel = 0;
+int nextLevel = 0;
+boolean hasMoreSlices = true;
+
+//inSlice declaration
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+#if ($symbol.isTypeInt())
+int $symbol.getJavaName() = 0;
+#elseif ($symbol.isTypeFloat())
+double $symbol.getJavaName() = 0.0;
+#elseif ($symbol.isTypeBool())
+boolean $symbol.getJavaName() = false;
+#elseif ($symbol.isTypeString())
+String $symbol.getJavaName() = null;
+#end
+boolean is_$symbol.getJavaName()_null = true;
+#end
+#end
+
+//outSlice declaration
+#foreach ($exp in $query.getSelectExpressions())
+#set($symbol=$query.getSymbolTable().get($exp.getJavaName()))
+
+#if($symbol && $symbol.isColumnID())
+
+#else
+//for expression: $exp.getRoot().generateCode();
+#if ($exp.isTypeInt())
+int $exp.getJavaName() = 0;
+#elseif ($exp.isTypeFloat())
+double $exp.getJavaName() = 0.0;
+#elseif ($exp.isTypeBool())
+boolean $exp.getJavaName() = false;
+#elseif ($exp.isTypeString())
+String $exp.getJavaName() = null;
+#end
+#end
+
+#end
+
+ColumnReader reader = null;
+
+while (hasMoreSlices)
+{
+	//fetch inSlice from sourceTablet
+	nextLevel = 0;
+	hasMoreSlices = false;
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+	reader = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
+	if(reader.nextRepetitionLevel() >= fetchLevel)
+	{
+		boolean isLastInReader = reader.next();
+		// if at least on reader has more elements, then we have more slices.
+		hasMoreSlices = hasMoreSlices || isLastInReader;
+		
+		if(reader.isNull())
+		{
+			is_$symbol.getJavaName()_null = true;
+#if ($symbol.isTypeInt())
+			$symbol.getJavaName() = 0;
+#elseif ($symbol.isTypeFloat())
+			//$symbol.getJavaName() = 0.0;
+#elseif ($symbol.isTypeBool())
+			//$symbol.getJavaName() = false;
+#elseif ($symbol.isTypeString())
+			$symbol.getJavaName() = "";
+#end			
+		}else
+		{
+			is_$symbol.getJavaName()_null = false;
+#if ($symbol.isTypeInt())
+			$symbol.getJavaName() = reader.getIntValue();
+#elseif ($symbol.isTypeFloat())
+			//$symbol.getJavaName() = reader.getFloatValue();
+#elseif ($symbol.isTypeBool())
+			//$symbol.getJavaName() = reader.getIntValue();
+#elseif ($symbol.isTypeString())
+			$symbol.getJavaName() = reader.getStringValue();
+#end
+		}
+	}
+	nextLevel = Math.max(nextLevel, reader.nextRepetitionLevel());
+#end
+#end	
+
+	fetchLevel = nextLevel;
+	
+	if (!hasMoreSlices) break; //no more slice, exit
+
+#if ($query.getFilter())
+	if ($query.getFilter().getRoot().generateCode())
+	{
+#end
+		//calculate expressions for outSlice
+#foreach ($exp in $query.getSelectExpressions())		
+		if (selectLevel <= $exp.getRepetitionLevel())
+		{
+			$exp.getJavaName() = $exp.getRoot().generateCode();
+			//TODO: append $exp.getJavaName() to resultTablet here
+			System.out.print($exp.getJavaName() + "\t\t");	
+		}
+		else
+		{
+			System.out.print("null\t\t");	
+		} 
+#end		
+		
+		System.out.println();				
+		selectLevel = fetchLevel;
+
+#if ($query.getFilter())	
+	} 
+	else 
+	{
+		if(selectLevel > fetchLevel) selectLevel = fetchLevel;
+	}
+#end
+}
