@@ -11,13 +11,14 @@ import dremel.compiler.Expression.Symbol;
 import dremel.compiler.Query;
 import dremel.dataset.SchemaTree;
 import dremel.dataset.Table;
+import dremel.tableton.Tablet;
 
 /**
  * @author nhsan
  * 
  */
 public class QueryImpl implements Query {
-	List<Table> tables;
+	List<Tablet> tables;
 	List<dremel.compiler.Query> subQueries;
 	List<Expression> selectExps;
 	List<Symbol> groupByExps;
@@ -30,7 +31,7 @@ public class QueryImpl implements Query {
 	List<dremel.compiler.Expression.Function> aggregationFunctions;
 
 	public QueryImpl() {
-		tables = new LinkedList<Table>();
+		tables = new LinkedList<Tablet>();
 		subQueries = new LinkedList<dremel.compiler.Query>();
 		selectExps = new LinkedList<Expression>();
 		groupByExps = new LinkedList<Symbol>();
@@ -40,7 +41,7 @@ public class QueryImpl implements Query {
 	}
 
 	@Override
-	public List<Table> getTables() {
+	public List<Tablet> getTables() {
 		return tables;
 	}
 

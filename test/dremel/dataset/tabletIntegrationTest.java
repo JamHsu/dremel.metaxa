@@ -130,7 +130,6 @@ public class tabletIntegrationTest {
 		while (it.hasNext()) {
 			Symbol symbol = it.next();
 			if (symbol.getReference() instanceof SchemaTree) {
-				symbol.setSliceMappingIndex(i++);
 				fieldsOrder.add(((SchemaTree) symbol.getReference()).getName());
 			}
 		}

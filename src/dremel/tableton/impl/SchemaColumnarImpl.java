@@ -37,11 +37,11 @@ public class SchemaColumnarImpl implements SchemaColumnar {
 	@Override
 	public void addColumnMetaData(ColumnMetaData newColumn)
 	{
-		if(columnsMetaData.containsKey(newColumn.getColumnName()))
+		if(columnsMetaData.containsKey(newColumn.getColumnName().toLowerCase()))
 		{
 			throw new RuntimeException("Column with name "+newColumn.getColumnName() +"Already exists in the schema");
 		}
-		columnsMetaData.put(newColumn.getColumnName(), newColumn);
+		columnsMetaData.put(newColumn.getColumnName().toLowerCase(), newColumn);
 	}
 	
 	@Override

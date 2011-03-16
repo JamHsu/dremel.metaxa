@@ -15,7 +15,7 @@ import dremel.dataset.SchemaTree;
  */
 public interface Expression {
 	public enum ReturnType {
-		INVALID, FLOAT, INT, STRING, BOOL, NULL
+		INVALID, NULL, FLOAT, INT, STRING, BOOL
 	}
 
 	public interface Node {
@@ -55,10 +55,19 @@ public interface Expression {
 
 		public void setReference(Object ref);
 
-		public int getSliceMappingIndex();
-
-		public void setSliceMappingIndex(int sliceMappingIndex);
 		public String getJavaName();
+
+		public boolean isAlias();
+
+		public boolean isColumnID();
+
+		public boolean isTypeInt();
+
+		public boolean isTypeFloat();
+
+		public boolean isTypeBool();
+
+		public boolean isTypeString();
 	}
 
 	public interface Function {
@@ -67,6 +76,7 @@ public interface Expression {
 		public int getArgumentCount();
 
 		public Node getArgument(int index);
+
 		public boolean isAggregate();
 	}
 
@@ -81,7 +91,16 @@ public interface Expression {
 	public int getRepetitionLevel();
 
 	public List<SchemaTree> getRelatedFields();
+
 	public ReturnType getReturnType();
-	
+
 	public String getJavaName();
+
+	public boolean isTypeInt();
+
+	public boolean isTypeFloat();
+
+	public boolean isTypeBool();
+
+	public boolean isTypeString();
 }

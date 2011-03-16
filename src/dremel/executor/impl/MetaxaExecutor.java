@@ -20,6 +20,7 @@ import dremel.dataset.SliceScanner;
 import dremel.executor.AggResult;
 import dremel.executor.Executor;
 import dremel.executor.SliceOutputStream;
+import dremel.tableton.Tablet;
 
 public class MetaxaExecutor implements Executor {
 
@@ -29,8 +30,8 @@ public class MetaxaExecutor implements Executor {
 		public JavaLangScript(String code) throws Exception {
 			se = CompilerFactoryFactory.getDefaultCompilerFactory().newScriptEvaluator();
 			se.setReturnType(void.class);
-			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*" });
-			se.setParameters(new String[] { "inSlice", "outSlice", "context1", "outStream" }, new Class[] { Slice.class, Slice.class, Object[].class, SliceOutputStream.class });
+			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*" , "dremel.tableton.*" });
+			se.setParameters(new String[] { "sourceTablet", "resultTablet"}, new Class[] { Tablet.class, Tablet.class});
 			se.cook(code);
 		}
 

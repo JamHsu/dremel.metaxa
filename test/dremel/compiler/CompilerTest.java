@@ -57,7 +57,7 @@ public class CompilerTest {
 		Query query = compiler.parse(nodes);
 
 		assertTrue(query.getTables().size() == 1);
-		assertTrue(query.getTables().get(0).getTableName().equals("[table1]"));
+		//assertTrue(query.getTables().get(0).getTableName().equals("[table1]"));
 		assertTrue(query.getSubQueries().size() == 0);// no subqueries
 		assertTrue(query.getFilter() != null);
 		assertTrue(query.getFilter().getRoot() instanceof BinaryOp);
@@ -97,7 +97,7 @@ public class CompilerTest {
 		compiler.analyse(query);
 
 		assertTrue(query.getTables().size() == 1);
-		assertTrue(query.getTables().get(0).getTableName().equals("[document]"));
+		//assertTrue(query.getTables().get(0).getTableName().equals("[document]"));
 		//assertTrue(query.getTables().get(0).getSchema() == Document.getDescriptor());
 		assertTrue(query.getSubQueries().size() == 0);
 

@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.antlr.runtime.RecognitionException;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -20,13 +21,28 @@ import dremel.compiler.Expression.Function;
 import dremel.compiler.Expression.Node;
 import dremel.compiler.Expression.ReturnType;
 import dremel.compiler.Expression.Symbol;
+import dremel.compiler.Compiler;
 import dremel.compiler.Query;
 import dremel.compiler.parser.AstNode;
+import dremel.compiler.parser.Parser;
 import dremel.compiler.parser.impl.BqlParser;
 import dremel.dataset.SchemaTree;
 import dremel.dataset.Slice;
 import dremel.dataset.Table;
+import dremel.dataset.impl.SchemaTreeLoader;
 import dremel.executor.Executor;
+import dremel.executor.Executor.Script;
+import dremel.executor.impl.MetaxaExecutor;
+import dremel.tableton.ColumnMetaData;
+import dremel.tableton.ColumnReader;
+import dremel.tableton.SchemaColumnar;
+import dremel.tableton.Tablet;
+import dremel.tableton.TabletIterator;
+import dremel.tableton.ColumnMetaData.ColumnType;
+import dremel.tableton.ColumnMetaData.EncodingType;
+import dremel.tableton.impl.ColumnWriterImpl;
+import dremel.tableton.impl.SchemaColumnarImpl;
+import dremel.tableton.impl.TabletImpl;
 
 /**
  * @author nhsan
@@ -84,8 +100,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 				assert (node2.getChildCount() == 1);
 				AstNode node3 = (AstNode) node2.getChild(0);
-				List<Table> tables = query.getTables();
-				tables.add(new dremel.dataset.impl.TableImpl(node3.getText()));
+				List<Tablet> tables = query.getTables();
+				tables.add(getTablet(node3.getText())); //get tablet
 			} else if (node2.getType() == BqlParser.N_SELECT_STATEMENT) {
 				List<dremel.compiler.Query> queries = query.getSubQueries();
 				queries.add(parse(node2));
@@ -358,7 +374,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	public void analyse(Query query) {
 		assert (query.getTables().size() == 1);// one table only
 		assert (query.getSubQueries().size() == 0);// no sub-queries
-		SchemaTree SchemaTree = query.getTables().get(0).getSchema();
+		SchemaTree SchemaTree = query.getTables().get(0).getSchemaTree();
 		Map<SchemaTree, Integer> maxLevels = new HashMap<SchemaTree, Integer>();
 
 		// bind field+exp to symbols
@@ -422,25 +438,17 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	public String compileToScript(Query query) {
 		VelocityContext context = new VelocityContext();
 
-		List<SchemaTree> fields = new LinkedList<SchemaTree>();
-
 		try {
-			Iterator<Symbol> it = query.getSymbolTable().values().iterator();
-			int i = 0;
-			while (it.hasNext()) {
-				Symbol symbol = it.next();
-				if (symbol.getReference() instanceof SchemaTree) {
-					symbol.setSliceMappingIndex(i++);
-					fields.add((SchemaTree) symbol.getReference());
-				}
-			}
-
 			context.put("query", query);
+			context.put("sourceTablet", query.getTables().get(0));
 
 			Template template = null;
 
 			try {
-				template = Velocity.getTemplate("src/dremel/executor/executor.vm");
+				if (query.getAggregationFunctions().size() == 0)
+					template = Velocity.getTemplate("src/dremel/executor/stna_executor.vm");
+				else
+					throw new RuntimeException("Not support query type");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -453,5 +461,86 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	Tablet getTablet(String name) {
+		if (name.equalsIgnoreCase("[document]")) {
+			return getPaperSchemaTablet();
+
+		} else
+			throw new RuntimeException("Can not get tablet");
+	}
+	
+	private void buildLinkBackwardData(ColumnMetaData columnMetaData)
+	{
+		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(columnMetaData);
+		// write data
+		columnBuilder.addIntDataTriple(0, ColumnReader.NULL, (byte)0, (byte)1);
+		columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte)0, (byte)2);
+		columnBuilder.addIntDataTriple(30, ColumnReader.NOT_NULL, (byte)1, (byte)2);
+		
+		columnBuilder.close();
+	
+	}
+	
+	private void buildLinksForwardData(ColumnMetaData columnMetaData)
+	{
+		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(columnMetaData);
+		// write data
+		columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte)0, (byte)2);
+		columnBuilder.addIntDataTriple(40, ColumnReader.NOT_NULL, (byte)1, (byte)2);
+		columnBuilder.addIntDataTriple(60, ColumnReader.NOT_NULL, (byte)1, (byte)2);
+		columnBuilder.addIntDataTriple(80, ColumnReader.NOT_NULL, (byte)0, (byte)2);
+		
+		columnBuilder.close();	
+	}
+	
+	private void buildDocIDData(ColumnMetaData docidMetaData) {
+		
+		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(docidMetaData);
+		// write data
+		columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte)0, (byte)0);
+		columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte)0, (byte)0);
+		
+		
+		columnBuilder.close();
+		
+	}
+		
+	
+	public Tablet getPaperSchemaTablet()
+	{
+		// build single column tablet for the input
+		ColumnMetaData linksBackwardMetaData= new ColumnMetaData("Links.Backward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksBackward", (byte)1, (byte)2);
+		buildLinkBackwardData(linksBackwardMetaData);
+		
+		ColumnMetaData linksForwardMetaData= new ColumnMetaData("Links.Forward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksForward", (byte)1, (byte)2);
+		buildLinksForwardData(linksForwardMetaData);
+		
+		ColumnMetaData docidMetaData= new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata\\docid", (byte)0, (byte)0);
+		buildDocIDData(docidMetaData);
+				
+		SchemaColumnar schema = new SchemaColumnarImpl();
+		schema.addColumnMetaData(linksBackwardMetaData);
+		schema.addColumnMetaData(linksForwardMetaData);
+		schema.addColumnMetaData(docidMetaData);
+		SchemaTree schemaTree = SchemaTreeLoader.loadSchema("[document]");
+		Tablet tablet = new TabletImpl(schemaTree,schema);
+		
+		return tablet;
+	}
+
+	public static void main(String[] args) throws Exception {
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as exp2, links.backward as exp3, links.backward+\ndocid FROM [document] where \ndocid>0");
+		CompilerImpl compiler = new CompilerImpl();
+		Query query = compiler.parse(nodes);
+		compiler.analyse(query);
+		String code = compiler.compileToScript(query);
+		Script script=new MetaxaExecutor.JavaLangScript(code);
+		
+		script.evaluate(new Object[] {query.getTables().get(0),query.getTables().get(0)});
+		//compiler.eval(query.getTables().get(0)); 
+		
+
 	}
 }

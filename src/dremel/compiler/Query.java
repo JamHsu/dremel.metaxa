@@ -7,7 +7,7 @@ import java.util.Map;
 import dremel.compiler.Expression.Function;
 import dremel.compiler.Expression.Symbol;
 import dremel.dataset.SchemaTree;
-import dremel.dataset.Table;
+import dremel.tableton.Tablet;
 
 /**
  * 
@@ -17,7 +17,7 @@ import dremel.dataset.Table;
  * 
  */
 public interface Query {
-	 public List<Table> getTables(); // FROM clause
+	 public List<Tablet> getTables(); // FROM clause
 
 	public List<Query> getSubQueries(); // FROM clause
 

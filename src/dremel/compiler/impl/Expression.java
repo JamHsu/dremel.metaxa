@@ -440,7 +440,7 @@ public class Expression implements dremel.compiler.Expression {
 			assert (nodes.size() == 1);
 			assert (nodes.get(0) instanceof dremel.compiler.Expression.Symbol);
 			symbol = (dremel.compiler.Expression.Symbol) nodes.get(0);
-			assert (symbol.getReference() instanceof FieldDescriptor);
+			//assert (symbol.getReference() instanceof FieldDescriptor);
 		}
 
 		@Override
@@ -478,6 +478,7 @@ public class Expression implements dremel.compiler.Expression {
 			super(query);
 			this.symbol = symbol.toLowerCase();
 			sliceMappingIndex = -1;
+			reference=null;
 		}
 
 		@Override
@@ -492,7 +493,13 @@ public class Expression implements dremel.compiler.Expression {
 
 		@Override
 		public String generateCode() {
-			return getJavaName();
+			if (reference instanceof Expression)
+			{
+				Expression exp= (Expression)reference;
+				return exp.getRoot().generateCode();
+			}
+			else 
+				return getJavaName();
 		}
 
 		@Override
@@ -528,16 +535,6 @@ public class Expression implements dremel.compiler.Expression {
 			this.reference = reference;
 		}
 
-		@Override
-		public int getSliceMappingIndex() {
-			return sliceMappingIndex;
-		}
-
-		@Override
-		public void setSliceMappingIndex(int sliceMappingIndex) {
-			this.sliceMappingIndex = sliceMappingIndex;
-		}
-
 		/*
 		 * (non-Javadoc)
 		 * 
@@ -546,6 +543,66 @@ public class Expression implements dremel.compiler.Expression {
 		@Override
 		public String getJavaName() {
 			return symbol.replaceAll("\\.", "_");
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Symbol#isAlias()
+		 */
+		@Override
+		public boolean isAlias() {
+			return (reference instanceof Expression);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Symbol#isColumnID()
+		 */
+		@Override
+		public boolean isColumnID() {
+			return (reference instanceof SchemaTree);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Symbol#isTypeInt()
+		 */
+		@Override
+		public boolean isTypeInt() {
+			return (getReturnType() == ReturnType.INT);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Symbol#isTypeFloat()
+		 */
+		@Override
+		public boolean isTypeFloat() {
+			return (getReturnType() == ReturnType.FLOAT);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Symbol#isTypeBool()
+		 */
+		@Override
+		public boolean isTypeBool() {
+			return (getReturnType() == ReturnType.BOOL);
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Symbol#isTypeString()
+		 */
+		@Override
+		public boolean isTypeString() {
+			return (getReturnType() == ReturnType.STRING);
 		}
 	}
 
@@ -636,5 +693,25 @@ public class Expression implements dremel.compiler.Expression {
 		else {
 			return "noname_" + Integer.toHexString(this.hashCode());
 		}
+	}
+
+	@Override
+	public boolean isTypeInt() {
+		return (getReturnType() == ReturnType.INT);
+	}
+
+	@Override
+	public boolean isTypeFloat() {
+		return (getReturnType() == ReturnType.FLOAT);
+	}
+
+	@Override
+	public boolean isTypeBool() {
+		return (getReturnType() == ReturnType.BOOL);
+	}
+
+	@Override
+	public boolean isTypeString() {
+		return (getReturnType() == ReturnType.STRING);
 	}
 }

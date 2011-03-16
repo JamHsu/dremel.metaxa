@@ -81,7 +81,6 @@ public class ExpressionTest {
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		assertTrue(query.getTables().size() == 1);
-		assertTrue(query.getTables().get(0).getTableName().equals("[document]"));
 		assertTrue(query.getSelectExpressions().size() == 3);
 		assertTrue(query.getSelectExpressions().get(0).getReturnType() == ReturnType.FLOAT);
 		assertTrue(query.getSelectExpressions().get(1).getReturnType() == ReturnType.BOOL);
