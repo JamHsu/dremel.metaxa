@@ -90,7 +90,7 @@ public interface Expression {
 
 	public int getRepetitionLevel();
 
-	public List<SchemaTree> getRelatedFields();
+	public List<Symbol> getSymbols();
 
 	public ReturnType getReturnType();
 

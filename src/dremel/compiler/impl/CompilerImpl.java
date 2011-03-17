@@ -274,28 +274,28 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		return level;
 	}
 
-	void getRelatedFields(Node node, List<SchemaTree> fields) {
+	void getRelatedFields(Node node, List<Symbol> symbols) {
 		if (node instanceof Symbol) {
 			Symbol symbol = (Symbol) node;
 			Object o = symbol.getReference();
 			if (o instanceof SchemaTree) {
-				if (!fields.contains(o))
-					fields.add((SchemaTree) o);
+				if (!symbols.contains(symbol))
+					symbols.add(symbol);
 			} else if (o instanceof Expression) {
 				Expression exp = (Expression) o;
-				List<SchemaTree> lst = exp.getRelatedFields();
-				Iterator<SchemaTree> it = lst.iterator();
+				List<Symbol> lst = exp.getSymbols();
+				Iterator<Symbol> it = lst.iterator();
 
 				while (it.hasNext()) {
-					SchemaTree d = it.next();
-					if (!fields.contains(d))
-						fields.add(d);
+					Symbol d = it.next();
+					if (!symbols.contains(d))
+						symbols.add(d);
 				}
 			}
 		} else {
 			for (int i = 0; i < node.getChildCount(); i++) {
 				Node n = node.getChild(i);
-				getRelatedFields(n, fields);
+				getRelatedFields(n, symbols);
 			}
 		}
 	}
@@ -409,7 +409,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			getAggregationFunction(exp.getRoot(), query.getAggregationFunctions());
 			int scopeLevel = getWithinLevel(exp.getWithin(), maxLevels);
 			exp.setWithinLevel(scopeLevel);
-			getRelatedFields(exp.getRoot(), exp.getRelatedFields());
+			getRelatedFields(exp.getRoot(), exp.getSymbols());
 
 			assert (exp.getReturnType() != ReturnType.INVALID);
 		}

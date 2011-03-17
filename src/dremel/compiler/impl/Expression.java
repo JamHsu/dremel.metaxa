@@ -611,11 +611,11 @@ public class Expression implements dremel.compiler.Expression {
 	String alias;
 	int rLevel;
 	int withinLevel;
-	List<SchemaTree> fields;
+	List<dremel.compiler.Expression.Symbol> symbols;
 	ReturnType type;
 
 	public Expression() {
-		fields = new LinkedList<SchemaTree>();
+		symbols = new LinkedList<dremel.compiler.Expression.Symbol>();
 		type = ReturnType.NULL;
 	}
 
@@ -665,8 +665,8 @@ public class Expression implements dremel.compiler.Expression {
 	}
 
 	@Override
-	public List<SchemaTree> getRelatedFields() {
-		return fields;
+	public List<dremel.compiler.Expression.Symbol> getSymbols() {
+		return symbols;
 	}
 
 	/*
