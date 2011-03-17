@@ -101,7 +101,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				assert (node2.getChildCount() == 1);
 				AstNode node3 = (AstNode) node2.getChild(0);
 				List<Tablet> tables = query.getTables();
-				tables.add(getTablet(node3.getText())); //get tablet
+				tables.add(getTablet(node3.getText())); // get tablet
 			} else if (node2.getType() == BqlParser.N_SELECT_STATEMENT) {
 				List<dremel.compiler.Query> queries = query.getSubQueries();
 				queries.add(parse(node2));
@@ -447,7 +447,9 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			try {
 				if (query.getAggregationFunctions().size() == 0)
 					template = Velocity.getTemplate("src/dremel/executor/stna_executor.vm");
-				else
+				else if (query.getGroupByExpressions().size() == 0) {
+					template = Velocity.getTemplate("src/dremel/executor/stwa_executor.vm");
+				} else
 					throw new RuntimeException("Not support query type");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -470,77 +472,80 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		} else
 			throw new RuntimeException("Can not get tablet");
 	}
-	
-	private void buildLinkBackwardData(ColumnMetaData columnMetaData)
-	{
+
+	private void buildLinkBackwardData(ColumnMetaData columnMetaData) {
 		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(columnMetaData);
 		// write data
-		columnBuilder.addIntDataTriple(0, ColumnReader.NULL, (byte)0, (byte)1);
-		columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte)0, (byte)2);
-		columnBuilder.addIntDataTriple(30, ColumnReader.NOT_NULL, (byte)1, (byte)2);
-		
+		columnBuilder.addIntDataTriple(0, ColumnReader.NULL, (byte) 0, (byte) 1);
+		columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
+		columnBuilder.addIntDataTriple(30, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
+
 		columnBuilder.close();
-	
+
 	}
-	
-	private void buildLinksForwardData(ColumnMetaData columnMetaData)
-	{
+
+	private void buildLinksForwardData(ColumnMetaData columnMetaData) {
 		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(columnMetaData);
 		// write data
-		columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte)0, (byte)2);
-		columnBuilder.addIntDataTriple(40, ColumnReader.NOT_NULL, (byte)1, (byte)2);
-		columnBuilder.addIntDataTriple(60, ColumnReader.NOT_NULL, (byte)1, (byte)2);
-		columnBuilder.addIntDataTriple(80, ColumnReader.NOT_NULL, (byte)0, (byte)2);
-		
-		columnBuilder.close();	
+		columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
+		columnBuilder.addIntDataTriple(40, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
+		columnBuilder.addIntDataTriple(60, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
+		columnBuilder.addIntDataTriple(80, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
+
+		columnBuilder.close();
 	}
-	
+
 	private void buildDocIDData(ColumnMetaData docidMetaData) {
-		
+
 		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(docidMetaData);
 		// write data
-		columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte)0, (byte)0);
-		columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte)0, (byte)0);
-		
-		
+		columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
+		columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
+
 		columnBuilder.close();
-		
+
 	}
-		
-	
-	public Tablet getPaperSchemaTablet()
-	{
+
+	public Tablet getPaperSchemaTablet() {
 		// build single column tablet for the input
-		ColumnMetaData linksBackwardMetaData= new ColumnMetaData("Links.Backward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksBackward", (byte)1, (byte)2);
+		ColumnMetaData linksBackwardMetaData = new ColumnMetaData("Links.Backward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksBackward", (byte) 1, (byte) 2);
 		buildLinkBackwardData(linksBackwardMetaData);
-		
-		ColumnMetaData linksForwardMetaData= new ColumnMetaData("Links.Forward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksForward", (byte)1, (byte)2);
+
+		ColumnMetaData linksForwardMetaData = new ColumnMetaData("Links.Forward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksForward", (byte) 1, (byte) 2);
 		buildLinksForwardData(linksForwardMetaData);
-		
-		ColumnMetaData docidMetaData= new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata\\docid", (byte)0, (byte)0);
+
+		ColumnMetaData docidMetaData = new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata\\docid", (byte) 0, (byte) 0);
 		buildDocIDData(docidMetaData);
-				
+
 		SchemaColumnar schema = new SchemaColumnarImpl();
 		schema.addColumnMetaData(linksBackwardMetaData);
 		schema.addColumnMetaData(linksForwardMetaData);
 		schema.addColumnMetaData(docidMetaData);
 		SchemaTree schemaTree = SchemaTreeLoader.loadSchema("[document]");
-		Tablet tablet = new TabletImpl(schemaTree,schema);
-		
+		Tablet tablet = new TabletImpl(schemaTree, schema);
+
 		return tablet;
 	}
 
 	public static void main(String[] args) throws Exception {
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as exp2, links.backward as exp3, links.backward+\ndocid FROM [document] where \ndocid>0");
+		class Test {
+			public int a = 0;
+		}
+
+		List<Test> tests = new LinkedList<Test>();
+
+		Test t = new Test();
+		t.a = 1;
+		tests.add(t);
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as exp2, links.backward as exp3, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward FROM [document] where \ndocid>0");
+		// AstNode nodes =
+		// Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, count(links.forward) within links FROM [document] where \ndocid>0");
 		CompilerImpl compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
-		Script script=new MetaxaExecutor.JavaLangScript(code);
-		
-		script.evaluate(new Object[] {query.getTables().get(0),query.getTables().get(0)});
-		//compiler.eval(query.getTables().get(0)); 
-		
+		Script script = new MetaxaExecutor.JavaLangScript(code);
 
+		script.evaluate(new Object[] { query.getTables().get(0), query.getTables().get(0) });
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * This template for single thread, no aggregation function query
+ * This template for single thread, WITHIN aggregation function query
  */
  
 int selectLevel = 0;
@@ -23,22 +23,33 @@ boolean is_$symbol.getJavaName()_null = true;
 #end
 #end
 
-//outSlice declaration
+class OutSlice
+{
+	public int missing_count = $query.getAggregationFunctions().size();
+	
 #foreach ($exp in $query.getSelectExpressions())
-#set($symbol=$query.getSymbolTable().get($exp.getJavaName()))
-//for expression: $exp.getRoot().generateCode();
-#if($symbol && $symbol.isColumnID())
-#else
 #if ($exp.isTypeInt())
-int $exp.getJavaName() = 0;
+	public int $exp.getJavaName() = 0;
 #elseif ($exp.isTypeFloat())
-double $exp.getJavaName() = 0.0;
+	public double $exp.getJavaName() = 0.0;
 #elseif ($exp.isTypeBool())
-boolean $exp.getJavaName() = false;
+	public boolean $exp.getJavaName() = false;
 #elseif ($exp.isTypeString())
-String $exp.getJavaName() = null;
+	public String $exp.getJavaName() = null;
 #end
+	public int $exp.getJavaName()_state = 3; //0~OK,1~NULL,2~NOTEMITTED, 3~MISSING (for aggregation)
 #end
+	//linked list
+	public OutSlice next;
+	public OutSlice previous;
+};
+
+OutSlice first = new OutSlice();
+first.next = null;
+first.previous = null;
+OutSlice last = null;
+
+#foreach ($exp in $query.getSelectExpressions())
 boolean input_changed_$exp.getJavaName() = false;
 #end
 
@@ -63,7 +74,9 @@ while (hasMoreSlices)
 #end
 #end	
 		boolean isLastInReader = reader.next();
+		// if at least on reader has more elements, then we have more slices.
 		hasMoreSlices = hasMoreSlices || isLastInReader;
+		
 		if(reader.isNull())
 		{
 			is_$symbol.getJavaName()_null = true;
@@ -112,8 +125,8 @@ while (hasMoreSlices)
 			}
 			else
 			{ 
-				$exp.getJavaName() = $exp.getRoot().generateCode();
-				System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
+				//$exp.getJavaName() = $exp.getRoot().generateCode();
+				//System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
 			}	
 		}
 		else

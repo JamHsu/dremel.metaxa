@@ -30,7 +30,8 @@ public class MetaxaExecutor implements Executor {
 		public JavaLangScript(String code) throws Exception {
 			se = CompilerFactoryFactory.getDefaultCompilerFactory().newScriptEvaluator();
 			se.setReturnType(void.class);
-			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*" , "dremel.tableton.*" });
+			
+			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*" , "dremel.tableton.*","java.util.List","java.util.LinkedList" });
 			se.setParameters(new String[] { "sourceTablet", "resultTablet"}, new Class[] { Tablet.class, Tablet.class});
 			se.cook(code);
 		}
@@ -149,5 +150,4 @@ public class MetaxaExecutor implements Executor {
 	public Script getScript() {
 		return script;
 	}
-
 }
