@@ -123,6 +123,26 @@ public class Expression implements dremel.compiler.Expression {
 		public Query getQuery() {
 			return query;
 		}
+
+		@Override
+		public boolean isTypeInt() {
+			return (getReturnType() == ReturnType.INT);
+		}
+
+		@Override
+		public boolean isTypeFloat() {
+			return (getReturnType() == ReturnType.FLOAT);
+		}
+
+		@Override
+		public boolean isTypeBool() {
+			return (getReturnType() == ReturnType.BOOL);
+		}
+
+		@Override
+		public boolean isTypeString() {
+			return (getReturnType() == ReturnType.STRING);
+		}
 	}
 
 	static public class BinaryOp extends AbstractNode implements dremel.compiler.Expression.BinaryOp {
@@ -391,6 +411,26 @@ public class Expression implements dremel.compiler.Expression {
 		}
 	}
 
+	static public abstract class AggFunction extends Function {
+		dremel.compiler.Expression.Symbol symbol;
+
+		/**
+		 * @param node
+		 * @param query
+		 */
+		public AggFunction(AstNode node, Query query) {
+			super(node, query);
+
+			assert (nodes.size() == 1);
+			assert (nodes.get(0) instanceof dremel.compiler.Expression.Symbol);
+			symbol = (dremel.compiler.Expression.Symbol) nodes.get(0);
+		}
+
+		public dremel.compiler.Expression.Symbol getSymbol() {
+			return symbol;
+		}
+	}
+
 	/*
 	 * some build-in function: length, count, sum....
 	 */
@@ -426,13 +466,9 @@ public class Expression implements dremel.compiler.Expression {
 		 * 
 		 * @see dremel.compiler.Expression.Function#isAggregate()
 		 */
-		@Override
-		public boolean isAggregate() {
-			return false;
-		}
 	}
 
-	static public class CountFunc extends Function {
+	static public class CountFunc extends AggFunction {
 		dremel.compiler.Expression.Symbol symbol;
 
 		public CountFunc(AstNode node, Query query) {
@@ -445,7 +481,7 @@ public class Expression implements dremel.compiler.Expression {
 
 		@Override
 		public String generateCode() {
-			return "count_" + ((Symbol) nodes.get(0)).getJavaName() + "++";
+			return ((Symbol) nodes.get(0)).getJavaName() + "_" + hashCode() + "++";
 		}
 
 		/*
@@ -463,10 +499,6 @@ public class Expression implements dremel.compiler.Expression {
 		 * 
 		 * @see dremel.compiler.Expression.Function#isAggregate()
 		 */
-		@Override
-		public boolean isAggregate() {
-			return true;
-		}
 	}
 
 	static public class Symbol extends AbstractNode implements dremel.compiler.Expression.Symbol {
@@ -478,7 +510,7 @@ public class Expression implements dremel.compiler.Expression {
 			super(query);
 			this.symbol = symbol.toLowerCase();
 			sliceMappingIndex = -1;
-			reference=null;
+			reference = null;
 		}
 
 		@Override
@@ -493,12 +525,10 @@ public class Expression implements dremel.compiler.Expression {
 
 		@Override
 		public String generateCode() {
-			if (reference instanceof Expression)
-			{
-				Expression exp= (Expression)reference;
+			if (reference instanceof Expression) {
+				Expression exp = (Expression) reference;
 				return exp.getRoot().generateCode();
-			}
-			else 
+			} else
 				return getJavaName();
 		}
 
@@ -563,46 +593,6 @@ public class Expression implements dremel.compiler.Expression {
 		@Override
 		public boolean isColumnID() {
 			return (reference instanceof SchemaTree);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see dremel.compiler.Expression.Symbol#isTypeInt()
-		 */
-		@Override
-		public boolean isTypeInt() {
-			return (getReturnType() == ReturnType.INT);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see dremel.compiler.Expression.Symbol#isTypeFloat()
-		 */
-		@Override
-		public boolean isTypeFloat() {
-			return (getReturnType() == ReturnType.FLOAT);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see dremel.compiler.Expression.Symbol#isTypeBool()
-		 */
-		@Override
-		public boolean isTypeBool() {
-			return (getReturnType() == ReturnType.BOOL);
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see dremel.compiler.Expression.Symbol#isTypeString()
-		 */
-		@Override
-		public boolean isTypeString() {
-			return (getReturnType() == ReturnType.STRING);
 		}
 	}
 

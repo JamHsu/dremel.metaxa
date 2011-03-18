@@ -23,6 +23,7 @@ import dremel.compiler.Expression.ReturnType;
 import dremel.compiler.Expression.Symbol;
 import dremel.compiler.Compiler;
 import dremel.compiler.Query;
+import dremel.compiler.impl.Expression.AggFunction;
 import dremel.compiler.parser.AstNode;
 import dremel.compiler.parser.Parser;
 import dremel.compiler.parser.impl.BqlParser;
@@ -306,11 +307,11 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param node
 	 * @param aggFuncs
 	 */
-	void getAggregationFunction(Node node, List<Function> aggFuncs) {
+	void getAggregationFunction(Node node, List<AggFunction> aggFuncs) {
 		if (node instanceof Function) {
 			Function func = (Function) node;
-			if (func.isAggregate())
-				aggFuncs.add(func);
+			if (func instanceof AggFunction)
+				aggFuncs.add((AggFunction)func);
 		} else {
 			for (int i = 0; i < node.getChildCount(); i++) {
 				Node n = node.getChild(i);
@@ -528,24 +529,17 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	}
 
 	public static void main(String[] args) throws Exception {
-		class Test {
-			public int a = 0;
-		}
-
-		List<Test> tests = new LinkedList<Test>();
-
-		Test t = new Test();
-		t.a = 1;
-		tests.add(t);
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as exp2, links.backward as exp3, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward FROM [document] where \ndocid>0");
-		// AstNode nodes =
-		// Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, count(links.forward) within links FROM [document] where \ndocid>0");
+		
+		//AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as exp2, links.backward as exp3, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward FROM [document] where \ndocid>0");
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, count(links.forward) within links, links.backward FROM [document] where \ndocid>0");
 		CompilerImpl compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
 		Script script = new MetaxaExecutor.JavaLangScript(code);
-
+		
+		System.out.println();
+		
 		script.evaluate(new Object[] { query.getTables().get(0), query.getTables().get(0) });
 	}
 }

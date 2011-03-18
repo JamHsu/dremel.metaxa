@@ -28,6 +28,14 @@ public interface Expression {
 		public String generateCode();
 
 		public ReturnType getReturnType();
+		
+		public boolean isTypeInt();
+
+		public boolean isTypeFloat();
+
+		public boolean isTypeBool();
+
+		public boolean isTypeString();
 	}
 
 	public interface BinaryOp {
@@ -61,13 +69,6 @@ public interface Expression {
 
 		public boolean isColumnID();
 
-		public boolean isTypeInt();
-
-		public boolean isTypeFloat();
-
-		public boolean isTypeBool();
-
-		public boolean isTypeString();
 	}
 
 	public interface Function {
@@ -76,8 +77,6 @@ public interface Expression {
 		public int getArgumentCount();
 
 		public Node getArgument(int index);
-
-		public boolean isAggregate();
 	}
 
 	public String getAlias();

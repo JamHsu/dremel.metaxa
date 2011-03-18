@@ -70,9 +70,9 @@ while (hasMoreSlices)
 #if ($symbol.isTypeInt())
 			$symbol.getJavaName() = 0;
 #elseif ($symbol.isTypeFloat())
-			//$symbol.getJavaName() = 0.0;
+			$symbol.getJavaName() = 0.0;
 #elseif ($symbol.isTypeBool())
-			//$symbol.getJavaName() = false;
+			$symbol.getJavaName() = false;
 #elseif ($symbol.isTypeString())
 			$symbol.getJavaName() = "";
 #end			
@@ -95,6 +95,7 @@ while (hasMoreSlices)
 #end	
 
 	fetchLevel = nextLevel;
+	//System.out.println(selectLevel + "\t" + fetchLevel);
 	
 	if (!hasMoreSlices) break; //no more slice, exit
 

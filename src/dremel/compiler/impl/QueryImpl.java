@@ -9,6 +9,7 @@ import dremel.compiler.Expression;
 import dremel.compiler.Expression.Function;
 import dremel.compiler.Expression.Symbol;
 import dremel.compiler.Query;
+import dremel.compiler.impl.Expression.AggFunction;
 import dremel.dataset.SchemaTree;
 import dremel.dataset.Table;
 import dremel.tableton.Tablet;
@@ -28,7 +29,7 @@ public class QueryImpl implements Query {
 	int limit;
 	SchemaTree sourceSchema;
 	SchemaTree targetSchema;
-	List<dremel.compiler.Expression.Function> aggregationFunctions;
+	List<AggFunction> aggregationFunctions;
 
 	public QueryImpl() {
 		tables = new LinkedList<Tablet>();
@@ -37,7 +38,7 @@ public class QueryImpl implements Query {
 		groupByExps = new LinkedList<Symbol>();
 		orderByExps = new LinkedList<Symbol>();
 		symbolTable = new HashMap<String, dremel.compiler.Expression.Symbol>();
-		aggregationFunctions = new LinkedList<dremel.compiler.Expression.Function>();
+		aggregationFunctions = new LinkedList<AggFunction>();
 	}
 
 	@Override
@@ -103,7 +104,7 @@ public class QueryImpl implements Query {
 	}
 
 	@Override
-	public List<Function> getAggregationFunctions() {
+	public List<AggFunction> getAggregationFunctions() {
 		return aggregationFunctions;
 	}
 	

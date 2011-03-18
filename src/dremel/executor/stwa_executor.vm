@@ -1,5 +1,6 @@
 /**
  * This template for single thread, WITHIN aggregation function query
+ * Currently do not support complex aggregation like: count(f)+1, sum(f1)+sum(f2)....
  */
  
 int selectLevel = 0;
@@ -26,6 +27,7 @@ boolean is_$symbol.getJavaName()_null = true;
 class OutSlice
 {
 	public int missing_count = $query.getAggregationFunctions().size();
+	public int select_level;
 	
 #foreach ($exp in $query.getSelectExpressions())
 #if ($exp.isTypeInt())
@@ -42,16 +44,41 @@ class OutSlice
 	//linked list
 	public OutSlice next;
 	public OutSlice previous;
+	
+	public void emit(Tablet resultTablet)
+	{
+		//emit slice here, for now print to stdout but need append to resultTablet
+#foreach ($exp1 in $query.getSelectExpressions())
+		if (this.$exp1.getJavaName()_state == 0) System.out.print(this.$exp1.getJavaName()+"\t\t");
+		else if (this.$exp1.getJavaName()_state == 1) System.out.print("NULL\t\t");
+		else if (this.$exp1.getJavaName()_state == 2) System.out.print("N/A\t\t");
+#end
+		System.out.println();
+	}
 };
-
+//linked list for output slice pool
 OutSlice first = new OutSlice();
 first.next = null;
 first.previous = null;
-OutSlice last = null;
+OutSlice last = first;
 
 #foreach ($exp in $query.getSelectExpressions())
 boolean input_changed_$exp.getJavaName() = false;
 #end
+
+//aggregation function variables\
+#foreach ($func in $query.getAggregationFunctions())
+#if ($func.isTypeInt())
+int $func.getSymbol().getJavaName()_$func.hashCode() = 0;
+#elseif ($exp.isTypeFloat())
+double $func.getSymbol().getJavaName()_$func.hashCode()  = 0.0;
+#elseif ($exp.isTypeBool())
+boolean $func.getSymbol().getJavaName()_$func.hashCode() = false;
+#elseif ($exp.isTypeString())
+String $func.getSymbol().getJavaName()_$func.hashCode() = null;
+#end
+OutSlice $func.getSymbol().getJavaName()_marker = first;
+#end 
 
 ColumnReader reader = null;
 
@@ -74,7 +101,6 @@ while (hasMoreSlices)
 #end
 #end	
 		boolean isLastInReader = reader.next();
-		// if at least on reader has more elements, then we have more slices.
 		hasMoreSlices = hasMoreSlices || isLastInReader;
 		
 		if(reader.isNull())
@@ -83,13 +109,14 @@ while (hasMoreSlices)
 #if ($symbol.isTypeInt())
 			$symbol.getJavaName() = 0;
 #elseif ($symbol.isTypeFloat())
-			//$symbol.getJavaName() = 0.0;
+			$symbol.getJavaName() = 0.0;
 #elseif ($symbol.isTypeBool())
-			//$symbol.getJavaName() = false;
+			$symbol.getJavaName() = false;
 #elseif ($symbol.isTypeString())
 			$symbol.getJavaName() = "";
 #end			
-		}else
+		}
+		else
 		{
 			is_$symbol.getJavaName()_null = false;
 #if ($symbol.isTypeInt())
@@ -108,34 +135,95 @@ while (hasMoreSlices)
 #end	
 
 	fetchLevel = nextLevel;
+	//System.out.println(fetchLevel + "\t"+ selectLevel);
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.getWithin())
+#set ($symbol=$exp.getSymbols().get(0))		
+	if (selectLevel <= $exp.getWithinLevel() || (!hasMoreSlices)) //check within level
+	{
+		//emit aggregation value
+		OutSlice s = $symbol.getJavaName()_marker;
+		s = s.next;
+		if (s!=null)
+		{
+			s.$exp.getJavaName() = $symbol.getJavaName()_$exp.getRoot().hashCode();
+			s.missing_count--;
+			s.$exp.getJavaName()_state = 0; //ok state
+			if ((s.missing_count==0))
+			{
+				s.emit(null);
+				first.next = s.next;
+			}
+			s = s.next;
+		}
+		while (s!=null) //from marker to the end of slice pool
+		{
+			s.$exp.getJavaName() = $symbol.getJavaName()_$exp.getRoot().hashCode();
+			s.missing_count--;
+			s.$exp.getJavaName()_state = 2; //N/A state
+			if ((s.missing_count==0))
+			{
+				s.emit(null);
+				first.next = s.next;
+			}
+			s = s.next;
+		}
+		$symbol.getJavaName()_marker = last;
+#if ($exp.isTypeInt())
+		$symbol.getJavaName()_$exp.getRoot().hashCode() = 0;
+#elseif ($exp.isTypeFloat())
+		$symbol.getJavaName()_$exp.getRoot().hashCode() = 0.0;
+#elseif ($exp.isTypeBool())
+		$symbol.getJavaName()_$exp.getRoot().hashCode() = false;
+#elseif ($exp.isTypeString())
+		$symbol.getJavaName()_$exp.getRoot().hashCode() = "";
+#end			
+	}			
+#end
+#end
 	
-	if (!hasMoreSlices) break; //no more slice, exit
+	if (!hasMoreSlices) break;
 
 #if ($query.getFilter())
 	if ($query.getFilter().getRoot().generateCode())
 	{
 #end
+		OutSlice outSlice = new OutSlice(); //allocate new output slice
 		//calculate expressions for outSlice
-#foreach ($exp in $query.getSelectExpressions())		
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.getWithin())
+		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName())
+		{
+#set ($symbol=$exp.getSymbols().get(0))		
+			if (!is_$symbol.getJavaName()_null)
+			{
+				$exp.getRoot().generateCode();//update agg value
+			}
+		}
+#else
 		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName())
 		{
 			if(#foreach ($symbol in $exp.getSymbols()) is_$symbol.getJavaName()_null && #end true) //all input are null
 			{
-				System.out.print("NULL\t\t");//TODO: append NULL to resultTablet here
+				outSlice.$exp.getJavaName()_state = 1; //null state
 			}
 			else
 			{ 
-				//$exp.getJavaName() = $exp.getRoot().generateCode();
-				//System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
+				outSlice.$exp.getJavaName() = $exp.getRoot().generateCode();
+				outSlice.$exp.getJavaName()_state = 0; //ok state
 			}	
 		}
 		else
 		{
-			System.out.print("N/A\t\t"); //for debug only
-		} 
-#end		
-		
-		System.out.println();				
+			outSlice.$exp.getJavaName()_state = 2; //N/A state
+		}
+#end 
+#end	
+		outSlice.select_level = selectLevel;
+		last.next = outSlice;
+		outSlice.previous = last;
+		outSlice.next = null;
+		last = outSlice;	
 		selectLevel = fetchLevel;
 
 #if ($query.getFilter())	

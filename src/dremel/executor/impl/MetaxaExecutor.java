@@ -14,6 +14,7 @@ import dremel.compiler.Expression.Node;
 import dremel.compiler.Expression.Symbol;
 import dremel.compiler.Expression;
 import dremel.compiler.Query;
+import dremel.compiler.impl.Expression.AggFunction;
 import dremel.dataset.SchemaTree;
 import dremel.dataset.Slice;
 import dremel.dataset.SliceScanner;
@@ -82,7 +83,7 @@ public class MetaxaExecutor implements Executor {
 																					// allocated
 																					// elements
 		context1[0] = new Integer(0); // selectLevel
-		Iterator<Function> fIt = query.getAggregationFunctions().iterator();
+		Iterator<AggFunction> fIt = query.getAggregationFunctions().iterator();
 
 		// allocate space for within aggregation function
 		int i = 1;

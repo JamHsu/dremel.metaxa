@@ -6,6 +6,7 @@ import java.util.Map;
 
 import dremel.compiler.Expression.Function;
 import dremel.compiler.Expression.Symbol;
+import dremel.compiler.impl.Expression.AggFunction;
 import dremel.dataset.SchemaTree;
 import dremel.tableton.Tablet;
 
@@ -40,5 +41,5 @@ public interface Query {
 
 	public Map<String, Symbol> getSymbolTable(); // field name + alias
 
-	public List<Function> getAggregationFunctions();
+	public List<AggFunction> getAggregationFunctions();
 }
