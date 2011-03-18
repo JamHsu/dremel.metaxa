@@ -84,9 +84,6 @@ ColumnReader reader = null;
 
 while (hasMoreSlices)
 {
-#foreach ($exp in $query.getSelectExpressions())
-	input_changed_$exp.getJavaName() = false;
-#end
 	//fetch inSlice from sourceTablet
 	nextLevel = 0;
 	hasMoreSlices = false;
@@ -139,7 +136,7 @@ while (hasMoreSlices)
 #foreach ($exp in $query.getSelectExpressions())
 #if ($exp.getWithin())
 #set ($symbol=$exp.getSymbols().get(0))		
-	if (selectLevel <= $exp.getWithinLevel() || (!hasMoreSlices)) //check within level
+	if (selectLevel <= $exp.getWithinLevel() || (!hasMoreSlices)) //emit agg values if condition matched
 	{
 		//emit aggregation value
 		OutSlice s = $symbol.getJavaName()_marker;
@@ -151,7 +148,7 @@ while (hasMoreSlices)
 			s.$exp.getJavaName()_state = 0; //ok state
 			if ((s.missing_count==0))
 			{
-				s.emit(null);
+				s.emit(resultTablet);
 				first.next = s.next;
 			}
 			s = s.next;
@@ -163,7 +160,7 @@ while (hasMoreSlices)
 			s.$exp.getJavaName()_state = 2; //N/A state
 			if ((s.missing_count==0))
 			{
-				s.emit(null);
+				s.emit(resultTablet);
 				first.next = s.next;
 			}
 			s = s.next;
@@ -192,7 +189,7 @@ while (hasMoreSlices)
 		//calculate expressions for outSlice
 #foreach ($exp in $query.getSelectExpressions())
 #if ($exp.getWithin())
-		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName())
+		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName()) //agg expression
 		{
 #set ($symbol=$exp.getSymbols().get(0))		
 			if (!is_$symbol.getJavaName()_null)
@@ -201,8 +198,10 @@ while (hasMoreSlices)
 			}
 		}
 #else
-		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName())
+#if ($exp.getSymbols().size()>0)
+		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName()) //non agg expression
 		{
+		
 			if(#foreach ($symbol in $exp.getSymbols()) is_$symbol.getJavaName()_null && #end true) //all input are null
 			{
 				outSlice.$exp.getJavaName()_state = 1; //null state
@@ -211,13 +210,19 @@ while (hasMoreSlices)
 			{ 
 				outSlice.$exp.getJavaName() = $exp.getRoot().generateCode();
 				outSlice.$exp.getJavaName()_state = 0; //ok state
-			}	
+			}
+	
 		}
 		else
 		{
 			outSlice.$exp.getJavaName()_state = 2; //N/A state
 		}
+#else
+		outSlice.$exp.getJavaName() = $exp.getRoot().generateCode();
+		outSlice.$exp.getJavaName()_state = 0; //ok state
+#end		
 #end 
+		input_changed_$exp.getJavaName() = false;
 #end	
 		outSlice.select_level = selectLevel;
 		last.next = outSlice;
@@ -225,12 +230,12 @@ while (hasMoreSlices)
 		outSlice.next = null;
 		last = outSlice;	
 		selectLevel = fetchLevel;
-
 #if ($query.getFilter())	
 	} 
 	else 
 	{
 		if(selectLevel > fetchLevel) selectLevel = fetchLevel;
+		
 	}
 #end
 }

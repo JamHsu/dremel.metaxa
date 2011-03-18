@@ -64,6 +64,8 @@ public class Expression implements dremel.compiler.Expression {
 			return new StringLengthFunc(node, query);
 		} else if (name.equalsIgnoreCase("count")) {
 			return new CountFunc(node, query);
+		} else if (name.equalsIgnoreCase("sum")) {
+			return new SumFunc(node, query);
 		} else
 			throw new RuntimeException("Not support function:" + name);
 	}
@@ -492,6 +494,46 @@ public class Expression implements dremel.compiler.Expression {
 		@Override
 		public ReturnType getReturnType() {
 			return ReturnType.INT;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Function#isAggregate()
+		 */
+	}
+
+	static public class SumFunc extends AggFunction {
+		dremel.compiler.Expression.Symbol symbol;
+
+		public SumFunc(AstNode node, Query query) {
+			super(node, query);
+			assert (nodes.size() == 1);
+			assert (nodes.get(0) instanceof dremel.compiler.Expression.Symbol);
+			symbol = (dremel.compiler.Expression.Symbol) nodes.get(0);
+			//assert (symbol.getReference() instanceof FieldDescriptor);
+		}
+
+		@Override
+		public String generateCode() {
+			return ((Symbol) nodes.get(0)).getJavaName() + "_" + hashCode() + " += " + getSymbol().getJavaName();
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see dremel.compiler.Expression.Node#getReturnType()
+		 */
+		@Override
+		public ReturnType getReturnType() {
+			Symbol s= (Symbol)getSymbol();
+			
+			if (s.isTypeInt())
+				return ReturnType.INT;
+			else if (s.isTypeFloat())
+				return ReturnType.FLOAT;
+			else
+				return ReturnType.INVALID;
 		}
 
 		/*

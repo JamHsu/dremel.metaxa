@@ -530,8 +530,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	public static void main(String[] args) throws Exception {
 		
-		//AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as exp2, links.backward as exp3, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward FROM [document] where \ndocid>0");
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, count(links.forward) within links, links.backward FROM [document] where \ndocid>0");
+		//AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward as exp2, links.backward as exp3, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
 		CompilerImpl compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);

@@ -46,9 +46,6 @@ ColumnReader reader = null;
 
 while (hasMoreSlices)
 {
-#foreach ($exp in $query.getSelectExpressions())
-	input_changed_$exp.getJavaName() = false;
-#end
 	//fetch inSlice from sourceTablet
 	nextLevel = 0;
 	hasMoreSlices = false;
@@ -105,6 +102,7 @@ while (hasMoreSlices)
 #end
 		//calculate expressions for outSlice
 #foreach ($exp in $query.getSelectExpressions())		
+#if ($exp.getSymbols().size()>0)
 		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName())
 		{
 			if(#foreach ($symbol in $exp.getSymbols()) is_$symbol.getJavaName()_null && #end true) //all input are null
@@ -120,7 +118,12 @@ while (hasMoreSlices)
 		else
 		{
 			System.out.print("N/A\t\t"); //for debug only
-		} 
+		}
+		input_changed_$exp.getJavaName() = false;
+#else
+				$exp.getJavaName() = $exp.getRoot().generateCode();
+				System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
+#end		
 #end		
 		
 		System.out.println();				
