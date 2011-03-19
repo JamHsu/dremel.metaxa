@@ -88,8 +88,4 @@ public class ColumnMetaData {
 	public EncodingType getEncoding() {
 		return encodingType;
 	}
-
-	
-	
-	
 }

@@ -113,16 +113,23 @@ while (hasMoreSlices)
 			{ 
 				$exp.getJavaName() = $exp.getRoot().generateCode();
 				System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
-			}	
+			}
+			input_changed_$exp.getJavaName() = false;	
 		}
 		else
 		{
 			System.out.print("N/A\t\t"); //for debug only
 		}
-		input_changed_$exp.getJavaName() = false;
 #else
-				$exp.getJavaName() = $exp.getRoot().generateCode();
-				System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
+		if (selectLevel ==0)
+		{
+			$exp.getJavaName() = $exp.getRoot().generateCode();
+			System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
+		}
+		else
+		{
+			System.out.print("N/A\t\t"); //for debug only
+		}
 #end		
 #end		
 		

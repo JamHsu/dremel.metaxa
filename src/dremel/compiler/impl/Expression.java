@@ -642,6 +642,7 @@ public class Expression implements dremel.compiler.Expression {
 	String scope;
 	String alias;
 	int rLevel;
+	int dLelel;
 	int withinLevel;
 	List<dremel.compiler.Expression.Symbol> symbols;
 	ReturnType type;
@@ -687,6 +688,15 @@ public class Expression implements dremel.compiler.Expression {
 		return alias;
 	}
 
+	@Override
+	public int getDefinitionLevel() {
+		return dLelel;
+	}
+	
+	public void setdLelel(int dLelel) {
+		this.dLelel = dLelel;
+	}
+	
 	@Override
 	public int getRepetitionLevel() {
 		return rLevel;

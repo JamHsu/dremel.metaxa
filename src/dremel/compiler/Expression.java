@@ -88,6 +88,7 @@ public interface Expression {
 	public int getWithinLevel();
 
 	public int getRepetitionLevel();
+	public int getDefinitionLevel();
 
 	public List<Symbol> getSymbols();
 

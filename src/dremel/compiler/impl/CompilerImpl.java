@@ -217,27 +217,31 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * fields in schema
 	 * 
 	 * @param desc
-	 * @param level
-	 * @param maxLevels
+	 * @param rlevel
+	 * @param maxRLevels
 	 */
-	private void calMaxLevel(SchemaTree desc, int level, Map<SchemaTree, Integer> maxLevels) {
+	private void calMaxLevel(SchemaTree desc, int rlevel,int dlevel, Map<SchemaTree, Integer> maxRLevels, Map<SchemaTree, Integer> maxDLevels) {
 		List<SchemaTree> fs = desc.getFieldsList();
 		for (int i = 0; i < fs.size(); i++) {
 			SchemaTree d = fs.get(i);
 			if (d.isRepeated()) {
 
 				if (d.isRecord()) {
-					calMaxLevel(d, level + 1, maxLevels);
-					maxLevels.put(d, level + 1);
+					calMaxLevel(d, rlevel + 1,dlevel+1, maxRLevels, maxDLevels);
+					maxRLevels.put(d, rlevel + 1);
+					maxDLevels.put(d, dlevel + 1);
 				} else {
-					maxLevels.put(d, level + 1);
+					maxRLevels.put(d, rlevel + 1);
+					maxDLevels.put(d, dlevel + 1);
 				}
 			} else {
 				if (d.isRecord()) {
-					calMaxLevel(d, level, maxLevels);
-					maxLevels.put(d, level);
+					calMaxLevel(d, rlevel,dlevel+1, maxRLevels, maxDLevels);
+					maxRLevels.put(d, rlevel);
+					maxDLevels.put(d, dlevel + 1);
 				} else {
-					maxLevels.put(d, level);
+					maxRLevels.put(d, rlevel);
+					maxDLevels.put(d, dlevel + 1);
 				}
 			}
 		}
@@ -376,11 +380,12 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		assert (query.getTables().size() == 1);// one table only
 		assert (query.getSubQueries().size() == 0);// no sub-queries
 		SchemaTree SchemaTree = query.getTables().get(0).getSchemaTree();
-		Map<SchemaTree, Integer> maxLevels = new HashMap<SchemaTree, Integer>();
+		Map<SchemaTree, Integer> maxRLevels = new HashMap<SchemaTree, Integer>();
+		Map<SchemaTree, Integer> maxDLevels = new HashMap<SchemaTree, Integer>();
 
 		// bind field+exp to symbols
-		calMaxLevel(SchemaTree, 0, maxLevels);
-		Iterator<SchemaTree> fIt = maxLevels.keySet().iterator();
+		calMaxLevel(SchemaTree, 0,0, maxRLevels, maxDLevels);
+		Iterator<SchemaTree> fIt = maxRLevels.keySet().iterator();
 		while (fIt.hasNext()) {
 			SchemaTree d = fIt.next();
 			String name = d.getName();
@@ -405,10 +410,10 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Iterator eIt = query.getSelectExpressions().iterator();
 		while (eIt.hasNext()) {
 			Expression exp = (Expression) eIt.next();
-			int level = getRLevel(exp.getRoot(), 0, maxLevels);
+			int level = getRLevel(exp.getRoot(), 0, maxRLevels);
 			exp.setRLevel(level);
 			getAggregationFunction(exp.getRoot(), query.getAggregationFunctions());
-			int scopeLevel = getWithinLevel(exp.getWithin(), maxLevels);
+			int scopeLevel = getWithinLevel(exp.getWithin(), maxRLevels);
 			exp.setWithinLevel(scopeLevel);
 			getRelatedFields(exp.getRoot(), exp.getSymbols());
 
@@ -417,7 +422,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 		Expression exp = (Expression) query.getFilter();
 		if (exp != null) {
-			int level = getRLevel(exp.getRoot(), 0, maxLevels);
+			int level = getRLevel(exp.getRoot(), 0, maxRLevels);
 			exp.setRLevel(level);
 			getAggregationFunction(exp.getRoot(), query.getAggregationFunctions());
 			assert (exp.getReturnType() == ReturnType.BOOL); // filter must be

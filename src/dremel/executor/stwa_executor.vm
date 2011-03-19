@@ -196,12 +196,12 @@ while (hasMoreSlices)
 			{
 				$exp.getRoot().generateCode();//update agg value
 			}
+			input_changed_$exp.getJavaName() = false;
 		}
 #else
 #if ($exp.getSymbols().size()>0)
 		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName()) //non agg expression
 		{
-		
 			if(#foreach ($symbol in $exp.getSymbols()) is_$symbol.getJavaName()_null && #end true) //all input are null
 			{
 				outSlice.$exp.getJavaName()_state = 1; //null state
@@ -211,18 +211,24 @@ while (hasMoreSlices)
 				outSlice.$exp.getJavaName() = $exp.getRoot().generateCode();
 				outSlice.$exp.getJavaName()_state = 0; //ok state
 			}
-	
+			input_changed_$exp.getJavaName() = false;
 		}
 		else
 		{
 			outSlice.$exp.getJavaName()_state = 2; //N/A state
 		}
 #else
-		outSlice.$exp.getJavaName() = $exp.getRoot().generateCode();
-		outSlice.$exp.getJavaName()_state = 0; //ok state
+		if (selectLevel == 0) //expression with constant only will be at level 0
+		{
+			outSlice.$exp.getJavaName() = $exp.getRoot().generateCode();
+			outSlice.$exp.getJavaName()_state = 0; //ok state
+		}
+		else
+		{
+			outSlice.$exp.getJavaName()_state = 2; //N/A state
+		}
 #end		
 #end 
-		input_changed_$exp.getJavaName() = false;
 #end	
 		outSlice.select_level = selectLevel;
 		last.next = outSlice;
