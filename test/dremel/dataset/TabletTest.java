@@ -1,5 +1,6 @@
 package dremel.dataset;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import dremel.tableton.Tablet;
 import dremel.tableton.TabletIterator;
 import dremel.tableton.ColumnMetaData.ColumnType;
 import dremel.tableton.ColumnMetaData.EncodingType;
+import dremel.tableton.impl.ColumnReaderImpl;
 import dremel.tableton.impl.ColumnWriterImpl;
 import dremel.tableton.impl.SchemaColumnarImpl;
 import dremel.tableton.impl.TabletBuilderImpl;
@@ -48,6 +50,67 @@ public class TabletTest {
 	
 	}
 		
+	
+	@Test 
+	public void testReadValuesInterface()
+	{
+		// build single column tablet for the input
+		ColumnMetaData linksBackwardMetaData= new ColumnMetaData("Links.LinksBackward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksBackward", (byte)1, (byte)2);
+		buildLinkBackwardData(linksBackwardMetaData);
+		ColumnReader reader = new ColumnReaderImpl(linksBackwardMetaData);
+		
+		int bufferSize = 2;
+		
+		int[] dataBuffer = new int[bufferSize];
+		byte[] repetitionBuffer = new byte[bufferSize];
+		boolean[] isNullBuffer  = new boolean[bufferSize];;
+		int readSize = reader.fillIntValues(dataBuffer, repetitionBuffer, isNullBuffer);
+		assertEquals(bufferSize,readSize);
+		
+		int[] expectedDataBuffer = new int[bufferSize];
+		expectedDataBuffer[0] = 0;
+        expectedDataBuffer[1] = 10;
+        
+		
+		byte[] expectedRepetitionBuffer = new byte[bufferSize];
+		expectedRepetitionBuffer[0] = 0;
+		expectedRepetitionBuffer[1] = 0;
+		
+		
+		boolean[] expectedisNullBuffer  = new boolean[bufferSize];;
+		expectedisNullBuffer[0] = true;
+		expectedisNullBuffer[1] = false;
+		
+		
+		assertArrayEquals(expectedDataBuffer,dataBuffer);
+		assertArrayEquals(expectedRepetitionBuffer,repetitionBuffer);
+		assertBooleanArraysEquals(expectedisNullBuffer,isNullBuffer);
+		
+		// read last value from for all buffers
+		readSize = reader.fillIntValues(dataBuffer, repetitionBuffer, isNullBuffer);
+		assertEquals(1,readSize);
+		
+		expectedDataBuffer[0] = 30;
+		expectedRepetitionBuffer[0] = 1;
+		expectedisNullBuffer[0] = false;
+		
+		readSize = reader.fillIntValues(dataBuffer, repetitionBuffer, isNullBuffer);		
+		assertEquals(readSize, ColumnReader.NO_MORE_DATA);
+	}
+	
+	/**
+	 * @param expectedisNullBuffer
+	 * @param isNullBuffer
+	 */
+	private void assertBooleanArraysEquals(boolean[] first,
+			boolean[] second) {
+		assertEquals(first.length, second.length);
+		for(int i=0; i<first.length; i++)
+		{
+			assertEquals(first[i], second[i]);
+		}		
+	}
+
 	@Test
 	public void twoColumnsTabletRoundtripTest()
 	{
@@ -153,8 +216,7 @@ public class TabletTest {
 			// we have more values in the second column
 			return false;
 		}
-		
-		
+				
 		return columnsEquals;
 	}
 }

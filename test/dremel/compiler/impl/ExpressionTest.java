@@ -38,7 +38,7 @@ import dremel.compiler.parser.Parser;
 public class ExpressionTest {
 	@Test
 	public void testExpression1() throws RecognitionException {
-		AstNode nodes = Parser.parseBql("SELECT (3+w-6)+count(f1)-length(f2) as exp1 FROM [table1]");
+		AstNode nodes = Parser.parseBql("SELECT (3+w-6)+count(f1)-length(f2) as exp1 FROM [document]");
 		Compiler compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		AstNode node = (AstNode) nodes.getChild(1);
@@ -58,7 +58,7 @@ public class ExpressionTest {
 	public void testExpression2() throws RecognitionException {
 		//FIXME: PARSER-logical NOT is not recognized
 		//FIXME: PARSER-bitwise NOT is not recognized
-		AstNode nodes = Parser.parseBql("SELECT (3+8.4-6), (3&4), (5>6) AND (7>8), \"abc\"-100, (\"abc\">\"def\") FROM [table1]");
+		AstNode nodes = Parser.parseBql("SELECT (3+8.4-6), (3&4), (5>6) AND (7>8), \"abc\"-100, (\"abc\">\"def\") FROM [document]");
 		Compiler compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		AstNode node = (AstNode) nodes.getChild(1);

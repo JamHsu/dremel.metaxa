@@ -41,5 +41,42 @@ public interface ColumnReader {
 	public int getLongValue();
 	public byte getByteValue();
 	public String getStringValue();
+	
+	// high performance methods for the data reading.
+	/**
+	 * fillXXXValues method get as a parameter buffer to be filled with the decoded values
+	 * return value indicates how many elements was actually filled. if there is enough data left in the column - the result
+	 * expected to be equal to dataBuffer.length
+	 * @param dataBuffer
+	 * @return indicates how many elements was actually filled. if there is enough data left in the column - the result. NO_MORE_DATA indicates taht there is no more data.
+	 */
+	public int fillByteValues(byte[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer);
+	
+	public int fillIntValues(int[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer);
+	
+	
+	
+	//----------------------- String columns related methods -----------------------
+	/**
+	 * @return size in bytes needed to store the column's dictionary.
+	 */
+	public int getDictionaryDataSize();
+	/**
+	 * Fills the given buffer with the string dictionary in the following format: String length, String bytes, String length ... (similar to the COM's BSTR).
+	 * String bytes can be used as is if QP is smart enough of String can be instantiated from the bytes if needed. Bytes are built
+	 * using UTF8 encoding. Selection of the best suited encoding require a bit more investigation.
+	 * @param dataBuffer - allocated buffer to hold the dictionary. It is supposed to be big enough to hold it in full.
+	 * @return size in bytes of the data filled in the dataBuffer. If data buffer is not big enough for the dictionary NOT_ENOUGH_SPACE constant is returned 
+	 */
+	public int fillStringDictionary(byte[] dataBuffer);
+	/**
+	 * This method fills the given array with the offsets of the corresponding strings in the dictionary returned by the fillStringDictionary call 
+	 * @param dataBuffer
+	 * @return number of entries actually filled in the dataBuffer. NO_MORE_DATA returned if there is no more data.
+	 */
+	public int fillStringOffsets(int[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer);
 		
+	//------------------------ constants ---------------------------------
+	public static final int NOT_ENOUGH_SPACE = -2;
+	public static final int NO_MORE_DATA = -1;
 }

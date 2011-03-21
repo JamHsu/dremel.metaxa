@@ -83,7 +83,7 @@ public class TabletBuilderImpl {
 		{
 					
 			ColumnWriter columnWriter = new ColumnWriterImpl(nextColumnMetaData);
-			columnWriters.put(nextColumnMetaData.getColumnName(), columnWriter);			
+			columnWriters.put(nextColumnMetaData.getColumnName().toLowerCase(), columnWriter);			
 		}					
 		
 	}
@@ -111,7 +111,7 @@ public class TabletBuilderImpl {
 			if(schema.getColumnMetaData(columnName).getMaxRepetitionLevel()>=selectLevel)
 			{
 				ColumnReader reader = inputIterator.getColumnsMap().get(columnName);
-				ColumnWriter writer = columnWriters.get(columnName);
+				ColumnWriter writer = columnWriters.get(columnName.toLowerCase());
 				assert(writer != null);
 				transferValue(columnName, reader, writer, selectLevel);
 			}

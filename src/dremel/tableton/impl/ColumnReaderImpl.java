@@ -279,4 +279,83 @@ public class ColumnReaderImpl implements ColumnReader {
 		throw new RuntimeException("Not implemented");
 	}
 
+	/* (non-Javadoc)
+	 * @see dremel.tableton.ColumnReader#fillByteValues(byte[])
+	 */
+	@Override
+	public int fillByteValues(byte[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer) {
+		int maxSize = dataBuffer.length;
+		int currentIndex = 0;
+		
+		while(next() && currentIndex<maxSize)
+		{			
+			dataBuffer[currentIndex] = getByteValue();
+			repetitionBuffer[currentIndex] = currentRepetitionLevel;
+			isNullBuffer[currentIndex] = currentIsNull;
+			
+			currentIndex++;
+		}
+		
+		if(currentIndex == 0)
+		{
+			return NO_MORE_DATA;
+		}
+		
+		return currentIndex;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.tableton.ColumnReader#fillIntValues(int[])
+	 */
+	@Override
+	public int fillIntValues(int[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer) {
+		int maxSize = dataBuffer.length;
+		int currentIndex = 0;
+		
+		while(next())
+		{			
+			dataBuffer[currentIndex] = getIntValue();
+			repetitionBuffer[currentIndex] = currentRepetitionLevel;
+			isNullBuffer[currentIndex] = currentIsNull;
+			
+			currentIndex++;
+			
+			if(currentIndex>=maxSize)
+			{ // we have to break before doing next();
+				break;
+			}
+		}
+		
+		if(currentIndex == 0)
+		{
+			return NO_MORE_DATA;
+		}
+		
+		return currentIndex;
+		
+	}
+
+	
+
+	/* (non-Javadoc)
+	 * @see dremel.tableton.ColumnReader#getDictionaryDataSize()
+	 */
+	@Override
+	public int getDictionaryDataSize() {
+		throw new RuntimeException("not implemented");	}
+
+	/* (non-Javadoc)
+	 * @see dremel.tableton.ColumnReader#fillStringDictionary(byte[])
+	 */
+	@Override
+	public int fillStringDictionary(byte[] dataBuffer) {
+		throw new RuntimeException("not implemented");	}
+
+	/* (non-Javadoc)
+	 * @see dremel.tableton.ColumnReader#fillStringOffsets(int[])
+	 */
+	@Override
+	public int fillStringOffsets(int[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer) {
+		throw new RuntimeException("not implemented");	}
+
 }
