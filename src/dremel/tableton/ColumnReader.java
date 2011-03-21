@@ -44,12 +44,13 @@ public interface ColumnReader {
 	
 	// high performance methods for the data reading.
 	/**
-	 * fillXXXValues method get as a parameter buffer to be filled with the decoded values
+	 * fillXXXValues method get as a parameter buffer to be filled with the decoded values, the buffer of repetition values and isNull indications 
 	 * return value indicates how many elements was actually filled. if there is enough data left in the column - the result
 	 * expected to be equal to dataBuffer.length
 	 * @param dataBuffer
 	 * @return indicates how many elements was actually filled. if there is enough data left in the column - the result. NO_MORE_DATA indicates taht there is no more data.
 	 */
+	
 	public int fillByteValues(byte[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer);
 	
 	public int fillIntValues(int[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer);

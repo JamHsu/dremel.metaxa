@@ -104,6 +104,11 @@ public class RleEncoderImpl extends StreamEncoder {
 		for(int i = startIndex; i < head; i++) {
 			if (lastNeedle == data[i]) {
 				repeatedBytes++;
+				if ((int)repeatedBytes >= 0xFF) {
+					writeEncodedTuple();
+					lastNeedle = data[i];
+					repeatedBytes = 1;					
+				}
 				continue;
 			}
 			writeEncodedTuple();

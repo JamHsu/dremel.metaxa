@@ -16,20 +16,19 @@
 */
 package dremel.tableton.impl.encoding.bit;
 
-import static org.junit.Assert.assertFalse;
-
 import java.io.IOException;
 import java.io.InputStream;
 
+import dremel.tableton.impl.encoding.common.utils.Bits;
 import dremel.tableton.impl.encoding.StreamDecoder;
-
-
+import dremel.tableton.impl.encoding.common.streams.memory.MemoryStructuredInputStream;
+import dremel.tableton.impl.encoding.common.notify.DataNotification;
 /**
  * Implements Bit decoding scheme
  * @author babay
  *
  */
-public class BitDecoderImpl extends StreamDecoder {
+public class BitDecoderImpl extends StreamDecoder implements DataNotification {
 
 	private static final int MAX_BITS = Integer.SIZE;
 	
@@ -38,6 +37,7 @@ public class BitDecoderImpl extends StreamDecoder {
 	int data = 0;
 	int needleBitWidth = 0;
 	int packedNeedlesPerBundle = 0;
+	int needlesPerBlock = 0;
 	boolean firstTime = true;
 	byte[] bin = new byte[MAX_BITS / Byte.SIZE];
 	
@@ -50,9 +50,29 @@ public class BitDecoderImpl extends StreamDecoder {
 	 * Constructor
 	 */
 	private BitDecoderImpl(InputStream encodedIn) {
-		super.setInStream(encodedIn);
+		MemoryStructuredInputStream msi = new MemoryStructuredInputStream();		
+		msi.setInputStream(encodedIn, this);
+		super.setInStream(msi);
 	}
 
+	/**
+	 * Called when new data block has been read
+	 * @return
+	 */
+	public int notifyDataBlockRead(java.io.InputStream in) {
+		int needlesRemainedFromPrevBlock = 0;
+		if (in instanceof MemoryStructuredInputStream) {
+			if (needlesPerBlock != 0) {
+				needlesRemainedFromPrevBlock = needlesPerBlock;
+			}
+			needlesPerBlock = ((MemoryStructuredInputStream)in).getNumberOfWrittenNeedlesInLastBlock() + needlesRemainedFromPrevBlock;
+		}
+		else {
+			needlesPerBlock = -1;
+		}
+		return 0;
+	}
+	
 	/**
 	 * Returns the number of bytes that can be read (or skipped over) from this input stream without blocking by the next caller of a method for this input stream.
 	 * Overridden method
@@ -89,15 +109,14 @@ public class BitDecoderImpl extends StreamDecoder {
 			firstTime = false;
 			// read bits width
 			try {
-				for(int i = 0; i < MAX_BITS; i += Byte.SIZE) {
-					byte b = (byte)encodedIn.read();
-					needleBitWidth |= (b << i);
-				}				
+				for(int i = 0, j = 0; i < MAX_BITS; i += Byte.SIZE, j++) {
+					bin[j] = (byte)encodedIn.read();
+				}
+				needleBitWidth = Bits.getInt(bin, 0);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				error = true;
-				e.printStackTrace();
-				return 0;
+				throw e;
 			}
 			if (needleBitWidth == -1) {
 				error = true;
@@ -105,21 +124,19 @@ public class BitDecoderImpl extends StreamDecoder {
 		}
 		if (data == 0) {
 			try {
-				for(int i = 0; i < MAX_BITS; i += Byte.SIZE) {
-					int b = (int)encodedIn.read();
-					data |= (b << i);
+				for(int i = 0, j = 0; i < MAX_BITS; i += Byte.SIZE, j++) {
+					bin[j] = (byte)encodedIn.read();
 				}
+				data = Bits.getInt(bin, 0);
 			} catch (IOException e) {
 				error = true;
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return 0;
-			}
-			if (data == -1) {
-				error = true;
+				throw e;
 			}
 		}
 		decode();
+		if (needle == 0 && needlesPerBlock == -1) {
+			throw new IOException();
+		}				
 		return needle;
 	}
 	
@@ -129,7 +146,8 @@ public class BitDecoderImpl extends StreamDecoder {
 	 */
 	protected void decode() {
 		needle = (byte)(data & ((1 << needleBitWidth) - 1));
-		data >>= needleBitWidth;
+		data >>>= needleBitWidth;
+		if (needlesPerBlock >= 0) needlesPerBlock--;
 	}
 	
 }

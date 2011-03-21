@@ -16,12 +16,14 @@
 */
 package dremel.tableton.impl.encoding.bit;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
+import dremel.tableton.impl.encoding.common.utils.Bits;
 import dremel.tableton.impl.encoding.StreamEncoder;
-
-
+import dremel.tableton.impl.encoding.common.streams.memory.MemoryStructuredOutputStream;
 
 /**
  * Implements RLE encoding scheme. This class overrides InputStream's functionality
@@ -35,7 +37,9 @@ public class BitEncoderImpl extends StreamEncoder {
 	int maxBitsWidth = 0;
 	int data = 0;
 	int numOfUsedBits = 0;
+	int encodedNeedles = 0;
 	boolean firstTime = true;
+	MemoryStructuredOutputStream mso = new MemoryStructuredOutputStream();
 	byte[] bout = new byte[MAX_BITS / Byte.SIZE];
 	
 	public static BitEncoderImpl instance(OutputStream out, int maxBitsWidth) {
@@ -48,6 +52,7 @@ public class BitEncoderImpl extends StreamEncoder {
 	 */
 	private BitEncoderImpl(OutputStream out, int maxBitsWidth) {
 		super.setOutputStream(out);
+		mso.setOutputStream(out);
 		this.maxBitsWidth = maxBitsWidth;
 	}
 	
@@ -70,12 +75,7 @@ public class BitEncoderImpl extends StreamEncoder {
 		super.flush();
 		if (data != 0) {
 			writeEncodedData();
-			try {
-				encodedOut.flush();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			mso.flush();
 		}
 	}
 
@@ -85,6 +85,7 @@ public class BitEncoderImpl extends StreamEncoder {
 	public void close() {
 		super.close();
 		flush();
+		mso.close();
 	}
 	
 	/**
@@ -92,24 +93,19 @@ public class BitEncoderImpl extends StreamEncoder {
 	 * @throws IOException 
 	 */
 	protected void encode(int b) {
+		encodedNeedles++;		
 		if (numOfUsedBits + maxBitsWidth > MAX_BITS) {
-			writeEncodedData();
+			writeEncodedData();		
 		}				
 		data |= b << numOfUsedBits;
 		numOfUsedBits += maxBitsWidth;
 	}
 	
 	protected void writeEncodedData() {
-		try {
-			int l = 0;
-			for(int i = 0, j = 0; i < MAX_BITS; i += Byte.SIZE, j++) {
-				bout[j] = (byte)((data >> i) & 0xff);
-			}
-			encodedOut.write(bout);
-			data = 0;
-			numOfUsedBits = 0;			
-		} catch (IOException e) {
-			throw new RuntimeException("writeEncodedData has failed");
-		}
+		Bits.putInt(bout, 0, data);
+		mso.setNumberOfWrittenNeedles(encodedNeedles);
+		mso.write(bout);
+		data = 0;
+		numOfUsedBits = 0;
 	}
 }
