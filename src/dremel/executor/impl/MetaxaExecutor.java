@@ -20,7 +20,6 @@ import dremel.dataset.Slice;
 import dremel.dataset.SliceScanner;
 import dremel.executor.AggResult;
 import dremel.executor.Executor;
-import dremel.executor.SliceOutputStream;
 import dremel.tableton.Tablet;
 
 public class MetaxaExecutor implements Executor {
@@ -110,30 +109,6 @@ public class MetaxaExecutor implements Executor {
 					context1[i++] = r;
 				}
 			}
-		}
-
-		SliceOutputStream outStream = new SimpleOutputStream();
-		while (scanner.hasMore()) {
-			Slice inSlice = scanner.next();
-			Slice outSlice = new dremel.dataset.impl.Slice(query.getSelectExpressions().size());
-			outSlice.setMissingCount(query.getAggregationFunctions().size());
-			script.evaluate(new Object[] { inSlice, outSlice, context1, outStream });
-		}
-
-		// update agg results
-		for (int j = 1; j < context1.length; j++) {
-			AggResult r = (AggResult) context1[j];
-			outStream.updateWithinValue(r.getIndex(), r.getValue(), r.getMarker());
-		}
-
-		System.out.println("");
-		while (outStream.hasReadySlice()) {
-			Slice s = outStream.get();
-			System.out.print("OSLICE:\t");
-			for (int j = 0; j < s.count(); j++) {
-				System.out.print(s.getValue(j) + "\t\t");
-			}
-			System.out.println();
 		}
 	}
 
