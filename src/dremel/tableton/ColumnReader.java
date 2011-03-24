@@ -76,8 +76,26 @@ public interface ColumnReader {
 	 * @return number of entries actually filled in the dataBuffer. NO_MORE_DATA returned if there is no more data.
 	 */
 	public int fillStringOffsets(int[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer);
+	
+	/**
+	 * this method should be used when the string column is not encoded
+	 * @param dataBuffer - the buffer to fill the string data
+	 * @param isNullBuffer - the buffer to be filled 
+	 * @return number of elements actually filled in all arrays (the same for each one), or NO_MORE_DATA, if there no more data to get.
+	 */
+	public int fillStringRowData(byte[] dataBuffer);
+	
+	/**
+	 * Fills up to the given buffers length of repetition level data, and isNull flags.
+	 * Both buffer expected to be of the same length
+	 * @param repetitionBuffer
+	 * @param isNullBuffer
+	 * @return
+	 */
+	int filllevelData(byte[] repetitionBuffer, boolean[] isNullBuffer);
 		
 	//------------------------ constants ---------------------------------
 	public static final int NOT_ENOUGH_SPACE = -2;
 	public static final int NO_MORE_DATA = -1;
+	
 }

@@ -18,6 +18,7 @@ package dremel.tableton;
 
 public interface ColumnWriter {
 
+	public void addStringDataTriple(String data, boolean isNull, byte repLevel, byte defLevel);
 	public void addIntDataTriple(int data, boolean isNull, byte repLevel, byte defLevel);
 	public void setNullValue(byte repLevel, byte defLevel);
 	public void close();

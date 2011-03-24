@@ -77,7 +77,7 @@ public class ColumnReaderImpl implements ColumnReader {
 	 */
 	private void openFiles() {
 				
-		int dataFileMagic = getColumnMagicBytes(columnMetaData.getColumnType());
+		int dataFileMagic = DataSetConstants.getMagicByColumnType(columnMetaData.getColumnType());
 		
 		ColumnFileSet columnFileSet = columnMetaData.getFileSet();
 		
@@ -126,15 +126,6 @@ public class ColumnReaderImpl implements ColumnReader {
 			default: return "unknown type with magic"+columnFileMagic;
 		}
 		
-	}
-
-	private static int getColumnMagicBytes(ColumnType expectedColumnType) {
-		switch(expectedColumnType)
-		{
-			case BYTE: return DataSetConstants.BYTE_COLUMN_MAGIC;
-			case INT: return  DataSetConstants.INT_COLUMN_MAGIC;
-			default: throw new RuntimeException("Unexpected column type" + expectedColumnType);
-		}		
 	}
 
 	@Override
@@ -357,5 +348,116 @@ public class ColumnReaderImpl implements ColumnReader {
 	@Override
 	public int fillStringOffsets(int[] dataBuffer, byte[] repetitionBuffer, boolean[] isNullBuffer) {
 		throw new RuntimeException("not implemented");	}
+
+	
+	/**
+	 * String type specific variables
+	 */
+	int nextBlockLength = NON_INITIALIZED_LENGTH;
+	int nextBlockElementsCount = NON_INITIALIZED_LENGTH;
+	static final int STRING_LENGTH_SIZE = 4;
+	static final int NON_INITIALIZED_LENGTH =-1;
+	static final int NO_MORE_BLOCKS = -2;
+	/* (non-Javadoc)
+	 * @see dremel.tableton.ColumnReader#fillStringRowData(byte[], byte[], boolean[])
+	 */
+	@Override
+	public int fillStringRowData(byte[] dataBuffer) {
+			
+		int spaceLeftInTheBuffer = dataBuffer.length;		
+		
+		try{
+		
+			if(nextBlockLength == NO_MORE_BLOCKS)
+			{
+					return NO_MORE_DATA;
+			}
+		
+			if(nextBlockLength == NON_INITIALIZED_LENGTH)
+			{
+				try{
+					nextBlockLength = dataInput.readInt();								
+				}catch(EOFException ex)
+				{
+					return NO_MORE_DATA;
+				}
+			}
+			
+			if(nextBlockLength>spaceLeftInTheBuffer)
+			{
+				return NOT_ENOUGH_SPACE;
+			}
+			
+			int pos =0;		
+				
+			while(spaceLeftInTheBuffer >= nextBlockLength)
+			{								
+										
+				dataInput.read(dataBuffer, pos, nextBlockLength);
+					
+				spaceLeftInTheBuffer -= nextBlockLength;
+				pos += nextBlockLength;
+				try{
+					nextBlockLength = dataInput.readInt();					
+				}catch(EOFException ex)
+				{
+					nextBlockLength = NO_MORE_BLOCKS;
+					break;
+				}
+
+			}
+				
+			return pos;
+		}
+		catch(Exception ex)
+		{
+			throw new RuntimeException("fillStringRowData failed ", ex);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.tableton.ColumnReader#fillStringRepetitionLevel(byte[])
+	 */
+	public static final int TEMP_DEF_LEVEL_BUFFER_SIZE = 1024;
+	byte[] temporaryDefLevelBuffer = new byte[TEMP_DEF_LEVEL_BUFFER_SIZE];
+	@Override
+	public int filllevelData(byte[] repetitionBuffer, boolean[] isNullBuffer) {		
+		try {
+			// read repetition level
+			int repBytesRead = repetitionInput.read(repetitionBuffer);
+			// read definition level 
+			
+			int isNullBytesRead = 0;
+			int pos = 0;
+			
+			int maxDefLevel = columnMetaData.getMaxDefinitionLevel();
+			
+			while(isNullBytesRead<repBytesRead)
+			{
+				int spaceLeftInResultBuffer = isNullBuffer.length-pos;
+				
+				int bytesToRead = Math.min(spaceLeftInResultBuffer, temporaryDefLevelBuffer.length);
+				int defReadTemp = definitionInput.read(temporaryDefLevelBuffer, 0, bytesToRead);				
+				for(int i=0; i<defReadTemp; i++)
+				{
+					if(temporaryDefLevelBuffer[i]<maxDefLevel)
+					{
+						isNullBuffer[pos]=true;	
+					}else
+					{
+						isNullBuffer[pos]=false;
+					}
+					pos++;
+				}
+				
+				isNullBytesRead +=defReadTemp;
+			}			
+		
+			return pos;	
+		} catch (IOException ex) {
+			throw new RuntimeException("filllevelData failed", ex);
+		}
+	
+	}
 
 }

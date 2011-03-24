@@ -18,7 +18,6 @@ package dremel.tableton.impl.encoding.rle;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 import dremel.tableton.impl.encoding.StreamDecoder;
 

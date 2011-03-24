@@ -16,7 +16,6 @@
 */
 package dremel.tableton.impl.encoding.bit;
 
-import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.OutputStream;

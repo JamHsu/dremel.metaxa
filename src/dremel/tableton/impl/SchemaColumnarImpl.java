@@ -19,9 +19,6 @@ package dremel.tableton.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import dremel.dataset.SchemaTree;
-import dremel.dataset.impl.SchemaTreeImpl;
-import dremel.dataset.impl.SchemaTreeImpl.NodeType;
 import dremel.tableton.ColumnMetaData;
 import dremel.tableton.SchemaColumnar;
 

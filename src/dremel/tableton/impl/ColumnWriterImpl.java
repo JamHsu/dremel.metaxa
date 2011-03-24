@@ -16,6 +16,7 @@
 */
 package dremel.tableton.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +24,6 @@ import java.io.IOException;
 
 import dremel.tableton.ColumnMetaData;
 import dremel.tableton.ColumnWriter;
-import dremel.tableton.ColumnMetaData.ColumnType;
 import dremel.tableton.impl.encoding.EncodingFactory;
 import dremel.tableton.impl.encoding.StreamEncoder;
 
@@ -45,7 +45,7 @@ public class ColumnWriterImpl implements ColumnWriter
 		repOutput = new DataOutputStream(new FileOutputStream(new File(fileSet.getRepFileName())));
 		defOutput = new DataOutputStream(new FileOutputStream(new File(fileSet.getDefFileName())));
 		
-		int dataMagicBytes = getMagicByColumnType(metaData.getColumnType());
+		int dataMagicBytes = DataSetConstants.getMagicByColumnType(metaData.getColumnType());
 		
 		dataOutput.writeInt(dataMagicBytes);
 		repOutput.writeInt(DataSetConstants.REPETITION_COLUMN_MAGIC);
@@ -75,15 +75,7 @@ public class ColumnWriterImpl implements ColumnWriter
 	}
 
 
-	private int getMagicByColumnType(ColumnType columnType) {
-		
-		switch(columnType)
-		{
-			case BYTE : return DataSetConstants.BYTE_COLUMN_MAGIC;
-			case INT : return DataSetConstants.INT_COLUMN_MAGIC;
-			default : throw new RuntimeException("unexpected column type "+ columnType); 
-		}			
-	}
+
 
 	@Override
 	public void addIntDataTriple(int data, boolean isNull, byte repLevel, byte defLevel)
@@ -113,6 +105,7 @@ public class ColumnWriterImpl implements ColumnWriter
 
 	public void close() {		
 		try {
+			flashCurrentStringBuffer();
 			dataOutput.close();		
 			repOutput.close();
 			defOutput.close();		
@@ -124,5 +117,74 @@ public class ColumnWriterImpl implements ColumnWriter
 	@Override
 	public void setNullValue(byte repLevel, byte defLevel) {
 		saveLevels(repLevel, defLevel);			
+	}
+
+	 public static byte[] intToByteArray(int value) {
+	        byte[] b = new byte[4];
+	        for (int i = 0; i < 4; i++) {
+	            int offset = (b.length - 1 - i) * 8;
+	            b[i] = (byte) ((value >>> offset) & 0xFF);
+	        }
+	        return b;
+	    }
+
+
+	/* (non-Javadoc)
+	 * @see dremel.tableton.ColumnWriter#addStringDataTriple(int, boolean, byte, byte)
+	 */
+	ByteArrayOutputStream temporaryStringBlock = new ByteArrayOutputStream();
+	int currentBytesInBlock = 0;
+	
+	public static int MAX_STRING_BLOCK_SIZE=1024*64;
+	
+	@Override
+	public void addStringDataTriple(String data, boolean isNull, byte repLevel,
+			byte defLevel) {
+			
+		// write to the repetition and definition levels as usual
+		saveLevels(repLevel, defLevel);
+		
+		if(!isNull)
+		{
+			if(data.length()+4>MAX_STRING_BLOCK_SIZE)
+			{
+				throw new RuntimeException("Sting length is too big. Maximum is "+(MAX_STRING_BLOCK_SIZE-4));
+			}
+			
+			try {
+				if(currentBytesInBlock+4+data.length()>MAX_STRING_BLOCK_SIZE)
+				{
+					flashCurrentStringBuffer();
+				}
+				// add the data into the buffer
+					
+				temporaryStringBlock.write(intToByteArray(data.length()));
+				currentBytesInBlock+=4;
+				
+				temporaryStringBlock.write(data.getBytes());
+				currentBytesInBlock+=data.getBytes().length;
+								
+			} catch (IOException ex) {
+				throw new RuntimeException("addStringDataTriple failed", ex);
+			}
+		}
+	}
+
+	/**
+	 * 
+	 */
+	private void flashCurrentStringBuffer() {		
+		try {
+			if(temporaryStringBlock.size() > 0)
+			{
+				dataOutput.write(intToByteArray(temporaryStringBlock.size()));
+				byte[] blockData = temporaryStringBlock.toByteArray();
+				dataOutput.write(blockData);
+				temporaryStringBlock.reset();
+			}
+		} catch (IOException ex) {
+			throw new RuntimeException("flashCurrentStringBuffer failed ", ex);
+		}
+		
 	}
 }

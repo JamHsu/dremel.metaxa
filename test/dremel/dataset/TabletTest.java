@@ -1,10 +1,9 @@
 package dremel.dataset;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
+import java.util.LinkedList;
+import java.util.List;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.Test;
 
@@ -23,7 +22,35 @@ import dremel.tableton.impl.TabletBuilderImpl;
 import dremel.tableton.impl.TabletImpl;
 
 public class TabletTest {
+
+
 	
+	
+	public void buildBigStringData(ColumnMetaData columnMetaData, int numberOfStringsToGenerate, String exampleOfString)
+	{
+		ColumnWriter columnBuilder = new ColumnWriterImpl(columnMetaData);
+		// write data
+		for(int i =0; i<numberOfStringsToGenerate; i++)
+		{
+			columnBuilder.addStringDataTriple(exampleOfString, ColumnReader.NOT_NULL, (byte)0, (byte)2);
+		}
+		
+		columnBuilder.close();
+	
+	}
+	
+	public void buildNameUrlData(ColumnMetaData columnMetaData)
+	{
+		ColumnWriter columnBuilder = new ColumnWriterImpl(columnMetaData);
+		// write data
+		columnBuilder.addStringDataTriple("http://A", ColumnReader.NOT_NULL, (byte)0, (byte)2);
+		columnBuilder.addStringDataTriple("http://B", ColumnReader.NOT_NULL, (byte)1, (byte)2);
+		columnBuilder.addStringDataTriple(null, ColumnReader.NULL, (byte)1, (byte)1);
+		columnBuilder.addStringDataTriple("http://C", ColumnReader.NULL, (byte)0, (byte)2);
+		
+		columnBuilder.close();
+	
+	}
 	
 	public void buildLinkBackwardData(ColumnMetaData columnMetaData)
 	{
@@ -49,8 +76,135 @@ public class TabletTest {
 		columnBuilder.close();
 	
 	}
-		
 	
+	
+	public static float calculateMBsSpeed(long sizeInBytes, long timeInMills)
+	{
+		float fSize = sizeInBytes;
+		float fTime = timeInMills;
+		float res = (fSize/(1024*1024))/(fTime/1000);
+		return res;
+	}
+	
+	@Test 
+	public void testStringColumnOnBiggerData()
+	{
+		ColumnMetaData bigStringMetaData= new ColumnMetaData("bigStringColumn", ColumnType.STRING, EncodingType.NONE, "testdata\\bigStringColumn", (byte)1, (byte)2);
+		int NUMBER_OF_STRINGS = 100000;
+		String exampleString = "SomeStringBiggerAndBigger";
+		buildBigStringData(bigStringMetaData, NUMBER_OF_STRINGS, exampleString);
+		ColumnReader reader = new ColumnReaderImpl(bigStringMetaData);
+		boolean hasMoreData = true;
+		long startTime = System.currentTimeMillis();
+		byte[] dataBuffer = new byte[1024*264];
+		while(hasMoreData)
+		{
+			int bytesRead = reader.fillStringRowData(dataBuffer);
+			if(bytesRead == ColumnReader.NO_MORE_DATA)
+			{
+				hasMoreData = false;
+			}
+		}
+		long endTime = System.currentTimeMillis();
+		System.out.println("Speed of strings reading is "+calculateMBsSpeed(NUMBER_OF_STRINGS*exampleString.length(), (endTime-startTime)));
+		
+		assertTrue(true);
+	}
+	
+	@Test 
+	public void testStringColumn()
+	{
+		ColumnMetaData nameUrlMetaData= new ColumnMetaData("Name.url", ColumnType.STRING, EncodingType.NONE, "testdata\\nameUrl", (byte)1, (byte)2);
+		buildNameUrlData(nameUrlMetaData);
+		ColumnReader reader = new ColumnReaderImpl(nameUrlMetaData);
+		
+		
+		// try to read  into buffer which is too small		
+		byte[] smallDataBuffer = new byte[5]; // buffer too small even for one element
+		int bytesRead = reader.fillStringRowData( smallDataBuffer);				
+		assertEquals(ColumnReader.NOT_ENOUGH_SPACE, bytesRead);
+		
+		
+		byte[] dataBuffer = new byte[1024];
+		byte[] repetitionBuffer = new byte[3];
+		boolean[] isNullBuffer = new boolean[3];
+		bytesRead = reader.fillStringRowData( dataBuffer);		
+				
+		int elementsRead = reader.filllevelData(repetitionBuffer, isNullBuffer);
+		assertEquals(elementsRead,3);
+		
+		List<String> columnElements  = readStringRowData(dataBuffer, bytesRead);
+		
+		
+		assertEquals(repetitionBuffer[0],0);
+		assertEquals(repetitionBuffer[1],1);
+		assertEquals(repetitionBuffer[2],1);
+		
+		assertEquals(isNullBuffer[0],false);
+		assertEquals(isNullBuffer[1],false);
+		assertEquals(isNullBuffer[2],true);
+		
+		assertEquals(columnElements.get(0),"http://A");
+		assertEquals(columnElements.get(1),"http://B");
+
+		
+		// try read when there is no more elements
+		bytesRead = reader.fillStringRowData( dataBuffer);
+		assertEquals(ColumnReader.NO_MORE_DATA, bytesRead);
+		
+		elementsRead = reader.filllevelData(repetitionBuffer, isNullBuffer);
+		assertEquals(elementsRead, 1);
+										
+		assertEquals(repetitionBuffer[0],0);				
+		assertEquals(isNullBuffer[0],false);				
+
+	}
+	
+	
+	 /**
+     * Convert the byte array to an int starting from the given offset.
+     *
+     * @param b The byte array
+     * @param offset The array offset
+     * @return The integer
+     */
+    public static int byteArrayToInt(byte[] b, int offset) {
+        int value = 0;
+        for (int i = 0; i < 4; i++) {
+            int shift = (4 - 1 - i) * 8;
+            value += (b[i + offset] & 0x000000FF) << shift;
+        }
+        return value;
+    }
+
+	
+	/**
+	 * @param dataBuffer
+	 * @param elementsRead
+	 * @param isNullBuffer
+	 * @return
+	 */
+	private List<String> readStringRowData(byte[] dataBuffer, int bytesInBuffer) {
+		
+		int bytesProcessed=0;
+		List<String> result = new LinkedList<String>();
+		//ByteArrayInputStream byteInput=new ByteArrayInputStream(dataBuffer);
+		
+		 
+		
+		int pos =0;
+		while (bytesProcessed<bytesInBuffer)
+		{
+			int strLength = byteArrayToInt(dataBuffer,pos);
+			pos+=4;
+			String str=new String(dataBuffer, pos, strLength);
+			pos+=strLength;
+			bytesProcessed+=strLength+4;
+			result.add(str);
+		}
+		return result;
+	}
+
 	@Test 
 	public void testReadValuesInterface()
 	{
