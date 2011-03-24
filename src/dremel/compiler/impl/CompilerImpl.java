@@ -1,6 +1,7 @@
 package dremel.compiler.impl;
 
 import java.io.StringWriter;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -220,14 +221,14 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param rlevel
 	 * @param maxRLevels
 	 */
-	private void calMaxLevel(SchemaTree desc, int rlevel,int dlevel, Map<SchemaTree, Integer> maxRLevels, Map<SchemaTree, Integer> maxDLevels) {
+	private void calMaxLevel(SchemaTree desc, int rlevel, int dlevel, Map<SchemaTree, Integer> maxRLevels, Map<SchemaTree, Integer> maxDLevels) {
 		List<SchemaTree> fs = desc.getFieldsList();
 		for (int i = 0; i < fs.size(); i++) {
 			SchemaTree d = fs.get(i);
 			if (d.isRepeated()) {
 
 				if (d.isRecord()) {
-					calMaxLevel(d, rlevel + 1,dlevel+1, maxRLevels, maxDLevels);
+					calMaxLevel(d, rlevel + 1, dlevel + 1, maxRLevels, maxDLevels);
 					maxRLevels.put(d, rlevel + 1);
 					maxDLevels.put(d, dlevel + 1);
 				} else {
@@ -236,7 +237,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				}
 			} else {
 				if (d.isRecord()) {
-					calMaxLevel(d, rlevel,dlevel+1, maxRLevels, maxDLevels);
+					calMaxLevel(d, rlevel, dlevel + 1, maxRLevels, maxDLevels);
 					maxRLevels.put(d, rlevel);
 					maxDLevels.put(d, dlevel + 1);
 				} else {
@@ -315,7 +316,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		if (node instanceof Function) {
 			Function func = (Function) node;
 			if (func instanceof AggFunction)
-				aggFuncs.add((AggFunction)func);
+				aggFuncs.add((AggFunction) func);
 		} else {
 			for (int i = 0; i < node.getChildCount(); i++) {
 				Node n = node.getChild(i);
@@ -384,7 +385,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Map<SchemaTree, Integer> maxDLevels = new HashMap<SchemaTree, Integer>();
 
 		// bind field+exp to symbols
-		calMaxLevel(SchemaTree, 0,0, maxRLevels, maxDLevels);
+		calMaxLevel(SchemaTree, 0, 0, maxRLevels, maxDLevels);
 		Iterator<SchemaTree> fIt = maxRLevels.keySet().iterator();
 		while (fIt.hasNext()) {
 			SchemaTree d = fIt.next();
@@ -534,17 +535,23 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	}
 
 	public static void main(String[] args) throws Exception {
-		
-		//AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+
+		// AstNode nodes =
+		// Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
+		 AstNode nodes =
+		 Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+		//AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, count(links.forward) within record FROM [document] where \ndocid>0");
 		CompilerImpl compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
 		Script script = new MetaxaExecutor.JavaLangScript(code);
-		
 		System.out.println();
-		
+		System.out.println("[docid]\t\t[c_id]\t\t[fwd]\t\t[s_fwd]\t\t[bwd]\t\t[c_bwd]\t\t[2*3+5]");
 		script.evaluate(new Object[] { query.getTables().get(0), query.getTables().get(0) });
+		// compiler.testFunc(query.getTables().get(0));
+	}
+
+	public void testFunc(Tablet sourceTablet) {
 	}
 }

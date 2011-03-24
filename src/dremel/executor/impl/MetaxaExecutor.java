@@ -31,7 +31,7 @@ public class MetaxaExecutor implements Executor {
 			se = CompilerFactoryFactory.getDefaultCompilerFactory().newScriptEvaluator();
 			se.setReturnType(void.class);
 			
-			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*" , "dremel.tableton.*","java.util.List","java.util.LinkedList" });
+			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*" , "dremel.tableton.*","java.util.List","java.util.LinkedList","java.nio.ByteBuffer" });
 			se.setParameters(new String[] { "sourceTablet", "resultTablet"}, new Class[] { Tablet.class, Tablet.class});
 			se.cook(code);
 		}
