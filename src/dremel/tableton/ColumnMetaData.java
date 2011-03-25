@@ -34,7 +34,7 @@ public class ColumnMetaData {
 	{
 		encodingType = forEncodingType;
 		fileSet = new ColumnFileSet(baseFileName);
-		columnName = forColumnName; 
+		columnName = forColumnName.toLowerCase(); 
 		columnType = forColumnType;
 		
 		maxRepetitionLevel = forMaxRepLevel;
