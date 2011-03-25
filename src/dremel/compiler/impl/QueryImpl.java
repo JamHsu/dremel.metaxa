@@ -12,6 +12,7 @@ import dremel.compiler.Query;
 import dremel.compiler.impl.Expression.AggFunction;
 import dremel.dataset.SchemaTree;
 import dremel.dataset.Table;
+import dremel.tableton.SchemaColumnar;
 import dremel.tableton.Tablet;
 
 /**
@@ -27,8 +28,8 @@ public class QueryImpl implements Query {
 	Map<String, Symbol> symbolTable;
 	Expression filter;
 	int limit;
-	SchemaTree sourceSchema;
-	SchemaTree targetSchema;
+	SchemaColumnar sourceSchema;
+	SchemaColumnar targetSchema;
 	List<AggFunction> aggregationFunctions;
 
 	public QueryImpl() {
@@ -72,12 +73,12 @@ public class QueryImpl implements Query {
 	}
 
 	@Override
-	public SchemaTree getSourceSchema() {
+	public SchemaColumnar getSourceSchema() {
 		return sourceSchema;
 	}
 
 	@Override
-	public SchemaTree getTargetSchema() {
+	public SchemaColumnar getTargetSchema() {
 		return targetSchema;
 	}
 
@@ -90,11 +91,11 @@ public class QueryImpl implements Query {
 		this.limit = limit;
 	}
 
-	public void setSourceSchema(SchemaTree sourceSchema) {
+	public void setSourceSchema(SchemaColumnar sourceSchema) {
 		this.sourceSchema = sourceSchema;
 	}
 
-	public void setTargetSchema(SchemaTree targetSchema) {
+	public void setTargetSchema(SchemaColumnar targetSchema) {
 		this.targetSchema = targetSchema;
 	}
 

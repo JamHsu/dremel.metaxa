@@ -693,7 +693,7 @@ public class Expression implements dremel.compiler.Expression {
 		return dLelel;
 	}
 	
-	public void setdLelel(int dLelel) {
+	public void setDLelel(int dLelel) {
 		this.dLelel = dLelel;
 	}
 	

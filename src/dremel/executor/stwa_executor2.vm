@@ -76,11 +76,14 @@ ColumnReader $symbol.getJavaName()_reader = (ColumnReader)sourceTablet.getColumn
 #end
 ColumnReader reader = null;
 
-//init buffer for within aggregation operation, should be passed by argurment
-ByteBuffer readBuffer = ByteBuffer.allocateDirect(4096);//buffer size must larger than maximum record size of table 
-ByteBuffer writeBuffer = readBuffer.duplicate();
-readBuffer.clear();
-writeBuffer.clear();
+#foreach ($exp in $query.getSelectExpressions())
+ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
+#end
+ColumnWriter writer = null;
+
+//init buffer for within aggregation operation, should be passed by argument
+ByteBuffer writeBuffer = ByteBuffer.allocateDirect(4096);//buffer size must big enough to hold data of biggest record  
+ByteBuffer readBuffer = writeBuffer.asReadOnlyBuffer();
 
 while (hasMoreSlices)
 {
@@ -173,18 +176,26 @@ while (hasMoreSlices)
 			byte state = 0;
 #foreach ($exp in $query.getSelectExpressions())
 			state = readBuffer.get();
-			if (state == 0)
+			writer = $exp.getJavaName()_writer;
+			if (state == 0){
 #if ($exp.isTypeInt())
-				System.out.print(readBuffer.getInt()+"\t\t");
-#elseif ($exp.isTypeFloat())
-				System.out.print(readBuffer.getDouble()+"\t\t");
-#elseif ($exp.isTypeBool())
+				writer.addIntDataTriple(readBuffer.getInt(),ColumnReader.NOT_NULL, level, (byte) 1);
 				//System.out.print(readBuffer.getInt()+"\t\t");
+#elseif ($exp.isTypeFloat())
+				//System.out.print(readBuffer.getDouble()+"\t\t");
+#elseif ($exp.isTypeBool())
+				//System.out.print(readBuffer.get()+"\t\t");
 #elseif ($exp.isTypeString())
 				//System.out.print(readBuffer.getInt()+"\t\t");
-#end			
-			else if (state == 1) System.out.print("NULL\t\t");
-			else if (state == 2) System.out.print("N/A\t\t");
+#end
+			}			
+			else if (state == 1){
+				//System.out.print("NULL\t\t");
+				writer.addIntDataTriple(0,ColumnReader.NULL, (byte) 0, (byte) 0);
+			}
+			else if (state == 2){ 
+				//System.out.print("N/A\t\t");
+			}
 #end
 			System.out.println();
 			sliceCount--;			
@@ -299,3 +310,8 @@ while (hasMoreSlices)
 	}
 #end
 }
+
+#foreach ($exp in $query.getSelectExpressions())
+writer = $exp.getJavaName()_writer;
+writer.close();
+#end

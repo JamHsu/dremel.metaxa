@@ -221,28 +221,47 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param rlevel
 	 * @param maxRLevels
 	 */
-	private void calMaxLevel(SchemaTree desc, int rlevel, int dlevel, Map<SchemaTree, Integer> maxRLevels, Map<SchemaTree, Integer> maxDLevels) {
+	private void calMaxRLevel(SchemaTree desc, int rlevel, Map<SchemaTree, Integer> maxRLevels) {
 		List<SchemaTree> fs = desc.getFieldsList();
 		for (int i = 0; i < fs.size(); i++) {
 			SchemaTree d = fs.get(i);
 			if (d.isRepeated()) {
 
 				if (d.isRecord()) {
-					calMaxLevel(d, rlevel + 1, dlevel + 1, maxRLevels, maxDLevels);
+					calMaxRLevel(d, rlevel + 1,  maxRLevels);
 					maxRLevels.put(d, rlevel + 1);
-					maxDLevels.put(d, dlevel + 1);
 				} else {
 					maxRLevels.put(d, rlevel + 1);
+				}
+			} else {
+				if (d.isRecord()) {
+					calMaxRLevel(d, rlevel, maxRLevels);
+					maxRLevels.put(d, rlevel);
+				} else {
+					maxRLevels.put(d, rlevel);
+				}
+			}
+		}
+	}
+
+	private void calMaxDLevel(SchemaTree desc, int dlevel, Map<SchemaTree, Integer> maxDLevels) {
+		List<SchemaTree> fs = desc.getFieldsList();
+		for (int i = 0; i < fs.size(); i++) {
+			SchemaTree d = fs.get(i);
+			if (d.isRepeated()) {
+
+				if (d.isRecord()) {
+					calMaxRLevel(d, dlevel + 1,  maxDLevels);
+					maxDLevels.put(d, dlevel + 1);
+				} else {
 					maxDLevels.put(d, dlevel + 1);
 				}
 			} else {
 				if (d.isRecord()) {
-					calMaxLevel(d, rlevel, dlevel + 1, maxRLevels, maxDLevels);
-					maxRLevels.put(d, rlevel);
-					maxDLevels.put(d, dlevel + 1);
+					calMaxRLevel(d, dlevel, maxDLevels);
+					maxDLevels.put(d, dlevel);
 				} else {
-					maxRLevels.put(d, rlevel);
-					maxDLevels.put(d, dlevel + 1);
+					maxDLevels.put(d, dlevel);
 				}
 			}
 		}
@@ -275,6 +294,29 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			for (int i = 0; i < node.getChildCount(); i++) {
 				Node n = node.getChild(i);
 				level = getRLevel(n, level, maxLevels);
+			}
+		}
+		return level;
+	}
+
+	int getDLevel(Node node, int level, Map<SchemaTree, Integer> maxLevels) {
+		if (node instanceof Symbol) {
+			Symbol symbol = (Symbol) node;
+			Object o = symbol.getReference();
+			if (o instanceof SchemaTree) {
+				int l = maxLevels.get(o);
+				if (l > level)
+					level = l;
+			} else if (o instanceof Expression) {
+				Expression exp = (Expression) o;
+				int l = exp.getDefinitionLevel();
+				if (l > level)
+					level = l;
+			}
+		} else {
+			for (int i = 0; i < node.getChildCount(); i++) {
+				Node n = node.getChild(i);
+				level = getDLevel(n, level, maxLevels);
 			}
 		}
 		return level;
@@ -385,7 +427,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Map<SchemaTree, Integer> maxDLevels = new HashMap<SchemaTree, Integer>();
 
 		// bind field+exp to symbols
-		calMaxLevel(SchemaTree, 0, 0, maxRLevels, maxDLevels);
+		calMaxRLevel(SchemaTree, 0, maxRLevels);
+		calMaxDLevel(SchemaTree, 0, maxDLevels);
 		Iterator<SchemaTree> fIt = maxRLevels.keySet().iterator();
 		while (fIt.hasNext()) {
 			SchemaTree d = fIt.next();
@@ -413,6 +456,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			Expression exp = (Expression) eIt.next();
 			int level = getRLevel(exp.getRoot(), 0, maxRLevels);
 			exp.setRLevel(level);
+			level = getDLevel(exp.getRoot(), 0, maxDLevels);
+			exp.setDLelel(level);
 			getAggregationFunction(exp.getRoot(), query.getAggregationFunctions());
 			int scopeLevel = getWithinLevel(exp.getWithin(), maxRLevels);
 			exp.setWithinLevel(scopeLevel);
@@ -430,10 +475,22 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 																// logical
 																// expression
 		}
+		SchemaColumnar resultSchema = generateResultSchema(query);
+		((QueryImpl)query).setTargetSchema(resultSchema);
 	}
 
-	public SchemaTree generateResultSchema(Query query) {
-		return null;
+	public SchemaColumnar generateResultSchema(Query query) {
+		ColumnType type = ColumnType.INT;
+		SchemaColumnar schema = new SchemaColumnarImpl();
+		for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
+			if (exp.isTypeFloat())
+				type = ColumnType.FLOAT;
+			else if (exp.isTypeString())
+				type = ColumnType.STRING;
+			ColumnMetaData metaData = new ColumnMetaData(exp.getJavaName(), type, EncodingType.NONE, "testdata\\out_" + exp.getJavaName(), (byte) exp.getRepetitionLevel(), (byte) exp.getDefinitionLevel());
+			schema.addColumnMetaData(metaData);
+		}
+		return schema;
 	}
 
 	@Override
@@ -536,11 +593,9 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	public static void main(String[] args) throws Exception {
 
-		// AstNode nodes =
-		// Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		 AstNode nodes =
-		 Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
-		//AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, count(links.forward) within record FROM [document] where \ndocid>0");
+		// AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+		// AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, count(links.forward) within record FROM [document] where \ndocid>0");
 		CompilerImpl compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
@@ -548,7 +603,29 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Script script = new MetaxaExecutor.JavaLangScript(code);
 		System.out.println();
 		System.out.println("[docid]\t\t[c_id]\t\t[fwd]\t\t[s_fwd]\t\t[bwd]\t\t[c_bwd]\t\t[2*3+5]");
-		script.evaluate(new Object[] { query.getTables().get(0), query.getTables().get(0) });
+		
+		SchemaColumnar schema = query.getTargetSchema();
+		
+		script.evaluate(new Object[] { query.getTables().get(0), schema});
+		
+		Tablet tablet = new TabletImpl(schema);
+		
+		TabletIterator it = tablet.getIterator();
+		
+		while (it.fetch())
+		{
+			for (ColumnReader reader : it.getColumnsMap().values())
+			{
+				if (reader.isNull())
+				{
+					System.out.print("NULL\t\t");
+				}
+				else {
+					System.out.print(reader.getIntValue()+ "\t\t");
+				}
+			}
+			System.out.println();
+		}
 		// compiler.testFunc(query.getTables().get(0));
 	}
 

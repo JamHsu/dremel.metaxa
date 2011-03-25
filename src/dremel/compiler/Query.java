@@ -8,6 +8,7 @@ import dremel.compiler.Expression.Function;
 import dremel.compiler.Expression.Symbol;
 import dremel.compiler.impl.Expression.AggFunction;
 import dremel.dataset.SchemaTree;
+import dremel.tableton.SchemaColumnar;
 import dremel.tableton.Tablet;
 
 /**
@@ -30,10 +31,10 @@ public interface Query {
 
 	public Expression getFilter(); // WHERE clause
 
-	public SchemaTree getSourceSchema(); // common schema of tables or
+	public SchemaColumnar getSourceSchema(); // common schema of tables or
 											// sub-queries in FROM clause
 
-	public SchemaTree getTargetSchema(); // schema for result set, can be source
+	public SchemaColumnar getTargetSchema(); // schema for result set, can be source
 											// schema for parent query if this
 											// query is sub-queries
 
