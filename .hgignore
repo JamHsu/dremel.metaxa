@@ -1,0 +1,9 @@
+
+syntax: regexp
+^tablet\.db$
+syntax: regexp
+^testdata$
+syntax: regexp
+^tablet\.db$
+syntax: regexp
+^testdata$
