@@ -228,7 +228,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			if (d.isRepeated()) {
 
 				if (d.isRecord()) {
-					calMaxRLevel(d, rlevel + 1,  maxRLevels);
+					calMaxRLevel(d, rlevel + 1, maxRLevels);
 					maxRLevels.put(d, rlevel + 1);
 				} else {
 					maxRLevels.put(d, rlevel + 1);
@@ -251,7 +251,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			if (d.isRepeated()) {
 
 				if (d.isRecord()) {
-					calMaxRLevel(d, dlevel + 1,  maxDLevels);
+					calMaxRLevel(d, dlevel + 1, maxDLevels);
 					maxDLevels.put(d, dlevel + 1);
 				} else {
 					maxDLevels.put(d, dlevel + 1);
@@ -476,7 +476,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 																// expression
 		}
 		SchemaColumnar resultSchema = generateResultSchema(query);
-		((QueryImpl)query).setTargetSchema(resultSchema);
+		((QueryImpl) query).setTargetSchema(resultSchema);
 	}
 
 	public SchemaColumnar generateResultSchema(Query query) {
@@ -487,7 +487,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				type = ColumnType.FLOAT;
 			else if (exp.isTypeString())
 				type = ColumnType.STRING;
-			ColumnMetaData metaData = new ColumnMetaData(exp.getJavaName(), type, EncodingType.NONE, "testdata\\out_" + exp.getJavaName(), (byte) exp.getRepetitionLevel(), (byte) exp.getDefinitionLevel());
+			ColumnMetaData metaData = new ColumnMetaData(exp.getJavaName(), type, EncodingType.NONE, "testdata/out_" + exp.getJavaName(), (byte) exp.getRepetitionLevel(), (byte) exp.getDefinitionLevel());
 			schema.addColumnMetaData(metaData);
 		}
 		return schema;
@@ -593,38 +593,57 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	public static void main(String[] args) throws Exception {
 
-		// AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
+		// AstNode nodes =
+		// Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
 		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
-		// AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, count(links.forward) within record FROM [document] where \ndocid>0");
+		// AstNode nodes =
+		// Parser.parseBql("SELECT \ndocid, links.forward, count(links.forward) within record FROM [document] where \ndocid>0");
 		CompilerImpl compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
 		Script script = new MetaxaExecutor.JavaLangScript(code);
-		System.out.println();
-		System.out.println("[docid]\t\t[c_id]\t\t[fwd]\t\t[s_fwd]\t\t[bwd]\t\t[c_bwd]\t\t[2*3+5]");
-		
+		// System.out.println();
+		// System.out.println("[docid]\t\t[c_id]\t\t[fwd]\t\t[s_fwd]\t\t[bwd]\t\t[c_bwd]\t\t[2*3+5]");
+
 		SchemaColumnar schema = query.getTargetSchema();
-		
-		script.evaluate(new Object[] { query.getTables().get(0), schema});
-		
+
+		script.evaluate(new Object[] { query.getTables().get(0), schema });
+
 		Tablet tablet = new TabletImpl(schema);
-		
-		TabletIterator it = tablet.getIterator();
-		
-		while (it.fetch())
-		{
-			for (ColumnReader reader : it.getColumnsMap().values())
-			{
-				if (reader.isNull())
+
+		boolean hasMoreSlices = true;
+		int fetchLevel = 0;
+
+		while (hasMoreSlices) {
+			int nextLevel = 0;
+			hasMoreSlices = false;
+			for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
+				ColumnReader nextReader = tablet.getColumns().get(exp.getJavaName());
+
+				if (nextReader.nextRepetitionLevel() >= fetchLevel) {
+					boolean isLastInReader = nextReader.next();
+					hasMoreSlices = hasMoreSlices || isLastInReader;
+					if (hasMoreSlices)
+					{
+						if (nextReader.isNull())
+						{
+							System.out.print("NULL\t\t");
+						}
+						else
+						{
+							System.out.print(nextReader.getIntValue()+ "\t\t");
+						}
+					}
+				}
+				else
 				{
-					System.out.print("NULL\t\t");
+					System.out.print("N/A\t\t");
 				}
-				else {
-					System.out.print(reader.getIntValue()+ "\t\t");
-				}
+				nextLevel = Math.max(nextLevel, nextReader.nextRepetitionLevel());
 			}
 			System.out.println();
+			fetchLevel = (byte) nextLevel;
 		}
 		// compiler.testFunc(query.getTables().get(0));
 	}

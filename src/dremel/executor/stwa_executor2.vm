@@ -78,6 +78,7 @@ ColumnReader reader = null;
 
 #foreach ($exp in $query.getSelectExpressions())
 ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
+byte $exp.getJavaName()_def = resultSchema.getColumnMetaData("$exp.getJavaName()").getMaxDefinitionLevel();
 #end
 ColumnWriter writer = null;
 
@@ -179,25 +180,14 @@ while (hasMoreSlices)
 			writer = $exp.getJavaName()_writer;
 			if (state == 0){
 #if ($exp.isTypeInt())
-				writer.addIntDataTriple(readBuffer.getInt(),ColumnReader.NOT_NULL, level, (byte) 1);
-				//System.out.print(readBuffer.getInt()+"\t\t");
+				writer.addIntDataTriple(readBuffer.getInt(),ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
 #elseif ($exp.isTypeFloat())
-				//System.out.print(readBuffer.getDouble()+"\t\t");
 #elseif ($exp.isTypeBool())
-				//System.out.print(readBuffer.get()+"\t\t");
 #elseif ($exp.isTypeString())
-				//System.out.print(readBuffer.getInt()+"\t\t");
 #end
 			}			
-			else if (state == 1){
-				//System.out.print("NULL\t\t");
-				writer.addIntDataTriple(0,ColumnReader.NULL, (byte) 0, (byte) 0);
-			}
-			else if (state == 2){ 
-				//System.out.print("N/A\t\t");
-			}
+			else if (state == 1) writer.addIntDataTriple(0,ColumnReader.NULL, level, (byte)($exp.getJavaName()_def-1));
 #end
-			System.out.println();
 			sliceCount--;			
 		}
 		if (sliceCount==0)
