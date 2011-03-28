@@ -593,9 +593,9 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	public static void main(String[] args) throws Exception {
 
-		// AstNode nodes =
-		// Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+		 AstNode nodes =
+		 Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
+		//AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
 		// AstNode nodes =
 		// Parser.parseBql("SELECT \ndocid, links.forward, count(links.forward) within record FROM [document] where \ndocid>0");
 		CompilerImpl compiler = new CompilerImpl();
@@ -603,8 +603,6 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
 		Script script = new MetaxaExecutor.JavaLangScript(code);
-		// System.out.println();
-		// System.out.println("[docid]\t\t[c_id]\t\t[fwd]\t\t[s_fwd]\t\t[bwd]\t\t[c_bwd]\t\t[2*3+5]");
 
 		SchemaColumnar schema = query.getTargetSchema();
 

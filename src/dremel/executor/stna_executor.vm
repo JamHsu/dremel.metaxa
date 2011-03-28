@@ -48,6 +48,12 @@ boolean input_changed_$exp.getJavaName() = false;
 
 ColumnReader reader = null;
 
+#foreach ($exp in $query.getSelectExpressions())
+ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
+byte $exp.getJavaName()_def = resultSchema.getColumnMetaData("$exp.getJavaName()").getMaxDefinitionLevel();
+#end
+ColumnWriter writer = null;
+
 while (hasMoreSlices)
 {
 	//fetch inSlice from sourceTablet
@@ -105,39 +111,32 @@ while (hasMoreSlices)
 	{
 #end
 		//calculate expressions for outSlice
-#foreach ($exp in $query.getSelectExpressions())		
+#foreach ($exp in $query.getSelectExpressions())
+		writer = $exp.getJavaName()_writer;		
 #if ($exp.getSymbols().size()>0)
 		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName())
 		{
 			if(#foreach ($symbol in $exp.getSymbols()) is_$symbol.getJavaName()_null && #end true) //all input are null
 			{
-				System.out.print("NULL\t\t");//TODO: append NULL to resultTablet here
+				writer.addIntDataTriple(0,ColumnReader.NULL, (byte)selectLevel, (byte)($exp.getJavaName()_def-1)); //need verify def level
 			}
 			else
 			{ 
 				$exp.getJavaName() = $exp.getRoot().generateCode();
-				System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
+				writer.addIntDataTriple($exp.getJavaName(),ColumnReader.NOT_NULL, (byte)selectLevel, $exp.getJavaName()_def);
 			}
 			input_changed_$exp.getJavaName() = false;	
 		}
-		else
-		{
-			System.out.print("N/A\t\t"); //for debug only
-		}
 #else
-		if (selectLevel ==0)
+		if (selectLevel == 0)
 		{
 			$exp.getJavaName() = $exp.getRoot().generateCode();
-			System.out.print($exp.getJavaName() + "\t\t"); //TODO: append $exp.getJavaName() to resultTablet here
-		}
-		else
-		{
-			System.out.print("N/A\t\t"); //for debug only
+			writer.addIntDataTriple($exp.getJavaName(),ColumnReader.NOT_NULL, (byte)selectLevel, $exp.getJavaName()_def);
 		}
 #end		
 #end		
 		
-		System.out.println();				
+		//System.out.println();				
 		selectLevel = fetchLevel;
 
 #if ($query.getFilter())	
@@ -148,3 +147,7 @@ while (hasMoreSlices)
 	}
 #end
 }
+
+#foreach ($exp in $query.getSelectExpressions())
+writer = $exp.getJavaName()_writer;writer.close();
+#end
