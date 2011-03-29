@@ -16,7 +16,6 @@
 */
 package dremel.tableton.impl.encoding.bit;
 
-
 import java.io.IOException;
 import java.io.OutputStream;
 

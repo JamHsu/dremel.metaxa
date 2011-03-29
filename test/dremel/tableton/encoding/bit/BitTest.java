@@ -41,7 +41,7 @@ public class BitTest {
         	System.out.println("value is " + b1[i]);
         }
        
-        java.io.File  f = new java.io.File("testdata\\bitTest");
+        java.io.File  f = new java.io.File("testData/bitTest");
        
         java.io.DataOutputStream dataOutput = null;
         try {

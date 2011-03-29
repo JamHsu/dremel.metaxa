@@ -18,7 +18,6 @@ package dremel.tableton;
 
 import java.util.Map;
 
-import dremel.dataset.SchemaTree;
 
 /**
  * In this stage it is not generic implementation but set of methods we need now for the dataset
