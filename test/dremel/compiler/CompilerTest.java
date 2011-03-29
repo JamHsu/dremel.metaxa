@@ -44,8 +44,9 @@ public class CompilerTest {
 		compiler.analyse(query);
 
 		assertTrue(query.getTables().size() == 1);
-		//assertTrue(query.getTables().get(0).getTableName().equals("[document]"));
-		//assertTrue(query.getTables().get(0).getSchema() == Document.getDescriptor());
+		// assertTrue(query.getTables().get(0).getTableName().equals("[document]"));
+		// assertTrue(query.getTables().get(0).getSchema() ==
+		// Document.getDescriptor());
 		assertTrue(query.getSubQueries().size() == 0);
 
 		Iterator<Symbol> it = query.getSymbolTable().values().iterator();
@@ -108,46 +109,7 @@ public class CompilerTest {
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
-		Script script = new MetaxaExecutor.JavaLangScript(code);
-
-		SchemaColumnar schema = query.getTargetSchema();
-
-		script.evaluate(new Object[] { query.getTables().get(0), schema });
-
-		Tablet tablet = new TabletImpl(schema);
-
-		boolean hasMoreSlices = true;
-		int fetchLevel = 0;
-
-		while (hasMoreSlices) {
-			int nextLevel = 0;
-			hasMoreSlices = false;
-			for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
-				ColumnReader nextReader = tablet.getColumns().get(exp.getJavaName());
-
-				if (nextReader.nextRepetitionLevel() >= fetchLevel) {
-					boolean isLastInReader = nextReader.next();
-					hasMoreSlices = hasMoreSlices || isLastInReader;
-					if (hasMoreSlices)
-					{
-						if (nextReader.isNull())
-						{
-							System.out.print("NULL\t\t");
-						}
-						else
-						{
-							System.out.print(nextReader.getIntValue()+ "\t\t");
-						}
-					}
-				}
-				else
-				{
-					System.out.print("N/A\t\t");
-				}
-				nextLevel = Math.max(nextLevel, nextReader.nextRepetitionLevel());
-			}
-			System.out.println();
-			fetchLevel = (byte) nextLevel;
-		}
+		MetaxaExecutor executor = new MetaxaExecutor(query, code);
+		executor.execute();
 	}
 }

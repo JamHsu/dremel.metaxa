@@ -115,8 +115,7 @@ public class tabletIntegrationTest {
 		SliceScanner scanner = new TabletIteratorAdapter(tabletIterator, fieldsOrder);
 		
 		try {
-			Script script = new MetaxaExecutor.JavaLangScript(compiler.compileToScript(query));
-			Executor executor = new MetaxaExecutor(query, scanner, script);
+			Executor executor = new MetaxaExecutor(query, compiler.compileToScript(query));
 			executor.execute();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

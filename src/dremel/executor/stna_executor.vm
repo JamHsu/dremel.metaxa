@@ -46,6 +46,11 @@ String $exp.getJavaName() = null;
 boolean input_changed_$exp.getJavaName() = false;
 #end
 
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+ColumnReader $symbol.getJavaName()_reader = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
+#end
+#end
 ColumnReader reader = null;
 
 #foreach ($exp in $query.getSelectExpressions())
@@ -61,7 +66,7 @@ while (hasMoreSlices)
 	hasMoreSlices = false;
 #foreach ($symbol in $query.getSymbolTable().values())
 #if ($symbol.isColumnID())
-	reader = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
+	reader = $symbol.getJavaName()_reader;
 	if(reader.nextRepetitionLevel() >= fetchLevel)
 	{
 #foreach ($exp in $query.getSelectExpressions())

@@ -20,8 +20,11 @@ import dremel.dataset.Slice;
 import dremel.dataset.SliceScanner;
 import dremel.executor.AggResult;
 import dremel.executor.Executor;
+import dremel.executor.Executor.Script;
+import dremel.tableton.ColumnReader;
 import dremel.tableton.SchemaColumnar;
 import dremel.tableton.Tablet;
+import dremel.tableton.impl.TabletImpl;
 
 public class MetaxaExecutor implements Executor {
 
@@ -32,7 +35,7 @@ public class MetaxaExecutor implements Executor {
 			se = CompilerFactoryFactory.getDefaultCompilerFactory().newScriptEvaluator();
 			se.setReturnType(void.class);
 
-			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*", "dremel.tableton.*","dremel.tableton.impl.*", "java.util.List", "java.util.LinkedList", "java.nio.ByteBuffer" });
+			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*", "dremel.tableton.*", "dremel.tableton.impl.*", "java.util.List", "java.util.LinkedList", "java.nio.ByteBuffer" });
 			se.setParameters(new String[] { "sourceTablet", "resultSchema" }, new Class[] { Tablet.class, SchemaColumnar.class });
 			se.cook(code);
 		}
@@ -49,14 +52,12 @@ public class MetaxaExecutor implements Executor {
 
 	List<SchemaTree> fields;
 	Query query;
-	SliceScanner scanner;
 	Script script;
 
-	public MetaxaExecutor(Query query, SliceScanner scanner, Script script) {
+	public MetaxaExecutor(Query query, String code) throws Exception {
 		fields = new LinkedList<SchemaTree>();
 		this.query = query;
-		this.script = script;
-		this.scanner = scanner;
+		script = new MetaxaExecutor.JavaLangScript(code);
 	}
 
 	@Override
@@ -76,46 +77,41 @@ public class MetaxaExecutor implements Executor {
 
 	@Override
 	public void execute() {
-		Object[] context1 = new Object[query.getAggregationFunctions().size() + 1];// fix-size
-																					// context,
-																					// hold
-																					// static
-																					// allocated
-																					// elements
-		context1[0] = new Integer(0); // selectLevel
-		Iterator<AggFunction> fIt = query.getAggregationFunctions().iterator();
+		SchemaColumnar schema = query.getTargetSchema();
 
-		// allocate space for within aggregation function
-		int i = 1;
-		while (fIt.hasNext()) {
-			dremel.compiler.impl.Expression.Function func = (dremel.compiler.impl.Expression.Function) fIt.next();
+		script.evaluate(new Object[] { query.getTables().get(0), schema });
 
-			if (func.getName().equalsIgnoreCase("count")) {
-				AggResult r = new AggResult(func, new Integer(0));
-				r.setIndex(getIndex(func));
-				context1[i++] = r;
-			} else if (func.getName().equalsIgnoreCase("sum")) {
-				assert (func.getChildCount() == 1);
-				assert (func.getChild(0) instanceof Symbol);
-				Symbol symbol = (Symbol) func.getChild(0);
-				assert (symbol.getReference() instanceof SchemaTree);
-				SchemaTree d = (SchemaTree) symbol.getReference();
-				if (d.isTypeInt64()) {
-					AggResult r = new AggResult(func, new Integer(0));
-					r.setIndex(getIndex(func));
-					context1[i++] = r;
-				} else if (d.isTypeFloat()) {
-					AggResult r = new AggResult(func, new Float(0.0));
-					r.setIndex(getIndex(func));
-					context1[i++] = r;
+		//print result tablet
+		Tablet tablet = new TabletImpl(schema);
+
+		boolean hasMoreSlices = true;
+		int fetchLevel = 0;
+
+		while (hasMoreSlices) {
+			int nextLevel = 0;
+			hasMoreSlices = false;
+			for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
+				ColumnReader nextReader = tablet.getColumns().get(exp.getJavaName());
+
+				if (nextReader.nextRepetitionLevel() >= fetchLevel) {
+					boolean isLastInReader = nextReader.next();
+					hasMoreSlices = hasMoreSlices || isLastInReader;
+					if (hasMoreSlices) {
+						if (nextReader.isNull()) {
+							System.out.print("NULL\t\t");
+						} else {
+							System.out.print(nextReader.getIntValue() + "\t\t");
+						}
+					}
+				} else {
+					System.out.print("N/A\t\t");
 				}
+				nextLevel = Math.max(nextLevel, nextReader.nextRepetitionLevel());
 			}
+			System.out.println();
+			fetchLevel = (byte) nextLevel;
 		}
-	}
 
-	@Override
-	public SliceScanner getScanner() {
-		return scanner;
 	}
 
 	@Override

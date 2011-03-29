@@ -17,7 +17,6 @@ public interface Executor {
 	
 	public List<SchemaTree> getFieldList();
 	public void execute();
-	public SliceScanner getScanner();
 	public Query getQuery();
 	public Script getScript();
 }

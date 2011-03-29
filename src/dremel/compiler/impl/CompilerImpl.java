@@ -593,59 +593,13 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	public static void main(String[] args) throws Exception {
 
-		 AstNode nodes =
-		 Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		//AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
-		// AstNode nodes =
-		// Parser.parseBql("SELECT \ndocid, links.forward, count(links.forward) within record FROM [document] where \ndocid>0");
+		 AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
+//		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
 		CompilerImpl compiler = new CompilerImpl();
 		Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
-		Script script = new MetaxaExecutor.JavaLangScript(code);
-
-		SchemaColumnar schema = query.getTargetSchema();
-
-		script.evaluate(new Object[] { query.getTables().get(0), schema });
-
-		Tablet tablet = new TabletImpl(schema);
-
-		boolean hasMoreSlices = true;
-		int fetchLevel = 0;
-
-		while (hasMoreSlices) {
-			int nextLevel = 0;
-			hasMoreSlices = false;
-			for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
-				ColumnReader nextReader = tablet.getColumns().get(exp.getJavaName());
-
-				if (nextReader.nextRepetitionLevel() >= fetchLevel) {
-					boolean isLastInReader = nextReader.next();
-					hasMoreSlices = hasMoreSlices || isLastInReader;
-					if (hasMoreSlices)
-					{
-						if (nextReader.isNull())
-						{
-							System.out.print("NULL\t\t");
-						}
-						else
-						{
-							System.out.print(nextReader.getIntValue()+ "\t\t");
-						}
-					}
-				}
-				else
-				{
-					System.out.print("N/A\t\t");
-				}
-				nextLevel = Math.max(nextLevel, nextReader.nextRepetitionLevel());
-			}
-			System.out.println();
-			fetchLevel = (byte) nextLevel;
-		}
-		// compiler.testFunc(query.getTables().get(0));
-	}
-
-	public void testFunc(Tablet sourceTablet) {
+		MetaxaExecutor executor = new MetaxaExecutor(query, code);
+		executor.execute();
 	}
 }
