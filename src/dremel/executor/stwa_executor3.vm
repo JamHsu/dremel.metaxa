@@ -1,0 +1,300 @@
+/**
+ * This template for single thread, WITHIN aggregation function query
+ * Currently do not support complex aggregation like: count(f)+1, sum(f1)+sum(f2)....
+ * This template using SlicePool to store output slices and do aggregation expression
+ */
+ 
+int selectLevel = 0;
+int fetchLevel = 0;
+int nextLevel = 0;
+boolean hasMoreSlices = true;
+byte missingCount = $query.getAggregationFunctions().size();
+int sliceCount = 0;
+
+//inSlice declaration
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+#if ($symbol.isTypeInt())
+int $symbol.getJavaName() = 0;
+#elseif ($symbol.isTypeFloat())
+double $symbol.getJavaName() = 0.0;
+#elseif ($symbol.isTypeBool())
+boolean $symbol.getJavaName() = false;
+#elseif ($symbol.isTypeString())
+String $symbol.getJavaName() = null;
+#end
+boolean is_$symbol.getJavaName()_null = true;
+#end
+#end
+
+//outSlice declaration
+#foreach ($exp in $query.getSelectExpressions())
+#set($isCol = 0)
+#if ($exp.getAlias())
+#set($symbol=$query.getSymbolTable().get($exp.getAlias()))
+#if($symbol && $symbol.isColumnID())
+#set($isCol = 1)
+#end
+#end
+#if($isCol == 0)
+#if ($exp.isTypeInt())
+int $exp.getJavaName() = 0;
+#elseif ($exp.isTypeFloat())
+double $exp.getJavaName() = 0.0;
+#elseif ($exp.isTypeBool())
+boolean $exp.getJavaName() = false;
+#elseif ($exp.isTypeString())
+String $exp.getJavaName() = null;
+#end
+#end
+boolean input_changed_$exp.getJavaName() = false;
+int $exp.getJavaName()_state = 3;
+
+#end
+//STATE: 0~OK, 1~NULL, 2~NOTEMITTED, 3~NEW SCOPE 
+
+//aggregation function variables
+#foreach ($func in $query.getAggregationFunctions())
+#if ($func.isTypeInt())
+int $func.getSymbol().getJavaName()_$func.hashCode() = 0;
+#elseif ($exp.isTypeFloat())
+double $func.getSymbol().getJavaName()_$func.hashCode()  = 0.0;
+#elseif ($exp.isTypeBool())
+boolean $func.getSymbol().getJavaName()_$func.hashCode() = false;
+#elseif ($exp.isTypeString())
+String $func.getSymbol().getJavaName()_$func.hashCode() = null;
+#end
+int $func.getSymbol().getJavaName()_slice_marker = -1; //is negative for first time 
+int $func.getSymbol().getJavaName()_field_marker = 0;
+
+#end 
+
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+ColumnReader $symbol.getJavaName()_reader = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
+#end
+#end
+ColumnReader reader = null;
+
+#foreach ($exp in $query.getSelectExpressions())
+ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
+byte $exp.getJavaName()_def = resultSchema.getColumnMetaData("$exp.getJavaName()").getMaxDefinitionLevel();
+#end
+ColumnWriter writer = null;
+
+SlicePool slicePool = new SlicePool(1024*64);
+byte[] sliceBuffer = new byte[1024];
+int updatePosition = 0;
+int slicePosition = 0;
+
+while (hasMoreSlices)
+{
+	//fetch inSlice from sourceTablet
+	nextLevel = 0;
+	hasMoreSlices = false;
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+	reader = $symbol.getJavaName()_reader;
+	if(reader.nextRepetitionLevel() >= fetchLevel)
+	{
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.getSymbols().contains($symbol))
+		input_changed_$exp.getJavaName() = true;
+#end
+#end	
+		boolean isLastInReader = reader.next();
+		hasMoreSlices = hasMoreSlices || isLastInReader;
+		
+		if(reader.isNull())
+		{
+			is_$symbol.getJavaName()_null = true;
+#if ($symbol.isTypeInt())
+			$symbol.getJavaName() = 0;
+#elseif ($symbol.isTypeFloat())
+			$symbol.getJavaName() = 0.0;
+#elseif ($symbol.isTypeBool())
+			$symbol.getJavaName() = false;
+#elseif ($symbol.isTypeString())
+			$symbol.getJavaName() = "";
+#end			
+		}
+		else
+		{
+			is_$symbol.getJavaName()_null = false;
+#if ($symbol.isTypeInt())
+			$symbol.getJavaName() = reader.getIntValue();
+#elseif ($symbol.isTypeFloat())
+			//$symbol.getJavaName() = reader.getFloatValue();
+#elseif ($symbol.isTypeBool())
+			//$symbol.getJavaName() = reader.getBoolValue();
+#elseif ($symbol.isTypeString())
+			$symbol.getJavaName() = reader.getStringValue();
+#end
+		}
+	}
+	nextLevel = Math.max(nextLevel, reader.nextRepetitionLevel());
+#end
+#end	
+
+	fetchLevel = nextLevel;
+
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.getWithin())
+#set ($symbol=$exp.getSymbols().get(0))		
+	if (selectLevel <= $exp.getWithinLevel() || (!hasMoreSlices)) //emit agg values if condition matched
+	{
+		if ($symbol.getJavaName()_slice_marker >=0 )
+		{
+#if ($exp.isTypeInt())		
+			slicePool.updateIntAggValue($symbol.getJavaName()_slice_marker,$symbol.getJavaName()_field_marker,$symbol.getJavaName()_$exp.getRoot().hashCode()); //update int aggval
+			$symbol.getJavaName()_$exp.getRoot().hashCode() = 0;
+#elseif ($exp.isTypeFloat())
+			//writeBuffer.putDouble($symbol.getJavaName()_field_marker, $symbol.getJavaName()_$exp.getRoot().hashCode()); //update float aggval
+			$symbol.getJavaName()_$exp.getRoot().hashCode() = 0.0;
+#end
+		}
+		else
+		{
+			missingCount--;
+		}
+		$symbol.getJavaName()_slice_marker = -1;
+		$exp.getJavaName()_state = 3; //change to new within scope
+		missingCount++;
+	}
+#end
+#end
+
+		while (slicePool.prepareSliceRead())
+		{
+			byte level = slicePool.getLevel();
+			byte state = 0;
+			int intVal = 0;
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.isTypeInt())
+			intVal = slicePool.readInt();
+			state = slicePool.getLastState();
+			writer = $exp.getJavaName()_writer;
+			if (state == 0) writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
+#elseif ($exp.isTypeFloat())
+#elseif ($exp.isTypeBool())
+#elseif ($exp.isTypeString())
+#end
+			else if (state == 1) writer.addIntDataTriple(0,ColumnReader.NULL, level, (byte)($exp.getJavaName()_def-1)); //need verify def level
+#end
+			slicePool.endSliceRead();
+		}
+
+	if (!hasMoreSlices) break;
+
+#if ($query.getFilter())
+	if ($query.getFilter().getRoot().generateCode())
+	{
+#end
+		
+		//calculate expressions for outSlice
+		sliceBuffer[0]=missingCount; //first byte is missingCount
+		sliceBuffer[1]=((byte)selectLevel); //second byte is selectLevel
+		updatePosition = 2;
+		
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.getWithin())
+		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName()) //agg expression
+		{
+#set ($symbol=$exp.getSymbols().get(0))		
+			if (!is_$symbol.getJavaName()_null)
+			{
+				$exp.getRoot().generateCode();//update agg value
+			}
+			input_changed_$exp.getJavaName() = false;
+		}
+		if ($exp.getJavaName()_state == 3) //the first slice of scope
+		{
+			sliceBuffer[updatePosition++] = (byte)0;
+			$symbol.getJavaName()_field_marker = updatePosition;
+#if ($exp.isTypeInt())		
+			updatePosition += 4;
+#elseif ($exp.isTypeFloat())
+			updatePosition += 8;
+#end
+			missingCount--;
+		}
+		else
+		{
+			sliceBuffer[updatePosition++] = (byte)2;
+		}
+#else
+#if ($exp.getSymbols().size()>0)
+		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName()) //non agg expression
+		{
+			if(#foreach ($symbol in $exp.getSymbols()) is_$symbol.getJavaName()_null && #end true) //all input are null
+			{
+				$exp.getJavaName()_state = 1; //null state
+				sliceBuffer[updatePosition++] = (byte)1;
+			}
+			else
+			{ 
+				$exp.getJavaName() = $exp.getRoot().generateCode();
+				$exp.getJavaName()_state = 0; //ok state
+				sliceBuffer[updatePosition++] = (byte)0;
+#if ($exp.isTypeInt())
+				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 24);
+				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 16);
+				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 8);
+				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName());
+#elseif ($exp.isTypeFloat())
+#elseif ($exp.isTypeBool())
+#elseif ($exp.isTypeString())
+#end			
+			}
+			input_changed_$exp.getJavaName() = false;
+		}
+		else
+		{
+			$exp.getJavaName()_state = 2; //N/A state
+			sliceBuffer[updatePosition++] = (byte)2;
+		}
+#else
+		if (selectLevel == 0) //expression with constant only will be at level 0
+		{
+			$exp.getJavaName() = $exp.getRoot().generateCode();
+			$exp.getJavaName()_state = 0; //ok state
+			sliceBuffer[updatePosition++] = (byte)0;
+#if ($exp.isTypeInt())
+			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 24);
+			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 16);
+			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 8);
+			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName());
+#elseif ($exp.isTypeFloat())
+#elseif ($exp.isTypeBool())
+#elseif ($exp.isTypeString())
+#end			
+		}
+		else
+		{
+			$exp.getJavaName()_state = 2; //N/A state
+			sliceBuffer[updatePosition++] = (byte)2;
+		}
+#end		
+#end 
+#end
+		slicePosition = slicePool.writeSlice(sliceBuffer,updatePosition);
+		
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.getWithin())
+#set ($symbol=$exp.getSymbols().get(0))	
+		if ($exp.getJavaName()_state == 3) //the first slice of scope
+		{
+			$symbol.getJavaName()_slice_marker = slicePosition;
+			$exp.getJavaName()_state = 2;
+		}
+#end
+#end
+		selectLevel = fetchLevel;
+#if ($query.getFilter())	
+	} 
+	else 
+	{
+		if(selectLevel > fetchLevel) selectLevel = fetchLevel;
+	}
+#end
+}

@@ -15,8 +15,6 @@
  */
 package dremel.executor;
 
-import java.nio.ByteBuffer;
-
 /**
  * Circular Buffer for slice caching. This implementation is not thread safe but
  * can access by two threads (one for reading, one for writing). This class is
@@ -30,96 +28,108 @@ import java.nio.ByteBuffer;
 public class SlicePool {
 
 	int buffer_size; // can be maximum 2GB
-	ByteBuffer r_buffer;
-	ByteBuffer w_buffer;
-	int count;
+	byte[] buffer;
+	int slice_count;
+	int end;
+	int start;
+	byte lastState;
 
-	/**
-	 * 
-	 */
-	public SlicePool(int bufferSize) {
-		buffer_size = bufferSize;
-		w_buffer = ByteBuffer.allocateDirect(buffer_size + 4); // always have
-																// minimum
-																// 4 bytes for
-																// circular
-																// pointer
-		r_buffer = w_buffer.duplicate();
-		count = 0;
+	public SlicePool(int size) {
+		slice_count = 0;
+		buffer_size = size;
+		buffer = new byte[size];
+		end = 0;
+		start = 0;
+		lastState = -1;
 	}
 
-	/**
-	 * @return the buffer
-	 */
-	public ByteBuffer getReadBuffer() {
-		return r_buffer;
-	}
+	public boolean prepareSliceRead() {
+		if (slice_count > 0) {
+			int missing = buffer[start];
 
-	/**
-	 * @return the buffer
-	 */
-	public ByteBuffer getWriteBuffer() {
-		return w_buffer;
-	}
-
-	/**
-	 * - check for available free block in buffer, do rewind if required
-	 * 
-	 * @param size
-	 *            size of slice
-	 * @return true if buffer is available for a slice with size bytes
-	 */
-	public boolean prepareWrite(int size) {
-		int end = w_buffer.position();
-		int start = r_buffer.position();
-
-		int r_size = size + 4; // including a pointer of block header
-		if (end >= start) {
-			if (buffer_size - end >= r_size) {
-				w_buffer.putInt(r_size);
-				return true;
-			} else if (start >= r_size) {
-				w_buffer.putInt(0); // pointer to zero position
-				w_buffer.position(0); // return to head
-				w_buffer.putInt(r_size);
-				return true;
+			if (missing == -1) {
+				start = 0;
+				missing = buffer[0];
 			}
-		} else {
-			int avail = start - end;
-			if (avail < 0)
-				avail = buffer_size - end;
-			if (avail >= r_size) {
-				w_buffer.putInt(r_size);
+
+			if (missing == 0) {
+				start++;
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public void endWrite() {
-		count++;
+	public byte getLevel() {
+		byte tmp = buffer[start];
+		start++;
+		return tmp;
 	}
 
-	/**
-	 * - get size of next slice, do rewind if required
-	 * 
-	 * @return size of next slice
-	 */
-	public int prepareRead() {
-		int size = r_buffer.getInt(); // get size of next slice
-		if (size == 0) // need return to head
-		{
-			r_buffer.position(0);
+	public byte getLastState() {
+		return lastState;
+	}
+
+	public int readInt() {
+		lastState = buffer[start++];
+
+		if (lastState == 0) {
+			//big-endian
+			int tmp = (buffer[start] << 24) + ((buffer[start + 1] & 0xFF) << 16) + ((buffer[start + 2] & 0xFF) << 8) + (buffer[start + 3] & 0xFF);
+			start += 4;
+			return tmp;
 		}
-		size = r_buffer.getInt();
-		return size;
+		return 0;
 	}
 
-	public void endRead() {
-		count--;
+	public double readFloat() {
+		lastState = buffer[start++];
+
+		if (lastState == 0) {
+			//big-endian
+			long tmp = ((long) (0xff & buffer[start]) << 56 | (long) (0xff & buffer[start + 1]) << 48 | (long) (0xff & buffer[start + 2]) << 40 | (long) (0xff & buffer[start + 3]) << 32 | (long) (0xff & buffer[start + 4]) << 24
+					| (long) (0xff & buffer[start + 5]) << 16 | (long) (0xff & buffer[start + 6]) << 8 | (long) (0xff & buffer[start + 7]));
+			start += 8;
+			return Double.longBitsToDouble(tmp);
+		}
+		return 0;
 	}
 
-	public int sliceCount() {
-		return count;
+	public String readString() {
+		return null;
+	}
+
+	public void endSliceRead() {
+		slice_count--;
+	}
+
+	public int writeSlice(byte[] slice, int length) {
+		if (end >= start) {
+			if (end + length >= buffer_size - 1) {
+				buffer[end] = -1;
+				end = 0;
+			} else {
+				System.arraycopy(slice, 0, buffer, end, length);
+				end += length;
+				slice_count++;
+				return (end - length);
+			}
+		}
+
+		if (end + length <= start) {
+			System.arraycopy(slice, 0, buffer, end, length);
+			end += length;
+			slice_count++;
+			return (end - length);
+		}
+		return -1;
+	}
+
+	public void updateIntAggValue(int slicePos, int offset, int val) {
+		buffer[slicePos]--;//= buffer[slicePos]-1;
+		buffer[slicePos + offset] = (byte) (val >> 24);
+		buffer[slicePos + offset + 1] = (byte) (val >> 16);
+		buffer[slicePos + offset + 2] = (byte) (val >> 8);
+		buffer[slicePos + offset + 3] = (byte) (val);
 	}
 }
