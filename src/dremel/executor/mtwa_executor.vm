@@ -1,9 +1,11 @@
-final SlicePool inPool = new SlicePool(1024*64);
-final SlicePool outPool = new SlicePool(1024*64);
+long startTime=System.currentTimeMillis();
+final SlicePool inPool = new SlicePool(64*1024);
+final SlicePool outPool = new SlicePool(64*1024);
 
 Runnable TabletReader = new Runnable() {
 public void run() {
-
+	int count_count=0;
+	System.out.println("BEGIN READER");
 #foreach ($symbol in $query.getSymbolTable().values())
 #if ($symbol.isColumnID())
 	ColumnReader $symbol.getJavaName()_reader = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
@@ -64,6 +66,7 @@ public void run() {
 #end	
 		//System.out.println();
 		if (!hasMoreSlices) break;
+		//System.out.println(count_count++);
 		fetchLevel = nextLevel;
 		sliceBuffer[1]=(byte)fetchLevel; //update level to buffer
 		
@@ -79,6 +82,7 @@ public void run() {
 
 Runnable TabletWriter = new Runnable() {
 public void run() {
+	System.out.println("BEGIN WRITER");
 #foreach ($exp in $query.getSelectExpressions())
 	ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
 	byte $exp.getJavaName()_def = resultSchema.getColumnMetaData("$exp.getJavaName()").getMaxDefinitionLevel();
@@ -100,7 +104,7 @@ public void run() {
 			if (state == 0) 
 			{
 				writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
-				System.out.print(intVal+"\t\t");
+				//System.out.print(intVal+"\t\t");
 			}
 #elseif ($exp.isTypeFloat())
 #elseif ($exp.isTypeBool())
@@ -109,24 +113,28 @@ public void run() {
 			else if (state == 1)
 			{
 				writer.addIntDataTriple(0,ColumnReader.NULL, level, (byte)($exp.getJavaName()_def-1)); //need verify def level
-				System.out.print("NULL\t\t");
+				//System.out.print("NULL\t\t");
 			}
 			else
 			{
-				System.out.print("N/A\t\t");
+				//System.out.print("N/A\t\t");
 			}
 #end
-			System.out.println();
+			//System.out.println();
 			outPool.endSliceRead();
 			//try{outPool.notify();}catch (InterruptedException e) {e.printStackTrace();}
 		}//if
 	}//while
+#foreach ($exp in $query.getSelectExpressions())
+	writer = $exp.getJavaName()_writer;writer.close();
+#end
 	System.out.println("END WRITER");
 }//run
 };
 
 Runnable QueryExecutor = new Runnable() {
 public void run() {
+	System.out.println("BEGIN EXECUTOR");
 	int selectLevel = 0;
 	byte missingCount = $query.getAggregationFunctions().size();
 	
@@ -212,17 +220,17 @@ public void run() {
 			{
 				is_$symbol.getJavaName()_null = false;
 				$symbol.getJavaName() = intVal;
-				System.out.print(intVal+"\t\t");
+				//System.out.print(intVal+"\t\t");
 			}
 			else if (state == 1) //NULL
 			{
-				System.out.print("NULL\t\t");
+				//System.out.print("NULL\t\t");
 				is_$symbol.getJavaName()_null = true;
 				$symbol.getJavaName() = 0;
 			}
 			else
 			{
-				System.out.print("N/A\t\t");
+				//System.out.print("N/A\t\t");
 			}
 #elseif ($symbol.isTypeFloat())
 #elseif ($symbol.isTypeBool())
@@ -231,7 +239,7 @@ public void run() {
 
 #end
 #end
-			System.out.println();
+			//System.out.println();
 			inPool.endSliceRead();
 			//try{inPool.notify();}catch (InterruptedException e) {e.printStackTrace();}
 /***********************************************************************************************/			
@@ -344,6 +352,8 @@ public void run() {
 #end		
 #end 
 #end
+			//for (int i=0;i<updatePosition;i++) System.out.print(sliceBuffer[i]+" ");
+			//System.out.println();
 			slicePosition = outPool.writeSlice(sliceBuffer,updatePosition);
 			while (slicePosition == -1)
 			{
@@ -371,6 +381,20 @@ public void run() {
 #end	
 		}//if
 	}//while
+	
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.getWithin())
+#set ($symbol=$exp.getSymbols().get(0))		
+		if ($symbol.getJavaName()_slice_marker >=0 )
+		{
+#if ($exp.isTypeInt())		
+			outPool.updateIntAggValue($symbol.getJavaName()_slice_marker,$symbol.getJavaName()_field_marker,$symbol.getJavaName()_$exp.getRoot().hashCode()); //update int aggval
+			$symbol.getJavaName()_$exp.getRoot().hashCode() = 0;
+#elseif ($exp.isTypeFloat())
+#end
+		}
+#end
+#end
 	outPool.endPool();
 	System.out.println("END EXECUTOR");
 }//run
@@ -383,3 +407,8 @@ Thread queryExecutor = new Thread(QueryExecutor);
 tabletReader.start();
 tabletWriter.start();
 queryExecutor.start();
+
+//wait for all thread terminated
+while (tabletReader.isAlive() || tabletWriter.isAlive() || queryExecutor.isAlive()){}
+
+System.out.println("Time:"+(System.currentTimeMillis()-startTime));

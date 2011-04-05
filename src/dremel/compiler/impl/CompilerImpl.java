@@ -536,13 +536,18 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		} else
 			throw new RuntimeException("Can not get tablet");
 	}
+	
+	final int MULTIPLE = 10;
 
 	private void buildLinkBackwardData(ColumnMetaData columnMetaData) {
 		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(columnMetaData);
 		// write data
-		columnBuilder.addIntDataTriple(0, ColumnReader.NULL, (byte) 0, (byte) 1);
-		columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
-		columnBuilder.addIntDataTriple(30, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
+		for (int i=0;i<MULTIPLE;i++)
+		{
+			columnBuilder.addIntDataTriple(0, ColumnReader.NULL, (byte) 0, (byte) 1);
+			columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
+			columnBuilder.addIntDataTriple(30, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
+		}
 
 		columnBuilder.close();
 
@@ -551,10 +556,13 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	private void buildLinksForwardData(ColumnMetaData columnMetaData) {
 		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(columnMetaData);
 		// write data
-		columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
-		columnBuilder.addIntDataTriple(40, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
-		columnBuilder.addIntDataTriple(60, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
-		columnBuilder.addIntDataTriple(80, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
+		for (int i=0;i<MULTIPLE;i++)
+		{
+			columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
+			columnBuilder.addIntDataTriple(40, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
+			columnBuilder.addIntDataTriple(60, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
+			columnBuilder.addIntDataTriple(80, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
+		}
 
 		columnBuilder.close();
 	}
@@ -563,8 +571,11 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(docidMetaData);
 		// write data
-		columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
-		columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
+		for (int i=0;i<MULTIPLE;i++)
+		{
+			columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
+			columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
+		}
 
 		columnBuilder.close();
 
@@ -572,13 +583,13 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	public Tablet getPaperSchemaTablet() {
 		// build single column tablet for the input
-		ColumnMetaData linksBackwardMetaData = new ColumnMetaData("Links.Backward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksBackward", (byte) 1, (byte) 2);
+		ColumnMetaData linksBackwardMetaData = new ColumnMetaData("Links.Backward", ColumnType.INT, EncodingType.NONE, "testdata/LinksBackward", (byte) 1, (byte) 2);
 		buildLinkBackwardData(linksBackwardMetaData);
 
-		ColumnMetaData linksForwardMetaData = new ColumnMetaData("Links.Forward", ColumnType.INT, EncodingType.NONE, "testdata\\LinksForward", (byte) 1, (byte) 2);
+		ColumnMetaData linksForwardMetaData = new ColumnMetaData("Links.Forward", ColumnType.INT, EncodingType.NONE, "testdata/LinksForward", (byte) 1, (byte) 2);
 		buildLinksForwardData(linksForwardMetaData);
 
-		ColumnMetaData docidMetaData = new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata\\docid", (byte) 0, (byte) 0);
+		ColumnMetaData docidMetaData = new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata/docid", (byte) 0, (byte) 0);
 		buildDocIDData(docidMetaData);
 
 		SchemaColumnar schema = new SchemaColumnarImpl();
@@ -594,14 +605,15 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	public static void main(String[] args) throws Exception {
 
 //		 AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		//AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");		
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+		//AstNode nodes = Parser.parseBql("SELECT \ndocid, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");		
 		CompilerImpl compiler = new CompilerImpl();
 		final Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
 		MetaxaExecutor executor = new MetaxaExecutor(query, code);
 		executor.execute();
+		
 		
 	}
 }

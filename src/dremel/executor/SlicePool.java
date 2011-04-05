@@ -114,19 +114,26 @@ public class SlicePool {
 	}
 
 	public int writeSlice(byte[] slice, int length) {
-		if (end >= start) {
-			if (end + length >= buffer_size - 1) {
-				buffer[end] = -1;
-				end = 0;
-			} else {
+		//System.out.println(this.hashCode()+":"+start+" "+end);
+		int st = start; //avoid start changed
+		if (end >= st) {
+			if (end + length + 2 < buffer_size) {
 				System.arraycopy(slice, 0, buffer, end, length);
 				end += length;
 				slice_count++;
 				return (end - length);
+			} else {
+				if (length + 2 < st)
+				{
+					buffer[end] = -1;
+					System.arraycopy(slice, 0, buffer, 0, length);
+					end = length;
+					slice_count++;
+					return 0;
+				}
 			}
 		}
-
-		if (end + length < start) {
+		else if (end + length + 2 < st) {
 			System.arraycopy(slice, 0, buffer, end, length);
 			end += length;
 			slice_count++;
@@ -136,6 +143,7 @@ public class SlicePool {
 	}
 
 	public void updateIntAggValue(int slicePos, int offset, int val) {
+		//System.out.println("agg:"+slicePos+" "+offset+" "+val);
 		buffer[slicePos]--;//= buffer[slicePos]-1;
 		buffer[slicePos + offset] = (byte) (val >> 24);
 		buffer[slicePos + offset + 1] = (byte) (val >> 16);
