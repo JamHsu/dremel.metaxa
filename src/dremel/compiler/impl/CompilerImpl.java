@@ -512,7 +512,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				if (query.getAggregationFunctions().size() == 0)
 					template = Velocity.getTemplate("src/dremel/executor/stna_executor.vm");
 				else if (query.getGroupByExpressions().size() == 0) {
-					template = Velocity.getTemplate("src/dremel/executor/stwa_executor3.vm");
+					template = Velocity.getTemplate("src/dremel/executor/mtwa_executor.vm");
 				} else
 					throw new RuntimeException("Not support query type");
 			} catch (Exception e) {
@@ -594,12 +594,14 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	public static void main(String[] args) throws Exception {
 
 //		 AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+		//AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");		
 		CompilerImpl compiler = new CompilerImpl();
-		Query query = compiler.parse(nodes);
+		final Query query = compiler.parse(nodes);
 		compiler.analyse(query);
 		String code = compiler.compileToScript(query);
 		MetaxaExecutor executor = new MetaxaExecutor(query, code);
 		executor.execute();
+		
 	}
 }

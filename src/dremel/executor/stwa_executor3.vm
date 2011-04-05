@@ -237,9 +237,9 @@ while (hasMoreSlices)
 				$exp.getJavaName()_state = 0; //ok state
 				sliceBuffer[updatePosition++] = (byte)0;
 #if ($exp.isTypeInt())
-				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 24);
-				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 16);
-				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 8);
+				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() >> 24);
+				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() >> 16);
+				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() >> 8);
 				sliceBuffer[updatePosition++] = (byte)($exp.getJavaName());
 #elseif ($exp.isTypeFloat())
 #elseif ($exp.isTypeBool())
@@ -260,9 +260,9 @@ while (hasMoreSlices)
 			$exp.getJavaName()_state = 0; //ok state
 			sliceBuffer[updatePosition++] = (byte)0;
 #if ($exp.isTypeInt())
-			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 24);
-			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 16);
-			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() << 8);
+			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() >> 24);
+			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() >> 16);
+			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName() >> 8);
 			sliceBuffer[updatePosition++] = (byte)($exp.getJavaName());
 #elseif ($exp.isTypeFloat())
 #elseif ($exp.isTypeBool())

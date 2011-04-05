@@ -33,6 +33,16 @@ public class SlicePool {
 	int end;
 	int start;
 	byte lastState;
+	boolean more = true;
+	
+	public boolean hasMore() {
+		return (more || (slice_count > 0));
+	}
+	
+	public void endPool()
+	{
+		more = false;
+	}
 
 	public SlicePool(int size) {
 		slice_count = 0;
@@ -116,7 +126,7 @@ public class SlicePool {
 			}
 		}
 
-		if (end + length <= start) {
+		if (end + length < start) {
 			System.arraycopy(slice, 0, buffer, end, length);
 			end += length;
 			slice_count++;
