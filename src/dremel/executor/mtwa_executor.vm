@@ -4,7 +4,6 @@ final SlicePool2 outPool = new SlicePool2(64*1024);
 
 Runnable TabletReader = new Runnable() {
 public void run() {
-	int count_count=0;
 	System.out.println("BEGIN READER");
 #foreach ($symbol in $query.getSymbolTable().values())
 #if ($symbol.isColumnID())
@@ -37,7 +36,6 @@ public void run() {
 			if(reader.isNull())
 			{
 				sliceBuffer[position++] = 1; //state=1 is NULL value
-				//System.out.print("NULL\t\t");
 			}
 			else
 			{
@@ -45,7 +43,6 @@ public void run() {
 				//write value
 #if ($symbol.isTypeInt())
 				int val = reader.getIntValue();
-				//System.out.print(val+"\t\t");
 				sliceBuffer[position++] = (byte)(val >> 24);
 				sliceBuffer[position++] = (byte)(val >> 16);
 				sliceBuffer[position++] = (byte)(val >> 8);
@@ -59,21 +56,15 @@ public void run() {
 		else
 		{
 			sliceBuffer[position++] = 2; //state=2 is N/A value
-			//System.out.print("N/A\t\t");
 		}
 		nextLevel = Math.max(nextLevel, reader.nextRepetitionLevel());
 #end
 #end	
-		//System.out.println();
 		if (!hasMoreSlices) break;
-		//System.out.println(count_count++);
 		fetchLevel = nextLevel;
 		sliceBuffer[1]=(byte)fetchLevel; //update level to buffer
 		
-		while (inPool.writeSlice(sliceBuffer, position) == -1)
-		{
-			//try{inPool.wait();}catch (InterruptedException e) {e.printStackTrace();}
-		}
+		while (inPool.writeSlice(sliceBuffer, position) == -1){}
 	}//while
 	inPool.endPool();
 	System.out.println("END READER");
@@ -104,7 +95,6 @@ public void run() {
 			if (state == 0) 
 			{
 				writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
-				//System.out.print(intVal+"\t\t");
 			}
 #elseif ($exp.isTypeFloat())
 #elseif ($exp.isTypeBool())
@@ -113,16 +103,9 @@ public void run() {
 			else if (state == 1)
 			{
 				writer.addIntDataTriple(0,ColumnReader.NULL, level, (byte)($exp.getJavaName()_def-1)); //need verify def level
-				//System.out.print("NULL\t\t");
-			}
-			else
-			{
-				//System.out.print("N/A\t\t");
-			}
+			}/**/
 #end
-			//System.out.println();
 			outPool.endSliceRead();
-			//try{outPool.notify();}catch (InterruptedException e) {e.printStackTrace();}
 		}//if
 	}//while
 #foreach ($exp in $query.getSelectExpressions())
@@ -220,17 +203,11 @@ public void run() {
 			{
 				is_$symbol.getJavaName()_null = false;
 				$symbol.getJavaName() = intVal;
-				//System.out.print(intVal+"\t\t");
 			}
 			else if (state == 1) //NULL
 			{
-				//System.out.print("NULL\t\t");
 				is_$symbol.getJavaName()_null = true;
 				$symbol.getJavaName() = 0;
-			}
-			else
-			{
-				//System.out.print("N/A\t\t");
 			}
 #elseif ($symbol.isTypeFloat())
 #elseif ($symbol.isTypeBool())
@@ -239,9 +216,7 @@ public void run() {
 
 #end
 #end
-			//System.out.println();
 			inPool.endSliceRead();
-			//try{inPool.notify();}catch (InterruptedException e) {e.printStackTrace();}
 /***********************************************************************************************/			
 #foreach ($exp in $query.getSelectExpressions())
 #if ($exp.getWithin())
@@ -404,12 +379,13 @@ Thread tabletReader = new Thread(TabletReader);
 Thread tabletWriter = new Thread(TabletWriter);
 Thread queryExecutor = new Thread(QueryExecutor);
 
+//tabletReader.setPriority(Thread.MAX_PRIORITY);
+//tabletWriter.setPriority(Thread.MAX_PRIORITY);
+//queryExecutor.setPriority(Thread.MIN_PRIORITY);
+
 tabletReader.start();
 tabletWriter.start();
 queryExecutor.start();
-
-//System.out.println("In pool:"+inPool.hashCode());
-//System.out.println("Out pool:"+outPool.hashCode());
 
 //wait for all thread terminated
 while (tabletReader.isAlive() || tabletWriter.isAlive() || queryExecutor.isAlive()){}

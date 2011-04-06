@@ -44,6 +44,9 @@ public class SlicePool2 {
 
 	public void endPool() {
 		more = false;
+		synchronized (readLock) {
+			readLock.notifyAll();
+		}
 	}
 
 	public SlicePool2(int size) {
@@ -72,7 +75,7 @@ public class SlicePool2 {
 
 		synchronized (readLock) {
 			try {
-				// System.out.println("Wait for read:"+this.hashCode());
+				 //System.out.println("Wait for read:"+this.hashCode());
 				readLock.wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -121,7 +124,10 @@ public class SlicePool2 {
 	}
 
 	public void endSliceRead() {
-		slice_count--;
+		synchronized (this) {
+			slice_count--;	
+		}
+		
 		synchronized (writeLock) {
 			writeLock.notify();
 		}
@@ -153,6 +159,7 @@ public class SlicePool2 {
 
 		synchronized (writeLock) {
 			try {
+				//System.out.println("Wait for write:"+this.hashCode());
 				writeLock.wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -163,7 +170,9 @@ public class SlicePool2 {
 	}
 
 	public void endSliceWrite() {
-		slice_count++;
+		synchronized (this) {
+			slice_count++;	
+		}
 		synchronized (readLock) {
 			readLock.notify();
 		}

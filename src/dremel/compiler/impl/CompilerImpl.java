@@ -512,7 +512,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				if (query.getAggregationFunctions().size() == 0)
 					template = Velocity.getTemplate("src/dremel/executor/stna_executor.vm");
 				else if (query.getGroupByExpressions().size() == 0) {
-					template = Velocity.getTemplate("src/dremel/executor/stwa_executor.vm");
+					template = Velocity.getTemplate("src/dremel/executor/stwa_executor3.vm");
 				} else
 					throw new RuntimeException("Not support query type");
 			} catch (Exception e) {
