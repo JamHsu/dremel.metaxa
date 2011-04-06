@@ -34,13 +34,15 @@ public class SlicePool {
 	int start;
 	byte lastState;
 	boolean more = true;
-	
+
+	// boolean waitRead = true;
+	// boolean waitWrite = false;
+
 	public boolean hasMore() {
 		return (more || (slice_count > 0));
 	}
-	
-	public void endPool()
-	{
+
+	public void endPool() {
 		more = false;
 	}
 
@@ -67,6 +69,14 @@ public class SlicePool {
 				return true;
 			}
 		}
+
+		synchronized (this) {
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		return false;
 	}
 
@@ -84,7 +94,7 @@ public class SlicePool {
 		lastState = buffer[start++];
 
 		if (lastState == 0) {
-			//big-endian
+			// big-endian
 			int tmp = (buffer[start] << 24) + ((buffer[start + 1] & 0xFF) << 16) + ((buffer[start + 2] & 0xFF) << 8) + (buffer[start + 3] & 0xFF);
 			start += 4;
 			return tmp;
@@ -96,7 +106,7 @@ public class SlicePool {
 		lastState = buffer[start++];
 
 		if (lastState == 0) {
-			//big-endian
+			// big-endian
 			long tmp = ((long) (0xff & buffer[start]) << 56 | (long) (0xff & buffer[start + 1]) << 48 | (long) (0xff & buffer[start + 2]) << 40 | (long) (0xff & buffer[start + 3]) << 32 | (long) (0xff & buffer[start + 4]) << 24
 					| (long) (0xff & buffer[start + 5]) << 16 | (long) (0xff & buffer[start + 6]) << 8 | (long) (0xff & buffer[start + 7]));
 			start += 8;
@@ -111,40 +121,57 @@ public class SlicePool {
 
 	public void endSliceRead() {
 		slice_count--;
+
+		synchronized (buffer) {
+			buffer.notify();
+		}
 	}
 
 	public int writeSlice(byte[] slice, int length) {
-		//System.out.println(this.hashCode()+":"+start+" "+end);
-		int st = start; //avoid start changed
+		int st = start; // avoid start changed
 		if (end >= st) {
-			if (end + length + 2 < buffer_size) {
+			if (end + length < buffer_size) {
 				System.arraycopy(slice, 0, buffer, end, length);
 				end += length;
 				slice_count++;
+				synchronized (this) {
+					this.notify();
+				}
 				return (end - length);
 			} else {
-				if (length + 2 < st)
-				{
+				if (length < st) {
 					buffer[end] = -1;
 					System.arraycopy(slice, 0, buffer, 0, length);
 					end = length;
 					slice_count++;
+					synchronized (this) {
+						this.notify();
+					}
 					return 0;
 				}
 			}
-		}
-		else if (end + length + 2 < st) {
+		} else if (end + length < st) {
 			System.arraycopy(slice, 0, buffer, end, length);
 			end += length;
 			slice_count++;
+			synchronized (this) {
+				this.notify();
+			}
 			return (end - length);
 		}
+		synchronized (buffer) {
+			try {
+				buffer.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
 		return -1;
 	}
 
 	public void updateIntAggValue(int slicePos, int offset, int val) {
-		//System.out.println("agg:"+slicePos+" "+offset+" "+val);
-		buffer[slicePos]--;//= buffer[slicePos]-1;
+		buffer[slicePos]--;// = buffer[slicePos]-1;
 		buffer[slicePos + offset] = (byte) (val >> 24);
 		buffer[slicePos + offset + 1] = (byte) (val >> 16);
 		buffer[slicePos + offset + 2] = (byte) (val >> 8);

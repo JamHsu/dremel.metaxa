@@ -83,7 +83,7 @@ byte $exp.getJavaName()_def = resultSchema.getColumnMetaData("$exp.getJavaName()
 ColumnWriter writer = null;
 
 //init buffer for within aggregation operation, should be passed by argument
-ByteBuffer writeBuffer = ByteBuffer.allocateDirect(4096);//buffer size must big enough to hold data of biggest record  
+ByteBuffer writeBuffer = ByteBuffer.allocateDirect(64*1024);//buffer size must big enough to hold data of biggest record  
 ByteBuffer readBuffer = writeBuffer.asReadOnlyBuffer();
 
 while (hasMoreSlices)

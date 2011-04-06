@@ -537,7 +537,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			throw new RuntimeException("Can not get tablet");
 	}
 	
-	final int MULTIPLE = 10;
+	final int MULTIPLE = 1000;
 
 	private void buildLinkBackwardData(ColumnMetaData columnMetaData) {
 		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(columnMetaData);

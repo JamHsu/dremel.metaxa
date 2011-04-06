@@ -410,5 +410,4 @@ queryExecutor.start();
 
 //wait for all thread terminated
 while (tabletReader.isAlive() || tabletWriter.isAlive() || queryExecutor.isAlive()){}
-
 System.out.println("Time:"+(System.currentTimeMillis()-startTime));

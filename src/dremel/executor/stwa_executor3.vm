@@ -3,6 +3,8 @@
  * Currently do not support complex aggregation like: count(f)+1, sum(f1)+sum(f2)....
  * This template using SlicePool to store output slices and do aggregation expression
  */
+
+long startTime=System.currentTimeMillis();
  
 int selectLevel = 0;
 int fetchLevel = 0;
@@ -298,3 +300,5 @@ while (hasMoreSlices)
 	}
 #end
 }
+
+System.out.println("Time:"+(System.currentTimeMillis()-startTime));

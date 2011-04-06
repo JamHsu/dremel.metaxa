@@ -82,35 +82,35 @@ public class MetaxaExecutor implements Executor {
 		script.evaluate(new Object[] { query.getTables().get(0), schema });
 
 		//print result tablet
-		Tablet tablet = new TabletImpl(schema);
-
-		boolean hasMoreSlices = true;
-		int fetchLevel = 0;
-
-		while (hasMoreSlices) {
-			int nextLevel = 0;
-			hasMoreSlices = false;
-			for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
-				ColumnReader nextReader = tablet.getColumns().get(exp.getJavaName());
-
-				if (nextReader.nextRepetitionLevel() >= fetchLevel) {
-					boolean isLastInReader = nextReader.next();
-					hasMoreSlices = hasMoreSlices || isLastInReader;
-					if (hasMoreSlices) {
-						if (nextReader.isNull()) {
-							System.out.print("NULL\t\t");
-						} else {
-							System.out.print(nextReader.getIntValue() + "\t\t");
-						}
-					}
-				} else {
-					System.out.print("N/A\t\t");
-				}
-				nextLevel = Math.max(nextLevel, nextReader.nextRepetitionLevel());
-			}
-			System.out.println();
-			fetchLevel = (byte) nextLevel;
-		}
+//		Tablet tablet = new TabletImpl(schema);
+//
+//		boolean hasMoreSlices = true;
+//		int fetchLevel = 0;
+//
+//		while (hasMoreSlices) {
+//			int nextLevel = 0;
+//			hasMoreSlices = false;
+//			for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
+//				ColumnReader nextReader = tablet.getColumns().get(exp.getJavaName());
+//
+//				if (nextReader.nextRepetitionLevel() >= fetchLevel) {
+//					boolean isLastInReader = nextReader.next();
+//					hasMoreSlices = hasMoreSlices || isLastInReader;
+//					if (hasMoreSlices) {
+//						if (nextReader.isNull()) {
+//							System.out.print("NULL\t\t");
+//						} else {
+//							System.out.print(nextReader.getIntValue() + "\t\t");
+//						}
+//					}
+//				} else {
+//					System.out.print("N/A\t\t");
+//				}
+//				nextLevel = Math.max(nextLevel, nextReader.nextRepetitionLevel());
+//			}
+//			System.out.println();
+//			fetchLevel = (byte) nextLevel;
+//		}
 
 	}
 
