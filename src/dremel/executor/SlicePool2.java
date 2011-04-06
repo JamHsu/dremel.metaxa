@@ -25,7 +25,7 @@ package dremel.executor;
  * 
  */
 
-public class SlicePool {
+public class SlicePool2 {
 
 	int buffer_size; // can be maximum 2GB
 	byte[] buffer;
@@ -35,6 +35,9 @@ public class SlicePool {
 	byte lastState;
 	boolean more = true;
 
+	Object readLock = new Object();
+	Object writeLock = new Object();
+
 	public boolean hasMore() {
 		return (more || (slice_count > 0));
 	}
@@ -43,7 +46,7 @@ public class SlicePool {
 		more = false;
 	}
 
-	public SlicePool(int size) {
+	public SlicePool2(int size) {
 		slice_count = 0;
 		buffer_size = size;
 		buffer = new byte[size];
@@ -64,6 +67,15 @@ public class SlicePool {
 			if (missing == 0) {
 				start++;
 				return true;
+			}
+		}
+
+		synchronized (readLock) {
+			try {
+				// System.out.println("Wait for read:"+this.hashCode());
+				readLock.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 		return false;
@@ -110,6 +122,9 @@ public class SlicePool {
 
 	public void endSliceRead() {
 		slice_count--;
+		synchronized (writeLock) {
+			writeLock.notify();
+		}
 	}
 
 	public int writeSlice(byte[] slice, int length) {
@@ -135,11 +150,23 @@ public class SlicePool {
 			endSliceWrite();
 			return (end - length);
 		}
+
+		synchronized (writeLock) {
+			try {
+				writeLock.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
 		return -1;
 	}
 
 	public void endSliceWrite() {
 		slice_count++;
+		synchronized (readLock) {
+			readLock.notify();
+		}
 	}
 
 	public void updateIntAggValue(int slicePos, int offset, int val) {

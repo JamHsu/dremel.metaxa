@@ -512,7 +512,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				if (query.getAggregationFunctions().size() == 0)
 					template = Velocity.getTemplate("src/dremel/executor/stna_executor.vm");
 				else if (query.getGroupByExpressions().size() == 0) {
-					template = Velocity.getTemplate("src/dremel/executor/mtwa_executor.vm");
+					template = Velocity.getTemplate("src/dremel/executor/stwa_executor.vm");
 				} else
 					throw new RuntimeException("Not support query type");
 			} catch (Exception e) {
@@ -537,7 +537,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			throw new RuntimeException("Can not get tablet");
 	}
 	
-	final int MULTIPLE = 1000;
+	final int MULTIPLE = 10000;
 
 	private void buildLinkBackwardData(ColumnMetaData columnMetaData) {
 		ColumnWriterImpl columnBuilder = new ColumnWriterImpl(columnMetaData);

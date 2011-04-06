@@ -1,6 +1,6 @@
 long startTime=System.currentTimeMillis();
-final SlicePool inPool = new SlicePool(64*1024);
-final SlicePool outPool = new SlicePool(64*1024);
+final SlicePool2 inPool = new SlicePool2(64*1024);
+final SlicePool2 outPool = new SlicePool2(64*1024);
 
 Runnable TabletReader = new Runnable() {
 public void run() {
@@ -407,6 +407,9 @@ Thread queryExecutor = new Thread(QueryExecutor);
 tabletReader.start();
 tabletWriter.start();
 queryExecutor.start();
+
+//System.out.println("In pool:"+inPool.hashCode());
+//System.out.println("Out pool:"+outPool.hashCode());
 
 //wait for all thread terminated
 while (tabletReader.isAlive() || tabletWriter.isAlive() || queryExecutor.isAlive()){}
