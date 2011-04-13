@@ -91,7 +91,7 @@ public void run() {
 #if ($exp.isTypeInt())
 			intVal = outPool.readInt();
 			state = outPool.getLastState();
-			writer = $exp.getJavaName()_writer;
+			/*writer = $exp.getJavaName()_writer;
 			if (state == 0) 
 			{
 				writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
