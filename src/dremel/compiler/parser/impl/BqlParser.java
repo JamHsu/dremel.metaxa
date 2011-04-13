@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:45:30 /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g 2011-02-12 23:31:24
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g 2011-04-13 22:35:40
 package dremel.compiler.parser.impl;
 
 import org.antlr.runtime.*;
@@ -28,134 +28,134 @@ public class BqlParser extends Parser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "N_SELECT_STATEMENT", "N_FROM", "N_SELECT", "N_WHERE", "N_GROUPBY", "N_ORDERBY", "N_LIMIT", "N_ID", "N_CREATE_COLUMN", "N_ALIAS", "N_WITHIN", "N_TABLE", "N_WITHIN_RECORD", "N_ASC", "N_DESC", "N_TABLE_NAME", "N_NAME", "N_IN", "N_CALL", "N_OP", "N_LOGICAL_OR", "N_LOGICAL_AND", "N_BITWISE_OR", "N_BITWISE_XOR", "N_BITWISE_AND", "N_EQUAL", "N_NOT_EQUAL", "N_LESS_THAN", "N_LESS_THAN_OR_EQUAL", "N_GREATER_THAN", "N_LOGICAL_NOT", "N_BITWISE_NOT", "N_CONTAINS", "N_REMAINDER", "N_GREATER_THAN_OR_EQUAL", "N_BITWISE_RIGHT_SHIFT", "N_DIVIDE", "N_MULTIPLY", "N_SUBSTRUCT", "N_ADD", "N_BITWISE_LEFT_SHIFT", "N_IN_PARAMS", "N_CALL_PARAMS", "N_INT", "N_FLOAT", "N_STRING", "N_EXPRESSION", "SEMICOLON", "SELECT", "COMMA", "AS", "WITHIN", "RECORD", "FROM", "LPAREN", "RPAREN", "WHERE", "GROUPBY", "ORDERBY", "ASC", "DESC", "LIMIT", "INT", "DOT", "ID", "STAR", "FLOAT", "STRING", "LOGICAL_OR", "LOGICAL_AND", "BITWISE_OR", "BITWISE_XOR", "BITWISE_AND", "EQUAL", "NOT_EQUAL", "LESS_THAN", "LESS_THAN_OR_EQUAL", "GREATER_THAN", "GREATER_THAN_OR_EQUAL", "BITWISE_LEFT_SHIFT", "BITWISE_RIGHT_SHIFT", "ADD", "SUBSTRUCT", "REMAINDER", "CONTAINS", "BITWISE_NOT", "LOGICAL_NOT", "IN", "SLASH", "DIV", "S", "E", "L", "C", "T", "W", "I", "H", "N", "R", "O", "D", "A", "F", "M", "G", "U", "P", "WS", "B", "Y", "COLON", "LSQUARE", "RSQUARE", "LCURLY", "RCURLY", "F_ID1", "F_ID2", "F_EXPONENT", "F_HEX_DIGIT", "COMMENT", "J", "K", "Q", "V", "X", "Z"
     };
-    public static final int EOF=-1;
-    public static final int N_SELECT_STATEMENT=4;
-    public static final int N_FROM=5;
-    public static final int N_SELECT=6;
-    public static final int N_WHERE=7;
-    public static final int N_GROUPBY=8;
-    public static final int N_ORDERBY=9;
-    public static final int N_LIMIT=10;
-    public static final int N_ID=11;
-    public static final int N_CREATE_COLUMN=12;
-    public static final int N_ALIAS=13;
-    public static final int N_WITHIN=14;
-    public static final int N_TABLE=15;
-    public static final int N_WITHIN_RECORD=16;
-    public static final int N_ASC=17;
-    public static final int N_DESC=18;
-    public static final int N_TABLE_NAME=19;
-    public static final int N_NAME=20;
-    public static final int N_IN=21;
-    public static final int N_CALL=22;
-    public static final int N_OP=23;
-    public static final int N_LOGICAL_OR=24;
-    public static final int N_LOGICAL_AND=25;
-    public static final int N_BITWISE_OR=26;
-    public static final int N_BITWISE_XOR=27;
-    public static final int N_BITWISE_AND=28;
-    public static final int N_EQUAL=29;
-    public static final int N_NOT_EQUAL=30;
-    public static final int N_LESS_THAN=31;
-    public static final int N_LESS_THAN_OR_EQUAL=32;
-    public static final int N_GREATER_THAN=33;
-    public static final int N_LOGICAL_NOT=34;
-    public static final int N_BITWISE_NOT=35;
-    public static final int N_CONTAINS=36;
-    public static final int N_REMAINDER=37;
-    public static final int N_GREATER_THAN_OR_EQUAL=38;
-    public static final int N_BITWISE_RIGHT_SHIFT=39;
-    public static final int N_DIVIDE=40;
-    public static final int N_MULTIPLY=41;
-    public static final int N_SUBSTRUCT=42;
-    public static final int N_ADD=43;
-    public static final int N_BITWISE_LEFT_SHIFT=44;
-    public static final int N_IN_PARAMS=45;
-    public static final int N_CALL_PARAMS=46;
-    public static final int N_INT=47;
-    public static final int N_FLOAT=48;
-    public static final int N_STRING=49;
-    public static final int N_EXPRESSION=50;
-    public static final int SEMICOLON=51;
-    public static final int SELECT=52;
-    public static final int COMMA=53;
-    public static final int AS=54;
-    public static final int WITHIN=55;
-    public static final int RECORD=56;
-    public static final int FROM=57;
-    public static final int LPAREN=58;
-    public static final int RPAREN=59;
-    public static final int WHERE=60;
-    public static final int GROUPBY=61;
-    public static final int ORDERBY=62;
-    public static final int ASC=63;
-    public static final int DESC=64;
-    public static final int LIMIT=65;
-    public static final int INT=66;
-    public static final int DOT=67;
-    public static final int ID=68;
     public static final int STAR=69;
-    public static final int FLOAT=70;
-    public static final int STRING=71;
-    public static final int LOGICAL_OR=72;
-    public static final int LOGICAL_AND=73;
-    public static final int BITWISE_OR=74;
-    public static final int BITWISE_XOR=75;
-    public static final int BITWISE_AND=76;
-    public static final int EQUAL=77;
-    public static final int NOT_EQUAL=78;
-    public static final int LESS_THAN=79;
-    public static final int LESS_THAN_OR_EQUAL=80;
-    public static final int GREATER_THAN=81;
-    public static final int GREATER_THAN_OR_EQUAL=82;
-    public static final int BITWISE_LEFT_SHIFT=83;
-    public static final int BITWISE_RIGHT_SHIFT=84;
-    public static final int ADD=85;
-    public static final int SUBSTRUCT=86;
-    public static final int REMAINDER=87;
-    public static final int CONTAINS=88;
-    public static final int BITWISE_NOT=89;
-    public static final int LOGICAL_NOT=90;
-    public static final int IN=91;
-    public static final int SLASH=92;
-    public static final int DIV=93;
-    public static final int S=94;
-    public static final int E=95;
-    public static final int L=96;
-    public static final int C=97;
-    public static final int T=98;
-    public static final int W=99;
-    public static final int I=100;
-    public static final int H=101;
-    public static final int N=102;
-    public static final int R=103;
-    public static final int O=104;
-    public static final int D=105;
-    public static final int A=106;
-    public static final int F=107;
-    public static final int M=108;
-    public static final int G=109;
-    public static final int U=110;
-    public static final int P=111;
-    public static final int WS=112;
-    public static final int B=113;
-    public static final int Y=114;
-    public static final int COLON=115;
     public static final int LSQUARE=116;
-    public static final int RSQUARE=117;
-    public static final int LCURLY=118;
-    public static final int RCURLY=119;
-    public static final int F_ID1=120;
-    public static final int F_ID2=121;
-    public static final int F_EXPONENT=122;
-    public static final int F_HEX_DIGIT=123;
+    public static final int N_CALL=22;
+    public static final int N_LIMIT=10;
+    public static final int CONTAINS=88;
+    public static final int N_DESC=18;
+    public static final int BITWISE_LEFT_SHIFT=83;
+    public static final int N_LOGICAL_NOT=34;
+    public static final int N_CREATE_COLUMN=12;
+    public static final int EOF=-1;
+    public static final int N_NOT_EQUAL=30;
+    public static final int LOGICAL_AND=73;
+    public static final int N_GROUPBY=8;
+    public static final int RPAREN=59;
+    public static final int N_EXPRESSION=50;
+    public static final int N_ADD=43;
+    public static final int N_BITWISE_NOT=35;
+    public static final int BITWISE_XOR=75;
+    public static final int NOT_EQUAL=78;
+    public static final int N_MULTIPLY=41;
+    public static final int N_ID=11;
+    public static final int N_IN=21;
     public static final int COMMENT=124;
+    public static final int SELECT=52;
+    public static final int N_BITWISE_XOR=27;
+    public static final int GROUPBY=61;
+    public static final int N_SUBSTRUCT=42;
+    public static final int N_INT=47;
+    public static final int D=105;
+    public static final int E=95;
+    public static final int F=107;
+    public static final int G=109;
+    public static final int N_WHERE=7;
+    public static final int RECORD=56;
+    public static final int N_LESS_THAN=31;
+    public static final int A=106;
+    public static final int B=113;
+    public static final int C=97;
+    public static final int ASC=63;
+    public static final int L=96;
+    public static final int M=108;
+    public static final int N=102;
+    public static final int O=104;
+    public static final int H=101;
+    public static final int I=100;
     public static final int J=125;
     public static final int K=126;
-    public static final int Q=127;
+    public static final int U=110;
+    public static final int T=98;
+    public static final int W=99;
     public static final int V=128;
+    public static final int LCURLY=118;
+    public static final int Q=127;
+    public static final int N_CALL_PARAMS=46;
+    public static final int SEMICOLON=51;
+    public static final int INT=66;
+    public static final int F_ID2=121;
+    public static final int P=111;
+    public static final int F_ID1=120;
+    public static final int S=94;
+    public static final int R=103;
+    public static final int Y=114;
     public static final int X=129;
     public static final int Z=130;
+    public static final int F_HEX_DIGIT=123;
+    public static final int WS=112;
+    public static final int REMAINDER=87;
+    public static final int N_STRING=49;
+    public static final int LESS_THAN=79;
+    public static final int WITHIN=55;
+    public static final int N_WITHIN=14;
+    public static final int N_TABLE=15;
+    public static final int FROM=57;
+    public static final int N_LESS_THAN_OR_EQUAL=32;
+    public static final int N_BITWISE_AND=28;
+    public static final int N_CONTAINS=36;
+    public static final int WHERE=60;
+    public static final int BITWISE_AND=76;
+    public static final int BITWISE_NOT=89;
+    public static final int LIMIT=65;
+    public static final int N_BITWISE_RIGHT_SHIFT=39;
+    public static final int BITWISE_OR=74;
+    public static final int LOGICAL_NOT=90;
+    public static final int FLOAT=70;
+    public static final int ORDERBY=62;
+    public static final int N_DIVIDE=40;
+    public static final int F_EXPONENT=122;
+    public static final int ID=68;
+    public static final int N_LOGICAL_AND=25;
+    public static final int LPAREN=58;
+    public static final int N_BITWISE_OR=26;
+    public static final int N_SELECT=6;
+    public static final int AS=54;
+    public static final int N_ORDERBY=9;
+    public static final int SLASH=92;
+    public static final int IN=91;
+    public static final int N_TABLE_NAME=19;
+    public static final int COMMA=53;
+    public static final int EQUAL=77;
+    public static final int N_NAME=20;
+    public static final int LOGICAL_OR=72;
+    public static final int DOT=67;
+    public static final int N_FROM=5;
+    public static final int N_SELECT_STATEMENT=4;
+    public static final int ADD=85;
+    public static final int N_REMAINDER=37;
+    public static final int LESS_THAN_OR_EQUAL=80;
+    public static final int N_EQUAL=29;
+    public static final int SUBSTRUCT=86;
+    public static final int N_WITHIN_RECORD=16;
+    public static final int GREATER_THAN=81;
+    public static final int N_GREATER_THAN_OR_EQUAL=38;
+    public static final int N_ALIAS=13;
+    public static final int N_IN_PARAMS=45;
+    public static final int N_LOGICAL_OR=24;
+    public static final int N_FLOAT=48;
+    public static final int RSQUARE=117;
+    public static final int N_BITWISE_LEFT_SHIFT=44;
+    public static final int BITWISE_RIGHT_SHIFT=84;
+    public static final int COLON=115;
+    public static final int GREATER_THAN_OR_EQUAL=82;
+    public static final int N_ASC=17;
+    public static final int RCURLY=119;
+    public static final int N_OP=23;
+    public static final int DIV=93;
+    public static final int DESC=64;
+    public static final int N_GREATER_THAN=33;
+    public static final int STRING=71;
 
     // delegates
     // delegators
@@ -179,7 +179,7 @@ public class BqlParser extends Parser {
     }
 
     public String[] getTokenNames() { return BqlParser.tokenNames; }
-    public String getGrammarFileName() { return "/home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g"; }
+    public String getGrammarFileName() { return "/home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g"; }
 
 
     public static class request_return extends ParserRuleReturnScope {
@@ -188,7 +188,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "request"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:34:1: request : selectStatement ( SEMICOLON )? EOF ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:34:1: request : selectStatement ( SEMICOLON )? EOF ;
     public final BqlParser.request_return request() throws RecognitionException {
         BqlParser.request_return retval = new BqlParser.request_return();
         retval.start = input.LT(1);
@@ -204,8 +204,8 @@ public class BqlParser extends Parser {
         CommonTree EOF3_tree=null;
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:34:13: ( selectStatement ( SEMICOLON )? EOF )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:34:16: selectStatement ( SEMICOLON )? EOF
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:34:13: ( selectStatement ( SEMICOLON )? EOF )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:34:16: selectStatement ( SEMICOLON )? EOF
             {
             root_0 = (CommonTree)adaptor.nil();
 
@@ -215,7 +215,7 @@ public class BqlParser extends Parser {
             state._fsp--;
 
             adaptor.addChild(root_0, selectStatement1.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:34:32: ( SEMICOLON )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:34:32: ( SEMICOLON )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -224,7 +224,7 @@ public class BqlParser extends Parser {
             }
             switch (alt1) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:34:33: SEMICOLON
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:34:33: SEMICOLON
                     {
                     SEMICOLON2=(Token)match(input,SEMICOLON,FOLLOW_SEMICOLON_in_request183); 
 
@@ -261,7 +261,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "selectStatement"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:37:1: selectStatement : selectClause fromClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? -> ^( N_SELECT_STATEMENT fromClause selectClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:37:1: selectStatement : selectClause fromClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? -> ^( N_SELECT_STATEMENT fromClause selectClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? ) ;
     public final BqlParser.selectStatement_return selectStatement() throws RecognitionException {
         BqlParser.selectStatement_return retval = new BqlParser.selectStatement_return();
         retval.start = input.LT(1);
@@ -288,8 +288,8 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_fromClause=new RewriteRuleSubtreeStream(adaptor,"rule fromClause");
         RewriteRuleSubtreeStream stream_groupbyClause=new RewriteRuleSubtreeStream(adaptor,"rule groupbyClause");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:37:20: ( selectClause fromClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? -> ^( N_SELECT_STATEMENT fromClause selectClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:37:23: selectClause fromClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:37:20: ( selectClause fromClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? -> ^( N_SELECT_STATEMENT fromClause selectClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:37:23: selectClause fromClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )?
             {
             pushFollow(FOLLOW_selectClause_in_selectStatement207);
             selectClause4=selectClause();
@@ -303,7 +303,7 @@ public class BqlParser extends Parser {
             state._fsp--;
 
             stream_fromClause.add(fromClause5.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:37:47: ( whereClause )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:37:47: ( whereClause )?
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -312,7 +312,7 @@ public class BqlParser extends Parser {
             }
             switch (alt2) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:37:47: whereClause
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:37:47: whereClause
                     {
                     pushFollow(FOLLOW_whereClause_in_selectStatement211);
                     whereClause6=whereClause();
@@ -326,7 +326,7 @@ public class BqlParser extends Parser {
 
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:8: ( groupbyClause )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:8: ( groupbyClause )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -335,7 +335,7 @@ public class BqlParser extends Parser {
             }
             switch (alt3) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:8: groupbyClause
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:8: groupbyClause
                     {
                     pushFollow(FOLLOW_groupbyClause_in_selectStatement222);
                     groupbyClause7=groupbyClause();
@@ -349,7 +349,7 @@ public class BqlParser extends Parser {
 
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:23: ( orderbyClause )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:23: ( orderbyClause )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -358,7 +358,7 @@ public class BqlParser extends Parser {
             }
             switch (alt4) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:23: orderbyClause
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:23: orderbyClause
                     {
                     pushFollow(FOLLOW_orderbyClause_in_selectStatement225);
                     orderbyClause8=orderbyClause();
@@ -372,7 +372,7 @@ public class BqlParser extends Parser {
 
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:38: ( limitClause )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:38: ( limitClause )?
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -381,7 +381,7 @@ public class BqlParser extends Parser {
             }
             switch (alt5) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:38: limitClause
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:38: limitClause
                     {
                     pushFollow(FOLLOW_limitClause_in_selectStatement228);
                     limitClause9=limitClause();
@@ -398,7 +398,7 @@ public class BqlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: selectClause, fromClause, groupbyClause, orderbyClause, whereClause, limitClause
+            // elements: selectClause, groupbyClause, fromClause, limitClause, whereClause, orderbyClause
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -410,32 +410,32 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 38:53: -> ^( N_SELECT_STATEMENT fromClause selectClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:57: ^( N_SELECT_STATEMENT fromClause selectClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:57: ^( N_SELECT_STATEMENT fromClause selectClause ( whereClause )? ( groupbyClause )? ( orderbyClause )? ( limitClause )? )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_SELECT_STATEMENT, "N_SELECT_STATEMENT"), root_1);
 
                 adaptor.addChild(root_1, stream_fromClause.nextTree());
                 adaptor.addChild(root_1, stream_selectClause.nextTree());
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:102: ( whereClause )?
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:102: ( whereClause )?
                 if ( stream_whereClause.hasNext() ) {
                     adaptor.addChild(root_1, stream_whereClause.nextTree());
 
                 }
                 stream_whereClause.reset();
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:115: ( groupbyClause )?
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:115: ( groupbyClause )?
                 if ( stream_groupbyClause.hasNext() ) {
                     adaptor.addChild(root_1, stream_groupbyClause.nextTree());
 
                 }
                 stream_groupbyClause.reset();
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:130: ( orderbyClause )?
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:130: ( orderbyClause )?
                 if ( stream_orderbyClause.hasNext() ) {
                     adaptor.addChild(root_1, stream_orderbyClause.nextTree());
 
                 }
                 stream_orderbyClause.reset();
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:38:145: ( limitClause )?
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:38:145: ( limitClause )?
                 if ( stream_limitClause.hasNext() ) {
                     adaptor.addChild(root_1, stream_limitClause.nextTree());
 
@@ -474,7 +474,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "selectClause"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:40:1: selectClause : SELECT columnExpr ( COMMA columnExpr )* -> ^( N_SELECT ( columnExpr )+ ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:40:1: selectClause : SELECT columnExpr ( COMMA columnExpr )* -> ^( N_SELECT ( columnExpr )+ ) ;
     public final BqlParser.selectClause_return selectClause() throws RecognitionException {
         BqlParser.selectClause_return retval = new BqlParser.selectClause_return();
         retval.start = input.LT(1);
@@ -494,8 +494,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_SELECT=new RewriteRuleTokenStream(adaptor,"token SELECT");
         RewriteRuleSubtreeStream stream_columnExpr=new RewriteRuleSubtreeStream(adaptor,"rule columnExpr");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:40:19: ( SELECT columnExpr ( COMMA columnExpr )* -> ^( N_SELECT ( columnExpr )+ ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:40:21: SELECT columnExpr ( COMMA columnExpr )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:40:19: ( SELECT columnExpr ( COMMA columnExpr )* -> ^( N_SELECT ( columnExpr )+ ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:40:21: SELECT columnExpr ( COMMA columnExpr )*
             {
             SELECT10=(Token)match(input,SELECT,FOLLOW_SELECT_in_selectClause267);  
             stream_SELECT.add(SELECT10);
@@ -506,7 +506,7 @@ public class BqlParser extends Parser {
             state._fsp--;
 
             stream_columnExpr.add(columnExpr11.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:40:39: ( COMMA columnExpr )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:40:39: ( COMMA columnExpr )*
             loop6:
             do {
                 int alt6=2;
@@ -519,7 +519,7 @@ public class BqlParser extends Parser {
 
                 switch (alt6) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:40:40: COMMA columnExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:40:40: COMMA columnExpr
             	    {
             	    COMMA12=(Token)match(input,COMMA,FOLLOW_COMMA_in_selectClause272);  
             	    stream_COMMA.add(COMMA12);
@@ -554,7 +554,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 40:64: -> ^( N_SELECT ( columnExpr )+ )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:40:68: ^( N_SELECT ( columnExpr )+ )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:40:68: ^( N_SELECT ( columnExpr )+ )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_SELECT, "N_SELECT"), root_1);
@@ -600,7 +600,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "columnExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:1: columnExpr : expression ( withinClause )? ( AS columnName )? -> ^( N_CREATE_COLUMN expression ( ^( N_ALIAS columnName ) )? ( withinClause )? ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:1: columnExpr : expression ( withinClause )? ( AS columnPath )? -> ^( N_CREATE_COLUMN expression ( ^( N_ALIAS columnPath ) )? ( withinClause )? ) ;
     public final BqlParser.columnExpr_return columnExpr() throws RecognitionException {
         BqlParser.columnExpr_return retval = new BqlParser.columnExpr_return();
         retval.start = input.LT(1);
@@ -612,17 +612,17 @@ public class BqlParser extends Parser {
 
         BqlParser.withinClause_return withinClause15 = null;
 
-        BqlParser.columnName_return columnName17 = null;
+        BqlParser.columnPath_return columnPath17 = null;
 
 
         CommonTree AS16_tree=null;
         RewriteRuleTokenStream stream_AS=new RewriteRuleTokenStream(adaptor,"token AS");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         RewriteRuleSubtreeStream stream_withinClause=new RewriteRuleSubtreeStream(adaptor,"rule withinClause");
-        RewriteRuleSubtreeStream stream_columnName=new RewriteRuleSubtreeStream(adaptor,"rule columnName");
+        RewriteRuleSubtreeStream stream_columnPath=new RewriteRuleSubtreeStream(adaptor,"rule columnPath");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:16: ( expression ( withinClause )? ( AS columnName )? -> ^( N_CREATE_COLUMN expression ( ^( N_ALIAS columnName ) )? ( withinClause )? ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:18: expression ( withinClause )? ( AS columnName )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:16: ( expression ( withinClause )? ( AS columnPath )? -> ^( N_CREATE_COLUMN expression ( ^( N_ALIAS columnPath ) )? ( withinClause )? ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:18: expression ( withinClause )? ( AS columnPath )?
             {
             pushFollow(FOLLOW_expression_in_columnExpr302);
             expression14=expression();
@@ -630,7 +630,7 @@ public class BqlParser extends Parser {
             state._fsp--;
 
             stream_expression.add(expression14.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:29: ( withinClause )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:29: ( withinClause )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -639,7 +639,7 @@ public class BqlParser extends Parser {
             }
             switch (alt7) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:29: withinClause
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:29: withinClause
                     {
                     pushFollow(FOLLOW_withinClause_in_columnExpr304);
                     withinClause15=withinClause();
@@ -653,7 +653,7 @@ public class BqlParser extends Parser {
 
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:43: ( AS columnName )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:43: ( AS columnPath )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -662,17 +662,17 @@ public class BqlParser extends Parser {
             }
             switch (alt8) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:44: AS columnName
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:44: AS columnPath
                     {
                     AS16=(Token)match(input,AS,FOLLOW_AS_in_columnExpr308);  
                     stream_AS.add(AS16);
 
-                    pushFollow(FOLLOW_columnName_in_columnExpr310);
-                    columnName17=columnName();
+                    pushFollow(FOLLOW_columnPath_in_columnExpr310);
+                    columnPath17=columnPath();
 
                     state._fsp--;
 
-                    stream_columnName.add(columnName17.getTree());
+                    stream_columnPath.add(columnPath17.getTree());
 
                     }
                     break;
@@ -682,7 +682,7 @@ public class BqlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: columnName, expression, withinClause
+            // elements: expression, withinClause, columnPath
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -692,29 +692,29 @@ public class BqlParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (CommonTree)adaptor.nil();
-            // 41:64: -> ^( N_CREATE_COLUMN expression ( ^( N_ALIAS columnName ) )? ( withinClause )? )
+            // 41:64: -> ^( N_CREATE_COLUMN expression ( ^( N_ALIAS columnPath ) )? ( withinClause )? )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:68: ^( N_CREATE_COLUMN expression ( ^( N_ALIAS columnName ) )? ( withinClause )? )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:68: ^( N_CREATE_COLUMN expression ( ^( N_ALIAS columnPath ) )? ( withinClause )? )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_CREATE_COLUMN, "N_CREATE_COLUMN"), root_1);
 
                 adaptor.addChild(root_1, stream_expression.nextTree());
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:97: ( ^( N_ALIAS columnName ) )?
-                if ( stream_columnName.hasNext() ) {
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:97: ^( N_ALIAS columnName )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:97: ( ^( N_ALIAS columnPath ) )?
+                if ( stream_columnPath.hasNext() ) {
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:97: ^( N_ALIAS columnPath )
                     {
                     CommonTree root_2 = (CommonTree)adaptor.nil();
                     root_2 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_ALIAS, "N_ALIAS"), root_2);
 
-                    adaptor.addChild(root_2, stream_columnName.nextTree());
+                    adaptor.addChild(root_2, stream_columnPath.nextTree());
 
                     adaptor.addChild(root_1, root_2);
                     }
 
                 }
-                stream_columnName.reset();
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:41:120: ( withinClause )?
+                stream_columnPath.reset();
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:41:120: ( withinClause )?
                 if ( stream_withinClause.hasNext() ) {
                     adaptor.addChild(root_1, stream_withinClause.nextTree());
 
@@ -753,7 +753,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "withinClause"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:42:1: withinClause : ( WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) ) ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:42:1: withinClause : ( WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) ) ) ;
     public final BqlParser.withinClause_return withinClause() throws RecognitionException {
         BqlParser.withinClause_return retval = new BqlParser.withinClause_return();
         retval.start = input.LT(1);
@@ -771,16 +771,16 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_RECORD=new RewriteRuleTokenStream(adaptor,"token RECORD");
         RewriteRuleSubtreeStream stream_columnPath=new RewriteRuleSubtreeStream(adaptor,"rule columnPath");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:42:17: ( ( WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) ) ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:42:19: ( WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:42:17: ( ( WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) ) ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:42:19: ( WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) ) )
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:42:19: ( WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:42:20: WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:42:19: ( WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:42:20: WITHIN ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) )
             {
             WITHIN18=(Token)match(input,WITHIN,FOLLOW_WITHIN_in_withinClause347);  
             stream_WITHIN.add(WITHIN18);
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:42:27: ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:42:27: ( RECORD -> ^( N_WITHIN_RECORD ) | columnPath -> ^( N_WITHIN columnPath ) )
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -798,7 +798,7 @@ public class BqlParser extends Parser {
             }
             switch (alt9) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:42:28: RECORD
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:42:28: RECORD
                     {
                     RECORD19=(Token)match(input,RECORD,FOLLOW_RECORD_in_withinClause350);  
                     stream_RECORD.add(RECORD19);
@@ -818,7 +818,7 @@ public class BqlParser extends Parser {
                     root_0 = (CommonTree)adaptor.nil();
                     // 42:43: -> ^( N_WITHIN_RECORD )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:42:47: ^( N_WITHIN_RECORD )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:42:47: ^( N_WITHIN_RECORD )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_WITHIN_RECORD, "N_WITHIN_RECORD"), root_1);
@@ -832,7 +832,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:43:10: columnPath
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:43:10: columnPath
                     {
                     pushFollow(FOLLOW_columnPath_in_withinClause376);
                     columnPath20=columnPath();
@@ -855,7 +855,7 @@ public class BqlParser extends Parser {
                     root_0 = (CommonTree)adaptor.nil();
                     // 43:27: -> ^( N_WITHIN columnPath )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:43:30: ^( N_WITHIN columnPath )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:43:30: ^( N_WITHIN columnPath )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_WITHIN, "N_WITHIN"), root_1);
@@ -903,7 +903,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "fromClause"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:46:1: fromClause : FROM subSelectStatement ( COMMA subSelectStatement )* -> ^( N_FROM ( subSelectStatement )+ ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:46:1: fromClause : FROM subSelectStatement ( COMMA subSelectStatement )* -> ^( N_FROM ( subSelectStatement )+ ) ;
     public final BqlParser.fromClause_return fromClause() throws RecognitionException {
         BqlParser.fromClause_return retval = new BqlParser.fromClause_return();
         retval.start = input.LT(1);
@@ -923,8 +923,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
         RewriteRuleSubtreeStream stream_subSelectStatement=new RewriteRuleSubtreeStream(adaptor,"rule subSelectStatement");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:46:16: ( FROM subSelectStatement ( COMMA subSelectStatement )* -> ^( N_FROM ( subSelectStatement )+ ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:46:18: FROM subSelectStatement ( COMMA subSelectStatement )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:46:16: ( FROM subSelectStatement ( COMMA subSelectStatement )* -> ^( N_FROM ( subSelectStatement )+ ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:46:18: FROM subSelectStatement ( COMMA subSelectStatement )*
             {
             FROM21=(Token)match(input,FROM,FOLLOW_FROM_in_fromClause412);  
             stream_FROM.add(FROM21);
@@ -935,7 +935,7 @@ public class BqlParser extends Parser {
             state._fsp--;
 
             stream_subSelectStatement.add(subSelectStatement22.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:46:42: ( COMMA subSelectStatement )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:46:42: ( COMMA subSelectStatement )*
             loop10:
             do {
                 int alt10=2;
@@ -948,7 +948,7 @@ public class BqlParser extends Parser {
 
                 switch (alt10) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:46:43: COMMA subSelectStatement
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:46:43: COMMA subSelectStatement
             	    {
             	    COMMA23=(Token)match(input,COMMA,FOLLOW_COMMA_in_fromClause417);  
             	    stream_COMMA.add(COMMA23);
@@ -983,7 +983,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 46:73: -> ^( N_FROM ( subSelectStatement )+ )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:46:77: ^( N_FROM ( subSelectStatement )+ )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:46:77: ^( N_FROM ( subSelectStatement )+ )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_FROM, "N_FROM"), root_1);
@@ -1029,7 +1029,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "subSelectStatement"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:47:1: subSelectStatement : ( tableName | ( LPAREN selectStatement RPAREN ) ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:47:1: subSelectStatement : ( tableName | ( LPAREN selectStatement RPAREN ) ) ;
     public final BqlParser.subSelectStatement_return subSelectStatement() throws RecognitionException {
         BqlParser.subSelectStatement_return retval = new BqlParser.subSelectStatement_return();
         retval.start = input.LT(1);
@@ -1047,12 +1047,12 @@ public class BqlParser extends Parser {
         CommonTree RPAREN28_tree=null;
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:47:22: ( ( tableName | ( LPAREN selectStatement RPAREN ) ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:47:24: ( tableName | ( LPAREN selectStatement RPAREN ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:47:22: ( ( tableName | ( LPAREN selectStatement RPAREN ) ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:47:24: ( tableName | ( LPAREN selectStatement RPAREN ) )
             {
             root_0 = (CommonTree)adaptor.nil();
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:47:24: ( tableName | ( LPAREN selectStatement RPAREN ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:47:24: ( tableName | ( LPAREN selectStatement RPAREN ) )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1070,7 +1070,7 @@ public class BqlParser extends Parser {
             }
             switch (alt11) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:47:25: tableName
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:47:25: tableName
                     {
                     pushFollow(FOLLOW_tableName_in_subSelectStatement444);
                     tableName25=tableName();
@@ -1082,10 +1082,10 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:47:37: ( LPAREN selectStatement RPAREN )
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:47:37: ( LPAREN selectStatement RPAREN )
                     {
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:47:37: ( LPAREN selectStatement RPAREN )
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:47:38: LPAREN selectStatement RPAREN
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:47:37: ( LPAREN selectStatement RPAREN )
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:47:38: LPAREN selectStatement RPAREN
                     {
                     LPAREN26=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_subSelectStatement449); 
                     pushFollow(FOLLOW_selectStatement_in_subSelectStatement452);
@@ -1131,7 +1131,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "whereClause"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:49:1: whereClause : WHERE expression -> ^( N_WHERE expression ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:49:1: whereClause : WHERE expression -> ^( N_WHERE expression ) ;
     public final BqlParser.whereClause_return whereClause() throws RecognitionException {
         BqlParser.whereClause_return retval = new BqlParser.whereClause_return();
         retval.start = input.LT(1);
@@ -1146,8 +1146,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_WHERE=new RewriteRuleTokenStream(adaptor,"token WHERE");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:49:16: ( WHERE expression -> ^( N_WHERE expression ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:49:18: WHERE expression
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:49:16: ( WHERE expression -> ^( N_WHERE expression ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:49:18: WHERE expression
             {
             WHERE29=(Token)match(input,WHERE,FOLLOW_WHERE_in_whereClause471);  
             stream_WHERE.add(WHERE29);
@@ -1173,7 +1173,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 49:42: -> ^( N_WHERE expression )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:49:46: ^( N_WHERE expression )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:49:46: ^( N_WHERE expression )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_WHERE, "N_WHERE"), root_1);
@@ -1212,7 +1212,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "groupbyClause"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:51:1: groupbyClause : GROUPBY columnName ( COMMA columnName )* -> ^( N_GROUPBY ( columnName )+ ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:51:1: groupbyClause : GROUPBY columnPath ( COMMA columnPath )* -> ^( N_GROUPBY ( columnPath )+ ) ;
     public final BqlParser.groupbyClause_return groupbyClause() throws RecognitionException {
         BqlParser.groupbyClause_return retval = new BqlParser.groupbyClause_return();
         retval.start = input.LT(1);
@@ -1221,30 +1221,30 @@ public class BqlParser extends Parser {
 
         Token GROUPBY31=null;
         Token COMMA33=null;
-        BqlParser.columnName_return columnName32 = null;
+        BqlParser.columnPath_return columnPath32 = null;
 
-        BqlParser.columnName_return columnName34 = null;
+        BqlParser.columnPath_return columnPath34 = null;
 
 
         CommonTree GROUPBY31_tree=null;
         CommonTree COMMA33_tree=null;
         RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
         RewriteRuleTokenStream stream_GROUPBY=new RewriteRuleTokenStream(adaptor,"token GROUPBY");
-        RewriteRuleSubtreeStream stream_columnName=new RewriteRuleSubtreeStream(adaptor,"rule columnName");
+        RewriteRuleSubtreeStream stream_columnPath=new RewriteRuleSubtreeStream(adaptor,"rule columnPath");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:51:20: ( GROUPBY columnName ( COMMA columnName )* -> ^( N_GROUPBY ( columnName )+ ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:51:22: GROUPBY columnName ( COMMA columnName )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:51:20: ( GROUPBY columnPath ( COMMA columnPath )* -> ^( N_GROUPBY ( columnPath )+ ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:51:22: GROUPBY columnPath ( COMMA columnPath )*
             {
             GROUPBY31=(Token)match(input,GROUPBY,FOLLOW_GROUPBY_in_groupbyClause502);  
             stream_GROUPBY.add(GROUPBY31);
 
-            pushFollow(FOLLOW_columnName_in_groupbyClause504);
-            columnName32=columnName();
+            pushFollow(FOLLOW_columnPath_in_groupbyClause504);
+            columnPath32=columnPath();
 
             state._fsp--;
 
-            stream_columnName.add(columnName32.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:51:41: ( COMMA columnName )*
+            stream_columnPath.add(columnPath32.getTree());
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:51:41: ( COMMA columnPath )*
             loop12:
             do {
                 int alt12=2;
@@ -1257,17 +1257,17 @@ public class BqlParser extends Parser {
 
                 switch (alt12) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:51:42: COMMA columnName
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:51:42: COMMA columnPath
             	    {
             	    COMMA33=(Token)match(input,COMMA,FOLLOW_COMMA_in_groupbyClause507);  
             	    stream_COMMA.add(COMMA33);
 
-            	    pushFollow(FOLLOW_columnName_in_groupbyClause509);
-            	    columnName34=columnName();
+            	    pushFollow(FOLLOW_columnPath_in_groupbyClause509);
+            	    columnPath34=columnPath();
 
             	    state._fsp--;
 
-            	    stream_columnName.add(columnName34.getTree());
+            	    stream_columnPath.add(columnPath34.getTree());
 
             	    }
             	    break;
@@ -1280,7 +1280,7 @@ public class BqlParser extends Parser {
 
 
             // AST REWRITE
-            // elements: columnName
+            // elements: columnPath
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1290,21 +1290,21 @@ public class BqlParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (CommonTree)adaptor.nil();
-            // 51:66: -> ^( N_GROUPBY ( columnName )+ )
+            // 51:66: -> ^( N_GROUPBY ( columnPath )+ )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:51:70: ^( N_GROUPBY ( columnName )+ )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:51:70: ^( N_GROUPBY ( columnPath )+ )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_GROUPBY, "N_GROUPBY"), root_1);
 
-                if ( !(stream_columnName.hasNext()) ) {
+                if ( !(stream_columnPath.hasNext()) ) {
                     throw new RewriteEarlyExitException();
                 }
-                while ( stream_columnName.hasNext() ) {
-                    adaptor.addChild(root_1, stream_columnName.nextTree());
+                while ( stream_columnPath.hasNext() ) {
+                    adaptor.addChild(root_1, stream_columnPath.nextTree());
 
                 }
-                stream_columnName.reset();
+                stream_columnPath.reset();
 
                 adaptor.addChild(root_0, root_1);
                 }
@@ -1338,7 +1338,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "orderbyClause"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:53:1: orderbyClause : ( ORDERBY orderbyColumnName ( COMMA orderbyColumnName )* ) -> ^( N_ORDERBY orderbyColumnName ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:53:1: orderbyClause : ( ORDERBY orderbyColumnName ( COMMA orderbyColumnName )* ) -> ^( N_ORDERBY orderbyColumnName ) ;
     public final BqlParser.orderbyClause_return orderbyClause() throws RecognitionException {
         BqlParser.orderbyClause_return retval = new BqlParser.orderbyClause_return();
         retval.start = input.LT(1);
@@ -1358,11 +1358,11 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_COMMA=new RewriteRuleTokenStream(adaptor,"token COMMA");
         RewriteRuleSubtreeStream stream_orderbyColumnName=new RewriteRuleSubtreeStream(adaptor,"rule orderbyColumnName");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:53:20: ( ( ORDERBY orderbyColumnName ( COMMA orderbyColumnName )* ) -> ^( N_ORDERBY orderbyColumnName ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:53:22: ( ORDERBY orderbyColumnName ( COMMA orderbyColumnName )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:53:20: ( ( ORDERBY orderbyColumnName ( COMMA orderbyColumnName )* ) -> ^( N_ORDERBY orderbyColumnName ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:53:22: ( ORDERBY orderbyColumnName ( COMMA orderbyColumnName )* )
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:53:22: ( ORDERBY orderbyColumnName ( COMMA orderbyColumnName )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:53:24: ORDERBY orderbyColumnName ( COMMA orderbyColumnName )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:53:22: ( ORDERBY orderbyColumnName ( COMMA orderbyColumnName )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:53:24: ORDERBY orderbyColumnName ( COMMA orderbyColumnName )*
             {
             ORDERBY35=(Token)match(input,ORDERBY,FOLLOW_ORDERBY_in_orderbyClause541);  
             stream_ORDERBY.add(ORDERBY35);
@@ -1373,7 +1373,7 @@ public class BqlParser extends Parser {
             state._fsp--;
 
             stream_orderbyColumnName.add(orderbyColumnName36.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:53:50: ( COMMA orderbyColumnName )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:53:50: ( COMMA orderbyColumnName )*
             loop13:
             do {
                 int alt13=2;
@@ -1386,7 +1386,7 @@ public class BqlParser extends Parser {
 
                 switch (alt13) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:53:51: COMMA orderbyColumnName
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:53:51: COMMA orderbyColumnName
             	    {
             	    COMMA37=(Token)match(input,COMMA,FOLLOW_COMMA_in_orderbyClause546);  
             	    stream_COMMA.add(COMMA37);
@@ -1424,7 +1424,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 53:80: -> ^( N_ORDERBY orderbyColumnName )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:53:84: ^( N_ORDERBY orderbyColumnName )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:53:84: ^( N_ORDERBY orderbyColumnName )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_ORDERBY, "N_ORDERBY"), root_1);
@@ -1463,7 +1463,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "orderbyColumnName"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:54:1: orderbyColumnName : columnName ( ASC -> ^( N_ASC columnName ) | DESC -> ^( N_DESC columnName ) | -> ^( N_ASC columnName ) ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:54:1: orderbyColumnName : columnPath ( ASC -> ^( N_ASC columnPath ) | DESC -> ^( N_DESC columnPath ) | -> ^( N_ASC columnPath ) ) ;
     public final BqlParser.orderbyColumnName_return orderbyColumnName() throws RecognitionException {
         BqlParser.orderbyColumnName_return retval = new BqlParser.orderbyColumnName_return();
         retval.start = input.LT(1);
@@ -1472,25 +1472,25 @@ public class BqlParser extends Parser {
 
         Token ASC40=null;
         Token DESC41=null;
-        BqlParser.columnName_return columnName39 = null;
+        BqlParser.columnPath_return columnPath39 = null;
 
 
         CommonTree ASC40_tree=null;
         CommonTree DESC41_tree=null;
         RewriteRuleTokenStream stream_ASC=new RewriteRuleTokenStream(adaptor,"token ASC");
         RewriteRuleTokenStream stream_DESC=new RewriteRuleTokenStream(adaptor,"token DESC");
-        RewriteRuleSubtreeStream stream_columnName=new RewriteRuleSubtreeStream(adaptor,"rule columnName");
+        RewriteRuleSubtreeStream stream_columnPath=new RewriteRuleSubtreeStream(adaptor,"rule columnPath");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:54:21: ( columnName ( ASC -> ^( N_ASC columnName ) | DESC -> ^( N_DESC columnName ) | -> ^( N_ASC columnName ) ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:54:23: columnName ( ASC -> ^( N_ASC columnName ) | DESC -> ^( N_DESC columnName ) | -> ^( N_ASC columnName ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:54:21: ( columnPath ( ASC -> ^( N_ASC columnPath ) | DESC -> ^( N_DESC columnPath ) | -> ^( N_ASC columnPath ) ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:54:23: columnPath ( ASC -> ^( N_ASC columnPath ) | DESC -> ^( N_DESC columnPath ) | -> ^( N_ASC columnPath ) )
             {
-            pushFollow(FOLLOW_columnName_in_orderbyColumnName571);
-            columnName39=columnName();
+            pushFollow(FOLLOW_columnPath_in_orderbyColumnName571);
+            columnPath39=columnPath();
 
             state._fsp--;
 
-            stream_columnName.add(columnName39.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:54:34: ( ASC -> ^( N_ASC columnName ) | DESC -> ^( N_DESC columnName ) | -> ^( N_ASC columnName ) )
+            stream_columnPath.add(columnPath39.getTree());
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:54:34: ( ASC -> ^( N_ASC columnPath ) | DESC -> ^( N_DESC columnPath ) | -> ^( N_ASC columnPath ) )
             int alt14=3;
             switch ( input.LA(1) ) {
             case ASC:
@@ -1521,7 +1521,7 @@ public class BqlParser extends Parser {
 
             switch (alt14) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:54:35: ASC
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:54:35: ASC
                     {
                     ASC40=(Token)match(input,ASC,FOLLOW_ASC_in_orderbyColumnName574);  
                     stream_ASC.add(ASC40);
@@ -1529,7 +1529,7 @@ public class BqlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: columnName
+                    // elements: columnPath
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1539,14 +1539,14 @@ public class BqlParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (CommonTree)adaptor.nil();
-                    // 54:46: -> ^( N_ASC columnName )
+                    // 54:46: -> ^( N_ASC columnPath )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:54:50: ^( N_ASC columnName )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:54:50: ^( N_ASC columnPath )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_ASC, "N_ASC"), root_1);
 
-                        adaptor.addChild(root_1, stream_columnName.nextTree());
+                        adaptor.addChild(root_1, stream_columnPath.nextTree());
 
                         adaptor.addChild(root_0, root_1);
                         }
@@ -1557,7 +1557,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:55:10: DESC
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:55:10: DESC
                     {
                     DESC41=(Token)match(input,DESC,FOLLOW_DESC_in_orderbyColumnName601);  
                     stream_DESC.add(DESC41);
@@ -1565,7 +1565,7 @@ public class BqlParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: columnName
+                    // elements: columnPath
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1575,14 +1575,14 @@ public class BqlParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (CommonTree)adaptor.nil();
-                    // 55:22: -> ^( N_DESC columnName )
+                    // 55:22: -> ^( N_DESC columnPath )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:55:25: ^( N_DESC columnName )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:55:25: ^( N_DESC columnPath )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_DESC, "N_DESC"), root_1);
 
-                        adaptor.addChild(root_1, stream_columnName.nextTree());
+                        adaptor.addChild(root_1, stream_columnPath.nextTree());
 
                         adaptor.addChild(root_0, root_1);
                         }
@@ -1593,11 +1593,11 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:56:38: 
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:56:38: 
                     {
 
                     // AST REWRITE
-                    // elements: columnName
+                    // elements: columnPath
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -1607,14 +1607,14 @@ public class BqlParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (CommonTree)adaptor.nil();
-                    // 56:38: -> ^( N_ASC columnName )
+                    // 56:38: -> ^( N_ASC columnPath )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:56:41: ^( N_ASC columnName )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:56:41: ^( N_ASC columnPath )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_ASC, "N_ASC"), root_1);
 
-                        adaptor.addChild(root_1, stream_columnName.nextTree());
+                        adaptor.addChild(root_1, stream_columnPath.nextTree());
 
                         adaptor.addChild(root_0, root_1);
                         }
@@ -1654,7 +1654,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "limitClause"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:59:1: limitClause : ( LIMIT INT ) -> ^( N_LIMIT INT ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:59:1: limitClause : ( LIMIT INT ) -> ^( N_LIMIT INT ) ;
     public final BqlParser.limitClause_return limitClause() throws RecognitionException {
         BqlParser.limitClause_return retval = new BqlParser.limitClause_return();
         retval.start = input.LT(1);
@@ -1670,11 +1670,11 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_LIMIT=new RewriteRuleTokenStream(adaptor,"token LIMIT");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:59:18: ( ( LIMIT INT ) -> ^( N_LIMIT INT ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:59:20: ( LIMIT INT )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:59:18: ( ( LIMIT INT ) -> ^( N_LIMIT INT ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:59:20: ( LIMIT INT )
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:59:20: ( LIMIT INT )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:59:22: LIMIT INT
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:59:20: ( LIMIT INT )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:59:22: LIMIT INT
             {
             LIMIT42=(Token)match(input,LIMIT,FOLLOW_LIMIT_in_limitClause669);  
             stream_LIMIT.add(LIMIT42);
@@ -1700,7 +1700,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 59:41: -> ^( N_LIMIT INT )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:59:44: ^( N_LIMIT INT )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:59:44: ^( N_LIMIT INT )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_LIMIT, "N_LIMIT"), root_1);
@@ -1739,7 +1739,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "columnPath"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:62:1: columnPath : columnPath2 -> ^( N_ID columnPath2 ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:62:1: columnPath : columnPath2 -> ^( N_ID columnPath2 ) ;
     public final BqlParser.columnPath_return columnPath() throws RecognitionException {
         BqlParser.columnPath_return retval = new BqlParser.columnPath_return();
         retval.start = input.LT(1);
@@ -1751,8 +1751,8 @@ public class BqlParser extends Parser {
 
         RewriteRuleSubtreeStream stream_columnPath2=new RewriteRuleSubtreeStream(adaptor,"rule columnPath2");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:62:15: ( columnPath2 -> ^( N_ID columnPath2 ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:62:17: columnPath2
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:62:15: ( columnPath2 -> ^( N_ID columnPath2 ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:62:17: columnPath2
             {
             pushFollow(FOLLOW_columnPath2_in_columnPath700);
             columnPath244=columnPath2();
@@ -1775,7 +1775,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 62:37: -> ^( N_ID columnPath2 )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:62:41: ^( N_ID columnPath2 )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:62:41: ^( N_ID columnPath2 )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_ID, "N_ID"), root_1);
@@ -1814,7 +1814,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "columnPath2"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:63:1: columnPath2 : columnName ( DOT columnName )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:63:1: columnPath2 : columnName ( DOT columnName )* ;
     public final BqlParser.columnPath2_return columnPath2() throws RecognitionException {
         BqlParser.columnPath2_return retval = new BqlParser.columnPath2_return();
         retval.start = input.LT(1);
@@ -1830,8 +1830,8 @@ public class BqlParser extends Parser {
         CommonTree DOT46_tree=null;
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:63:16: ( columnName ( DOT columnName )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:63:18: columnName ( DOT columnName )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:63:16: ( columnName ( DOT columnName )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:63:18: columnName ( DOT columnName )*
             {
             root_0 = (CommonTree)adaptor.nil();
 
@@ -1841,7 +1841,7 @@ public class BqlParser extends Parser {
             state._fsp--;
 
             adaptor.addChild(root_0, columnName45.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:63:29: ( DOT columnName )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:63:29: ( DOT columnName )*
             loop15:
             do {
                 int alt15=2;
@@ -1854,7 +1854,7 @@ public class BqlParser extends Parser {
 
                 switch (alt15) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:63:30: DOT columnName
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:63:30: DOT columnName
             	    {
             	    DOT46=(Token)match(input,DOT,FOLLOW_DOT_in_columnPath2730); 
             	    pushFollow(FOLLOW_columnName_in_columnPath2733);
@@ -1899,7 +1899,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "columnName"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:64:1: columnName : ( ID -> ^( N_NAME ID ) | STAR -> ^( N_NAME STAR ) );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:64:1: columnName : ( ID -> ^( N_NAME ID ) | STAR -> ^( N_NAME STAR ) );
     public final BqlParser.columnName_return columnName() throws RecognitionException {
         BqlParser.columnName_return retval = new BqlParser.columnName_return();
         retval.start = input.LT(1);
@@ -1915,7 +1915,7 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:64:16: ( ID -> ^( N_NAME ID ) | STAR -> ^( N_NAME STAR ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:64:16: ( ID -> ^( N_NAME ID ) | STAR -> ^( N_NAME STAR ) )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1933,7 +1933,7 @@ public class BqlParser extends Parser {
             }
             switch (alt16) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:64:18: ID
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:64:18: ID
                     {
                     ID48=(Token)match(input,ID,FOLLOW_ID_in_columnName752);  
                     stream_ID.add(ID48);
@@ -1953,7 +1953,7 @@ public class BqlParser extends Parser {
                     root_0 = (CommonTree)adaptor.nil();
                     // 64:21: -> ^( N_NAME ID )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:64:24: ^( N_NAME ID )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:64:24: ^( N_NAME ID )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_NAME, "N_NAME"), root_1);
@@ -1969,7 +1969,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:64:39: STAR
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:64:39: STAR
                     {
                     STAR49=(Token)match(input,STAR,FOLLOW_STAR_in_columnName764);  
                     stream_STAR.add(STAR49);
@@ -1989,7 +1989,7 @@ public class BqlParser extends Parser {
                     root_0 = (CommonTree)adaptor.nil();
                     // 64:44: -> ^( N_NAME STAR )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:64:47: ^( N_NAME STAR )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:64:47: ^( N_NAME STAR )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_NAME, "N_NAME"), root_1);
@@ -2030,7 +2030,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "tablePath"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:67:1: tablePath : tablePath2 -> ^( N_TABLE tablePath2 ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:67:1: tablePath : tablePath2 -> ^( N_TABLE tablePath2 ) ;
     public final BqlParser.tablePath_return tablePath() throws RecognitionException {
         BqlParser.tablePath_return retval = new BqlParser.tablePath_return();
         retval.start = input.LT(1);
@@ -2042,8 +2042,8 @@ public class BqlParser extends Parser {
 
         RewriteRuleSubtreeStream stream_tablePath2=new RewriteRuleSubtreeStream(adaptor,"rule tablePath2");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:67:14: ( tablePath2 -> ^( N_TABLE tablePath2 ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:67:16: tablePath2
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:67:14: ( tablePath2 -> ^( N_TABLE tablePath2 ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:67:16: tablePath2
             {
             pushFollow(FOLLOW_tablePath2_in_tablePath788);
             tablePath250=tablePath2();
@@ -2066,7 +2066,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 67:35: -> ^( N_TABLE tablePath2 )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:67:38: ^( N_TABLE tablePath2 )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:67:38: ^( N_TABLE tablePath2 )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_TABLE, "N_TABLE"), root_1);
@@ -2105,7 +2105,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "tablePath2"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:68:1: tablePath2 : tableName ( DOT tableName )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:68:1: tablePath2 : tableName ( DOT tableName )* ;
     public final BqlParser.tablePath2_return tablePath2() throws RecognitionException {
         BqlParser.tablePath2_return retval = new BqlParser.tablePath2_return();
         retval.start = input.LT(1);
@@ -2121,8 +2121,8 @@ public class BqlParser extends Parser {
         CommonTree DOT52_tree=null;
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:68:15: ( tableName ( DOT tableName )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:68:17: tableName ( DOT tableName )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:68:15: ( tableName ( DOT tableName )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:68:17: tableName ( DOT tableName )*
             {
             root_0 = (CommonTree)adaptor.nil();
 
@@ -2132,7 +2132,7 @@ public class BqlParser extends Parser {
             state._fsp--;
 
             adaptor.addChild(root_0, tableName51.getTree());
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:68:27: ( DOT tableName )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:68:27: ( DOT tableName )*
             loop17:
             do {
                 int alt17=2;
@@ -2145,7 +2145,7 @@ public class BqlParser extends Parser {
 
                 switch (alt17) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:68:28: DOT tableName
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:68:28: DOT tableName
             	    {
             	    DOT52=(Token)match(input,DOT,FOLLOW_DOT_in_tablePath2817); 
             	    pushFollow(FOLLOW_tableName_in_tablePath2820);
@@ -2190,7 +2190,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "tableName"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:69:1: tableName : ID -> ^( N_TABLE_NAME ID ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:69:1: tableName : ID -> ^( N_TABLE_NAME ID ) ;
     public final BqlParser.tableName_return tableName() throws RecognitionException {
         BqlParser.tableName_return retval = new BqlParser.tableName_return();
         retval.start = input.LT(1);
@@ -2203,8 +2203,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_ID=new RewriteRuleTokenStream(adaptor,"token ID");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:69:15: ( ID -> ^( N_TABLE_NAME ID ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:69:17: ID
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:69:15: ( ID -> ^( N_TABLE_NAME ID ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:69:17: ID
             {
             ID54=(Token)match(input,ID,FOLLOW_ID_in_tableName839);  
             stream_ID.add(ID54);
@@ -2224,7 +2224,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 69:20: -> ^( N_TABLE_NAME ID )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:69:23: ^( N_TABLE_NAME ID )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:69:23: ^( N_TABLE_NAME ID )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_TABLE_NAME, "N_TABLE_NAME"), root_1);
@@ -2263,7 +2263,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "expression"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:72:1: expression : expression2 -> ^( N_EXPRESSION expression2 ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:72:1: expression : expression2 -> ^( N_EXPRESSION expression2 ) ;
     public final BqlParser.expression_return expression() throws RecognitionException {
         BqlParser.expression_return retval = new BqlParser.expression_return();
         retval.start = input.LT(1);
@@ -2275,8 +2275,8 @@ public class BqlParser extends Parser {
 
         RewriteRuleSubtreeStream stream_expression2=new RewriteRuleSubtreeStream(adaptor,"rule expression2");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:72:15: ( expression2 -> ^( N_EXPRESSION expression2 ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:72:17: expression2
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:72:15: ( expression2 -> ^( N_EXPRESSION expression2 ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:72:17: expression2
             {
             pushFollow(FOLLOW_expression2_in_expression865);
             expression255=expression2();
@@ -2299,7 +2299,7 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 72:37: -> ^( N_EXPRESSION expression2 )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:72:41: ^( N_EXPRESSION expression2 )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:72:41: ^( N_EXPRESSION expression2 )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_EXPRESSION, "N_EXPRESSION"), root_1);
@@ -2338,7 +2338,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "expression2"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:73:1: expression2 : (a= binary10thPrcdExpr -> $a) (o= binary11thPrcdOp b= binary10thPrcdExpr -> ^( $o $expression2 $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:73:1: expression2 : (a= binary10thPrcdExpr -> $a) (o= binary11thPrcdOp b= binary10thPrcdExpr -> ^( $o $expression2 $b) )* ;
     public final BqlParser.expression2_return expression2() throws RecognitionException {
         BqlParser.expression2_return retval = new BqlParser.expression2_return();
         retval.start = input.LT(1);
@@ -2355,11 +2355,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary11thPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary11thPrcdOp");
         RewriteRuleSubtreeStream stream_binary10thPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary10thPrcdExpr");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:73:16: ( (a= binary10thPrcdExpr -> $a) (o= binary11thPrcdOp b= binary10thPrcdExpr -> ^( $o $expression2 $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:73:18: (a= binary10thPrcdExpr -> $a) (o= binary11thPrcdOp b= binary10thPrcdExpr -> ^( $o $expression2 $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:73:16: ( (a= binary10thPrcdExpr -> $a) (o= binary11thPrcdOp b= binary10thPrcdExpr -> ^( $o $expression2 $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:73:18: (a= binary10thPrcdExpr -> $a) (o= binary11thPrcdOp b= binary10thPrcdExpr -> ^( $o $expression2 $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:73:18: (a= binary10thPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:73:19: a= binary10thPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:73:18: (a= binary10thPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:73:19: a= binary10thPrcdExpr
             {
             pushFollow(FOLLOW_binary10thPrcdExpr_in_expression2895);
             a=binary10thPrcdExpr();
@@ -2390,7 +2390,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:73:45: (o= binary11thPrcdOp b= binary10thPrcdExpr -> ^( $o $expression2 $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:73:45: (o= binary11thPrcdOp b= binary10thPrcdExpr -> ^( $o $expression2 $b) )*
             loop18:
             do {
                 int alt18=2;
@@ -2403,7 +2403,7 @@ public class BqlParser extends Parser {
 
                 switch (alt18) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:73:46: o= binary11thPrcdOp b= binary10thPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:73:46: o= binary11thPrcdOp b= binary10thPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary11thPrcdOp_in_expression2904);
             	    o=binary11thPrcdOp();
@@ -2434,7 +2434,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 73:87: -> ^( $o $expression2 $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:73:91: ^( $o $expression2 $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:73:91: ^( $o $expression2 $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -2483,7 +2483,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary10thPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:74:1: binary10thPrcdExpr : (a= binary9thPrcdExpr -> $a) (o= binary10thPrcdOp b= binary9thPrcdExpr -> ^( $o $binary10thPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:74:1: binary10thPrcdExpr : (a= binary9thPrcdExpr -> $a) (o= binary10thPrcdOp b= binary9thPrcdExpr -> ^( $o $binary10thPrcdExpr $b) )* ;
     public final BqlParser.binary10thPrcdExpr_return binary10thPrcdExpr() throws RecognitionException {
         BqlParser.binary10thPrcdExpr_return retval = new BqlParser.binary10thPrcdExpr_return();
         retval.start = input.LT(1);
@@ -2500,11 +2500,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary10thPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary10thPrcdOp");
         RewriteRuleSubtreeStream stream_binary9thPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary9thPrcdExpr");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:74:22: ( (a= binary9thPrcdExpr -> $a) (o= binary10thPrcdOp b= binary9thPrcdExpr -> ^( $o $binary10thPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:74:24: (a= binary9thPrcdExpr -> $a) (o= binary10thPrcdOp b= binary9thPrcdExpr -> ^( $o $binary10thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:74:22: ( (a= binary9thPrcdExpr -> $a) (o= binary10thPrcdOp b= binary9thPrcdExpr -> ^( $o $binary10thPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:74:24: (a= binary9thPrcdExpr -> $a) (o= binary10thPrcdOp b= binary9thPrcdExpr -> ^( $o $binary10thPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:74:24: (a= binary9thPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:74:25: a= binary9thPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:74:24: (a= binary9thPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:74:25: a= binary9thPrcdExpr
             {
             pushFollow(FOLLOW_binary9thPrcdExpr_in_binary10thPrcdExpr937);
             a=binary9thPrcdExpr();
@@ -2535,7 +2535,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:74:50: (o= binary10thPrcdOp b= binary9thPrcdExpr -> ^( $o $binary10thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:74:50: (o= binary10thPrcdOp b= binary9thPrcdExpr -> ^( $o $binary10thPrcdExpr $b) )*
             loop19:
             do {
                 int alt19=2;
@@ -2548,7 +2548,7 @@ public class BqlParser extends Parser {
 
                 switch (alt19) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:74:51: o= binary10thPrcdOp b= binary9thPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:74:51: o= binary10thPrcdOp b= binary9thPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary10thPrcdOp_in_binary10thPrcdExpr946);
             	    o=binary10thPrcdOp();
@@ -2565,7 +2565,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: o, b, binary10thPrcdExpr
+            	    // elements: binary10thPrcdExpr, b, o
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -2579,7 +2579,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 74:91: -> ^( $o $binary10thPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:74:95: ^( $o $binary10thPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:74:95: ^( $o $binary10thPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -2628,7 +2628,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary9thPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:75:1: binary9thPrcdExpr : (a= binary8thPrcdExpr -> $a) (o= binary9thPrcdOp b= binary8thPrcdExpr -> ^( $o $binary9thPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:75:1: binary9thPrcdExpr : (a= binary8thPrcdExpr -> $a) (o= binary9thPrcdOp b= binary8thPrcdExpr -> ^( $o $binary9thPrcdExpr $b) )* ;
     public final BqlParser.binary9thPrcdExpr_return binary9thPrcdExpr() throws RecognitionException {
         BqlParser.binary9thPrcdExpr_return retval = new BqlParser.binary9thPrcdExpr_return();
         retval.start = input.LT(1);
@@ -2645,11 +2645,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary8thPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary8thPrcdExpr");
         RewriteRuleSubtreeStream stream_binary9thPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary9thPrcdOp");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:75:21: ( (a= binary8thPrcdExpr -> $a) (o= binary9thPrcdOp b= binary8thPrcdExpr -> ^( $o $binary9thPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:75:23: (a= binary8thPrcdExpr -> $a) (o= binary9thPrcdOp b= binary8thPrcdExpr -> ^( $o $binary9thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:75:21: ( (a= binary8thPrcdExpr -> $a) (o= binary9thPrcdOp b= binary8thPrcdExpr -> ^( $o $binary9thPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:75:23: (a= binary8thPrcdExpr -> $a) (o= binary9thPrcdOp b= binary8thPrcdExpr -> ^( $o $binary9thPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:75:23: (a= binary8thPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:75:24: a= binary8thPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:75:23: (a= binary8thPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:75:24: a= binary8thPrcdExpr
             {
             pushFollow(FOLLOW_binary8thPrcdExpr_in_binary9thPrcdExpr979);
             a=binary8thPrcdExpr();
@@ -2680,7 +2680,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:75:49: (o= binary9thPrcdOp b= binary8thPrcdExpr -> ^( $o $binary9thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:75:49: (o= binary9thPrcdOp b= binary8thPrcdExpr -> ^( $o $binary9thPrcdExpr $b) )*
             loop20:
             do {
                 int alt20=2;
@@ -2693,7 +2693,7 @@ public class BqlParser extends Parser {
 
                 switch (alt20) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:75:50: o= binary9thPrcdOp b= binary8thPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:75:50: o= binary9thPrcdOp b= binary8thPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary9thPrcdOp_in_binary9thPrcdExpr988);
             	    o=binary9thPrcdOp();
@@ -2710,7 +2710,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: binary9thPrcdExpr, o, b
+            	    // elements: binary9thPrcdExpr, b, o
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -2724,7 +2724,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 75:89: -> ^( $o $binary9thPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:75:93: ^( $o $binary9thPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:75:93: ^( $o $binary9thPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -2773,7 +2773,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary8thPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:76:1: binary8thPrcdExpr : (a= binary7thPrcdExpr -> $a) (o= binary8thPrcdOp b= binary7thPrcdExpr -> ^( $o $binary8thPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:76:1: binary8thPrcdExpr : (a= binary7thPrcdExpr -> $a) (o= binary8thPrcdOp b= binary7thPrcdExpr -> ^( $o $binary8thPrcdExpr $b) )* ;
     public final BqlParser.binary8thPrcdExpr_return binary8thPrcdExpr() throws RecognitionException {
         BqlParser.binary8thPrcdExpr_return retval = new BqlParser.binary8thPrcdExpr_return();
         retval.start = input.LT(1);
@@ -2790,11 +2790,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary7thPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary7thPrcdExpr");
         RewriteRuleSubtreeStream stream_binary8thPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary8thPrcdOp");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:76:21: ( (a= binary7thPrcdExpr -> $a) (o= binary8thPrcdOp b= binary7thPrcdExpr -> ^( $o $binary8thPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:76:23: (a= binary7thPrcdExpr -> $a) (o= binary8thPrcdOp b= binary7thPrcdExpr -> ^( $o $binary8thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:76:21: ( (a= binary7thPrcdExpr -> $a) (o= binary8thPrcdOp b= binary7thPrcdExpr -> ^( $o $binary8thPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:76:23: (a= binary7thPrcdExpr -> $a) (o= binary8thPrcdOp b= binary7thPrcdExpr -> ^( $o $binary8thPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:76:23: (a= binary7thPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:76:24: a= binary7thPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:76:23: (a= binary7thPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:76:24: a= binary7thPrcdExpr
             {
             pushFollow(FOLLOW_binary7thPrcdExpr_in_binary8thPrcdExpr1021);
             a=binary7thPrcdExpr();
@@ -2825,7 +2825,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:76:49: (o= binary8thPrcdOp b= binary7thPrcdExpr -> ^( $o $binary8thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:76:49: (o= binary8thPrcdOp b= binary7thPrcdExpr -> ^( $o $binary8thPrcdExpr $b) )*
             loop21:
             do {
                 int alt21=2;
@@ -2838,7 +2838,7 @@ public class BqlParser extends Parser {
 
                 switch (alt21) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:76:50: o= binary8thPrcdOp b= binary7thPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:76:50: o= binary8thPrcdOp b= binary7thPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary8thPrcdOp_in_binary8thPrcdExpr1030);
             	    o=binary8thPrcdOp();
@@ -2855,7 +2855,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: binary8thPrcdExpr, b, o
+            	    // elements: b, binary8thPrcdExpr, o
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -2869,7 +2869,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 76:89: -> ^( $o $binary8thPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:76:93: ^( $o $binary8thPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:76:93: ^( $o $binary8thPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -2918,7 +2918,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary7thPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:77:1: binary7thPrcdExpr : (a= binary6thPrcdExpr -> $a) (o= binary7thPrcdOp b= binary6thPrcdExpr -> ^( $o $binary7thPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:77:1: binary7thPrcdExpr : (a= binary6thPrcdExpr -> $a) (o= binary7thPrcdOp b= binary6thPrcdExpr -> ^( $o $binary7thPrcdExpr $b) )* ;
     public final BqlParser.binary7thPrcdExpr_return binary7thPrcdExpr() throws RecognitionException {
         BqlParser.binary7thPrcdExpr_return retval = new BqlParser.binary7thPrcdExpr_return();
         retval.start = input.LT(1);
@@ -2935,11 +2935,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary6thPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary6thPrcdExpr");
         RewriteRuleSubtreeStream stream_binary7thPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary7thPrcdOp");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:77:21: ( (a= binary6thPrcdExpr -> $a) (o= binary7thPrcdOp b= binary6thPrcdExpr -> ^( $o $binary7thPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:77:23: (a= binary6thPrcdExpr -> $a) (o= binary7thPrcdOp b= binary6thPrcdExpr -> ^( $o $binary7thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:77:21: ( (a= binary6thPrcdExpr -> $a) (o= binary7thPrcdOp b= binary6thPrcdExpr -> ^( $o $binary7thPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:77:23: (a= binary6thPrcdExpr -> $a) (o= binary7thPrcdOp b= binary6thPrcdExpr -> ^( $o $binary7thPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:77:23: (a= binary6thPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:77:24: a= binary6thPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:77:23: (a= binary6thPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:77:24: a= binary6thPrcdExpr
             {
             pushFollow(FOLLOW_binary6thPrcdExpr_in_binary7thPrcdExpr1063);
             a=binary6thPrcdExpr();
@@ -2970,7 +2970,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:77:49: (o= binary7thPrcdOp b= binary6thPrcdExpr -> ^( $o $binary7thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:77:49: (o= binary7thPrcdOp b= binary6thPrcdExpr -> ^( $o $binary7thPrcdExpr $b) )*
             loop22:
             do {
                 int alt22=2;
@@ -2983,7 +2983,7 @@ public class BqlParser extends Parser {
 
                 switch (alt22) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:77:50: o= binary7thPrcdOp b= binary6thPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:77:50: o= binary7thPrcdOp b= binary6thPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary7thPrcdOp_in_binary7thPrcdExpr1072);
             	    o=binary7thPrcdOp();
@@ -3000,7 +3000,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: o, binary7thPrcdExpr, b
+            	    // elements: b, binary7thPrcdExpr, o
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -3014,7 +3014,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 77:89: -> ^( $o $binary7thPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:77:93: ^( $o $binary7thPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:77:93: ^( $o $binary7thPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -3063,7 +3063,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary6thPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:78:1: binary6thPrcdExpr : (a= binary5thPrcdExpr -> $a) (o= binary6thPrcdOp b= binary5thPrcdExpr -> ^( $o $binary6thPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:78:1: binary6thPrcdExpr : (a= binary5thPrcdExpr -> $a) (o= binary6thPrcdOp b= binary5thPrcdExpr -> ^( $o $binary6thPrcdExpr $b) )* ;
     public final BqlParser.binary6thPrcdExpr_return binary6thPrcdExpr() throws RecognitionException {
         BqlParser.binary6thPrcdExpr_return retval = new BqlParser.binary6thPrcdExpr_return();
         retval.start = input.LT(1);
@@ -3080,11 +3080,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary5thPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary5thPrcdExpr");
         RewriteRuleSubtreeStream stream_binary6thPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary6thPrcdOp");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:78:21: ( (a= binary5thPrcdExpr -> $a) (o= binary6thPrcdOp b= binary5thPrcdExpr -> ^( $o $binary6thPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:78:23: (a= binary5thPrcdExpr -> $a) (o= binary6thPrcdOp b= binary5thPrcdExpr -> ^( $o $binary6thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:78:21: ( (a= binary5thPrcdExpr -> $a) (o= binary6thPrcdOp b= binary5thPrcdExpr -> ^( $o $binary6thPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:78:23: (a= binary5thPrcdExpr -> $a) (o= binary6thPrcdOp b= binary5thPrcdExpr -> ^( $o $binary6thPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:78:23: (a= binary5thPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:78:24: a= binary5thPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:78:23: (a= binary5thPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:78:24: a= binary5thPrcdExpr
             {
             pushFollow(FOLLOW_binary5thPrcdExpr_in_binary6thPrcdExpr1105);
             a=binary5thPrcdExpr();
@@ -3115,7 +3115,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:78:49: (o= binary6thPrcdOp b= binary5thPrcdExpr -> ^( $o $binary6thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:78:49: (o= binary6thPrcdOp b= binary5thPrcdExpr -> ^( $o $binary6thPrcdExpr $b) )*
             loop23:
             do {
                 int alt23=2;
@@ -3128,7 +3128,7 @@ public class BqlParser extends Parser {
 
                 switch (alt23) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:78:50: o= binary6thPrcdOp b= binary5thPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:78:50: o= binary6thPrcdOp b= binary5thPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary6thPrcdOp_in_binary6thPrcdExpr1114);
             	    o=binary6thPrcdOp();
@@ -3145,7 +3145,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: b, o, binary6thPrcdExpr
+            	    // elements: o, b, binary6thPrcdExpr
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -3159,7 +3159,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 78:89: -> ^( $o $binary6thPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:78:93: ^( $o $binary6thPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:78:93: ^( $o $binary6thPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -3208,7 +3208,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary5thPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:79:1: binary5thPrcdExpr : (a= binary4thPrcdExpr -> $a) (o= binary5thPrcdOp b= binary4thPrcdExpr -> ^( $o $binary5thPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:79:1: binary5thPrcdExpr : (a= binary4thPrcdExpr -> $a) (o= binary5thPrcdOp b= binary4thPrcdExpr -> ^( $o $binary5thPrcdExpr $b) )* ;
     public final BqlParser.binary5thPrcdExpr_return binary5thPrcdExpr() throws RecognitionException {
         BqlParser.binary5thPrcdExpr_return retval = new BqlParser.binary5thPrcdExpr_return();
         retval.start = input.LT(1);
@@ -3225,11 +3225,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary5thPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary5thPrcdOp");
         RewriteRuleSubtreeStream stream_binary4thPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary4thPrcdExpr");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:79:21: ( (a= binary4thPrcdExpr -> $a) (o= binary5thPrcdOp b= binary4thPrcdExpr -> ^( $o $binary5thPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:79:23: (a= binary4thPrcdExpr -> $a) (o= binary5thPrcdOp b= binary4thPrcdExpr -> ^( $o $binary5thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:79:21: ( (a= binary4thPrcdExpr -> $a) (o= binary5thPrcdOp b= binary4thPrcdExpr -> ^( $o $binary5thPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:79:23: (a= binary4thPrcdExpr -> $a) (o= binary5thPrcdOp b= binary4thPrcdExpr -> ^( $o $binary5thPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:79:23: (a= binary4thPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:79:24: a= binary4thPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:79:23: (a= binary4thPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:79:24: a= binary4thPrcdExpr
             {
             pushFollow(FOLLOW_binary4thPrcdExpr_in_binary5thPrcdExpr1147);
             a=binary4thPrcdExpr();
@@ -3260,7 +3260,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:79:49: (o= binary5thPrcdOp b= binary4thPrcdExpr -> ^( $o $binary5thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:79:49: (o= binary5thPrcdOp b= binary4thPrcdExpr -> ^( $o $binary5thPrcdExpr $b) )*
             loop24:
             do {
                 int alt24=2;
@@ -3273,7 +3273,7 @@ public class BqlParser extends Parser {
 
                 switch (alt24) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:79:50: o= binary5thPrcdOp b= binary4thPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:79:50: o= binary5thPrcdOp b= binary4thPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary5thPrcdOp_in_binary5thPrcdExpr1156);
             	    o=binary5thPrcdOp();
@@ -3290,7 +3290,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: binary5thPrcdExpr, o, b
+            	    // elements: binary5thPrcdExpr, b, o
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -3304,7 +3304,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 79:89: -> ^( $o $binary5thPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:79:93: ^( $o $binary5thPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:79:93: ^( $o $binary5thPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -3353,7 +3353,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary4thPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:80:1: binary4thPrcdExpr : (a= binary3rdPrcdExpr -> $a) (o= binary4thPrcdOp b= binary3rdPrcdExpr -> ^( $o $binary4thPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:80:1: binary4thPrcdExpr : (a= binary3rdPrcdExpr -> $a) (o= binary4thPrcdOp b= binary3rdPrcdExpr -> ^( $o $binary4thPrcdExpr $b) )* ;
     public final BqlParser.binary4thPrcdExpr_return binary4thPrcdExpr() throws RecognitionException {
         BqlParser.binary4thPrcdExpr_return retval = new BqlParser.binary4thPrcdExpr_return();
         retval.start = input.LT(1);
@@ -3370,11 +3370,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary3rdPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary3rdPrcdExpr");
         RewriteRuleSubtreeStream stream_binary4thPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary4thPrcdOp");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:80:21: ( (a= binary3rdPrcdExpr -> $a) (o= binary4thPrcdOp b= binary3rdPrcdExpr -> ^( $o $binary4thPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:80:23: (a= binary3rdPrcdExpr -> $a) (o= binary4thPrcdOp b= binary3rdPrcdExpr -> ^( $o $binary4thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:80:21: ( (a= binary3rdPrcdExpr -> $a) (o= binary4thPrcdOp b= binary3rdPrcdExpr -> ^( $o $binary4thPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:80:23: (a= binary3rdPrcdExpr -> $a) (o= binary4thPrcdOp b= binary3rdPrcdExpr -> ^( $o $binary4thPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:80:23: (a= binary3rdPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:80:24: a= binary3rdPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:80:23: (a= binary3rdPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:80:24: a= binary3rdPrcdExpr
             {
             pushFollow(FOLLOW_binary3rdPrcdExpr_in_binary4thPrcdExpr1189);
             a=binary3rdPrcdExpr();
@@ -3405,7 +3405,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:80:49: (o= binary4thPrcdOp b= binary3rdPrcdExpr -> ^( $o $binary4thPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:80:49: (o= binary4thPrcdOp b= binary3rdPrcdExpr -> ^( $o $binary4thPrcdExpr $b) )*
             loop25:
             do {
                 int alt25=2;
@@ -3418,7 +3418,7 @@ public class BqlParser extends Parser {
 
                 switch (alt25) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:80:50: o= binary4thPrcdOp b= binary3rdPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:80:50: o= binary4thPrcdOp b= binary3rdPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary4thPrcdOp_in_binary4thPrcdExpr1198);
             	    o=binary4thPrcdOp();
@@ -3435,7 +3435,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: b, binary4thPrcdExpr, o
+            	    // elements: binary4thPrcdExpr, b, o
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -3449,7 +3449,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 80:89: -> ^( $o $binary4thPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:80:93: ^( $o $binary4thPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:80:93: ^( $o $binary4thPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -3498,7 +3498,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary3rdPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:81:1: binary3rdPrcdExpr : (a= binary2ndPrcdExpr -> $a) (o= binary3rdPrcdOp b= binary2ndPrcdExpr -> ^( $o $binary3rdPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:81:1: binary3rdPrcdExpr : (a= binary2ndPrcdExpr -> $a) (o= binary3rdPrcdOp b= binary2ndPrcdExpr -> ^( $o $binary3rdPrcdExpr $b) )* ;
     public final BqlParser.binary3rdPrcdExpr_return binary3rdPrcdExpr() throws RecognitionException {
         BqlParser.binary3rdPrcdExpr_return retval = new BqlParser.binary3rdPrcdExpr_return();
         retval.start = input.LT(1);
@@ -3515,11 +3515,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary3rdPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary3rdPrcdOp");
         RewriteRuleSubtreeStream stream_binary2ndPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary2ndPrcdExpr");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:81:21: ( (a= binary2ndPrcdExpr -> $a) (o= binary3rdPrcdOp b= binary2ndPrcdExpr -> ^( $o $binary3rdPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:81:23: (a= binary2ndPrcdExpr -> $a) (o= binary3rdPrcdOp b= binary2ndPrcdExpr -> ^( $o $binary3rdPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:81:21: ( (a= binary2ndPrcdExpr -> $a) (o= binary3rdPrcdOp b= binary2ndPrcdExpr -> ^( $o $binary3rdPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:81:23: (a= binary2ndPrcdExpr -> $a) (o= binary3rdPrcdOp b= binary2ndPrcdExpr -> ^( $o $binary3rdPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:81:23: (a= binary2ndPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:81:24: a= binary2ndPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:81:23: (a= binary2ndPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:81:24: a= binary2ndPrcdExpr
             {
             pushFollow(FOLLOW_binary2ndPrcdExpr_in_binary3rdPrcdExpr1231);
             a=binary2ndPrcdExpr();
@@ -3550,7 +3550,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:81:49: (o= binary3rdPrcdOp b= binary2ndPrcdExpr -> ^( $o $binary3rdPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:81:49: (o= binary3rdPrcdOp b= binary2ndPrcdExpr -> ^( $o $binary3rdPrcdExpr $b) )*
             loop26:
             do {
                 int alt26=2;
@@ -3563,7 +3563,7 @@ public class BqlParser extends Parser {
 
                 switch (alt26) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:81:50: o= binary3rdPrcdOp b= binary2ndPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:81:50: o= binary3rdPrcdOp b= binary2ndPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary3rdPrcdOp_in_binary3rdPrcdExpr1240);
             	    o=binary3rdPrcdOp();
@@ -3580,7 +3580,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: binary3rdPrcdExpr, o, b
+            	    // elements: o, b, binary3rdPrcdExpr
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -3594,7 +3594,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 81:89: -> ^( $o $binary3rdPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:81:93: ^( $o $binary3rdPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:81:93: ^( $o $binary3rdPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -3643,7 +3643,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary2ndPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:82:1: binary2ndPrcdExpr : (a= binary1stPrcdExpr -> $a) (o= binary2ndPrcdOp b= binary1stPrcdExpr -> ^( $o $binary2ndPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:82:1: binary2ndPrcdExpr : (a= binary1stPrcdExpr -> $a) (o= binary2ndPrcdOp b= binary1stPrcdExpr -> ^( $o $binary2ndPrcdExpr $b) )* ;
     public final BqlParser.binary2ndPrcdExpr_return binary2ndPrcdExpr() throws RecognitionException {
         BqlParser.binary2ndPrcdExpr_return retval = new BqlParser.binary2ndPrcdExpr_return();
         retval.start = input.LT(1);
@@ -3660,11 +3660,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_binary1stPrcdExpr=new RewriteRuleSubtreeStream(adaptor,"rule binary1stPrcdExpr");
         RewriteRuleSubtreeStream stream_binary2ndPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary2ndPrcdOp");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:82:21: ( (a= binary1stPrcdExpr -> $a) (o= binary2ndPrcdOp b= binary1stPrcdExpr -> ^( $o $binary2ndPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:82:23: (a= binary1stPrcdExpr -> $a) (o= binary2ndPrcdOp b= binary1stPrcdExpr -> ^( $o $binary2ndPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:82:21: ( (a= binary1stPrcdExpr -> $a) (o= binary2ndPrcdOp b= binary1stPrcdExpr -> ^( $o $binary2ndPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:82:23: (a= binary1stPrcdExpr -> $a) (o= binary2ndPrcdOp b= binary1stPrcdExpr -> ^( $o $binary2ndPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:82:23: (a= binary1stPrcdExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:82:24: a= binary1stPrcdExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:82:23: (a= binary1stPrcdExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:82:24: a= binary1stPrcdExpr
             {
             pushFollow(FOLLOW_binary1stPrcdExpr_in_binary2ndPrcdExpr1273);
             a=binary1stPrcdExpr();
@@ -3695,7 +3695,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:82:49: (o= binary2ndPrcdOp b= binary1stPrcdExpr -> ^( $o $binary2ndPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:82:49: (o= binary2ndPrcdOp b= binary1stPrcdExpr -> ^( $o $binary2ndPrcdExpr $b) )*
             loop27:
             do {
                 int alt27=2;
@@ -3708,7 +3708,7 @@ public class BqlParser extends Parser {
 
                 switch (alt27) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:82:50: o= binary2ndPrcdOp b= binary1stPrcdExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:82:50: o= binary2ndPrcdOp b= binary1stPrcdExpr
             	    {
             	    pushFollow(FOLLOW_binary2ndPrcdOp_in_binary2ndPrcdExpr1282);
             	    o=binary2ndPrcdOp();
@@ -3725,7 +3725,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: o, b, binary2ndPrcdExpr
+            	    // elements: binary2ndPrcdExpr, b, o
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -3739,7 +3739,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 82:89: -> ^( $o $binary2ndPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:82:93: ^( $o $binary2ndPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:82:93: ^( $o $binary2ndPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -3788,7 +3788,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary1stPrcdExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:83:1: binary1stPrcdExpr : (a= unaryPrefixExpr -> $a) (o= binary1stPrcdOp b= unaryPrefixExpr -> ^( $o $binary1stPrcdExpr $b) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:83:1: binary1stPrcdExpr : (a= unaryPrefixExpr -> $a) (o= binary1stPrcdOp b= unaryPrefixExpr -> ^( $o $binary1stPrcdExpr $b) )* ;
     public final BqlParser.binary1stPrcdExpr_return binary1stPrcdExpr() throws RecognitionException {
         BqlParser.binary1stPrcdExpr_return retval = new BqlParser.binary1stPrcdExpr_return();
         retval.start = input.LT(1);
@@ -3805,11 +3805,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_unaryPrefixExpr=new RewriteRuleSubtreeStream(adaptor,"rule unaryPrefixExpr");
         RewriteRuleSubtreeStream stream_binary1stPrcdOp=new RewriteRuleSubtreeStream(adaptor,"rule binary1stPrcdOp");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:83:21: ( (a= unaryPrefixExpr -> $a) (o= binary1stPrcdOp b= unaryPrefixExpr -> ^( $o $binary1stPrcdExpr $b) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:83:23: (a= unaryPrefixExpr -> $a) (o= binary1stPrcdOp b= unaryPrefixExpr -> ^( $o $binary1stPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:83:21: ( (a= unaryPrefixExpr -> $a) (o= binary1stPrcdOp b= unaryPrefixExpr -> ^( $o $binary1stPrcdExpr $b) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:83:23: (a= unaryPrefixExpr -> $a) (o= binary1stPrcdOp b= unaryPrefixExpr -> ^( $o $binary1stPrcdExpr $b) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:83:23: (a= unaryPrefixExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:83:24: a= unaryPrefixExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:83:23: (a= unaryPrefixExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:83:24: a= unaryPrefixExpr
             {
             pushFollow(FOLLOW_unaryPrefixExpr_in_binary1stPrcdExpr1315);
             a=unaryPrefixExpr();
@@ -3840,7 +3840,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:83:49: (o= binary1stPrcdOp b= unaryPrefixExpr -> ^( $o $binary1stPrcdExpr $b) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:83:49: (o= binary1stPrcdOp b= unaryPrefixExpr -> ^( $o $binary1stPrcdExpr $b) )*
             loop28:
             do {
                 int alt28=2;
@@ -3853,7 +3853,7 @@ public class BqlParser extends Parser {
 
                 switch (alt28) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:83:50: o= binary1stPrcdOp b= unaryPrefixExpr
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:83:50: o= binary1stPrcdOp b= unaryPrefixExpr
             	    {
             	    pushFollow(FOLLOW_binary1stPrcdOp_in_binary1stPrcdExpr1326);
             	    o=binary1stPrcdOp();
@@ -3870,7 +3870,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: o, b, binary1stPrcdExpr
+            	    // elements: binary1stPrcdExpr, b, o
             	    // token labels: 
             	    // rule labels: retval, b, o
             	    // token list labels: 
@@ -3884,7 +3884,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 83:88: -> ^( $o $binary1stPrcdExpr $b)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:83:92: ^( $o $binary1stPrcdExpr $b)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:83:92: ^( $o $binary1stPrcdExpr $b)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -3933,7 +3933,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "unaryPrefixExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:84:1: unaryPrefixExpr : (o= unaryPrefixOp -> ^( $o $unaryPrefixExpr) )* (a= unaryPostfixExpr -> $a) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:84:1: unaryPrefixExpr : (o= unaryPrefixOp -> ^( $o $unaryPrefixExpr) )* (a= unaryPostfixExpr -> $a) ;
     public final BqlParser.unaryPrefixExpr_return unaryPrefixExpr() throws RecognitionException {
         BqlParser.unaryPrefixExpr_return retval = new BqlParser.unaryPrefixExpr_return();
         retval.start = input.LT(1);
@@ -3948,10 +3948,10 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_unaryPrefixOp=new RewriteRuleSubtreeStream(adaptor,"rule unaryPrefixOp");
         RewriteRuleSubtreeStream stream_unaryPostfixExpr=new RewriteRuleSubtreeStream(adaptor,"rule unaryPostfixExpr");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:84:20: ( (o= unaryPrefixOp -> ^( $o $unaryPrefixExpr) )* (a= unaryPostfixExpr -> $a) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:84:22: (o= unaryPrefixOp -> ^( $o $unaryPrefixExpr) )* (a= unaryPostfixExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:84:20: ( (o= unaryPrefixOp -> ^( $o $unaryPrefixExpr) )* (a= unaryPostfixExpr -> $a) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:84:22: (o= unaryPrefixOp -> ^( $o $unaryPrefixExpr) )* (a= unaryPostfixExpr -> $a)
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:84:22: (o= unaryPrefixOp -> ^( $o $unaryPrefixExpr) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:84:22: (o= unaryPrefixOp -> ^( $o $unaryPrefixExpr) )*
             loop29:
             do {
                 int alt29=2;
@@ -3964,7 +3964,7 @@ public class BqlParser extends Parser {
 
                 switch (alt29) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:84:23: o= unaryPrefixOp
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:84:23: o= unaryPrefixOp
             	    {
             	    pushFollow(FOLLOW_unaryPrefixOp_in_unaryPrefixExpr1361);
             	    o=unaryPrefixOp();
@@ -3975,7 +3975,7 @@ public class BqlParser extends Parser {
 
 
             	    // AST REWRITE
-            	    // elements: o, unaryPrefixExpr
+            	    // elements: unaryPrefixExpr, o
             	    // token labels: 
             	    // rule labels: retval, o
             	    // token list labels: 
@@ -3988,7 +3988,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 84:38: -> ^( $o $unaryPrefixExpr)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:84:40: ^( $o $unaryPrefixExpr)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:84:40: ^( $o $unaryPrefixExpr)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -4009,8 +4009,8 @@ public class BqlParser extends Parser {
                 }
             } while (true);
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:84:65: (a= unaryPostfixExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:84:66: a= unaryPostfixExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:84:65: (a= unaryPostfixExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:84:66: a= unaryPostfixExpr
             {
             pushFollow(FOLLOW_unaryPostfixExpr_in_unaryPrefixExpr1376);
             a=unaryPostfixExpr();
@@ -4068,7 +4068,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "unaryPostfixExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:85:1: unaryPostfixExpr : (a= atomExpr -> $a) (o= unaryPostfixOp -> ^( $o $unaryPostfixExpr) )* ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:85:1: unaryPostfixExpr : (a= atomExpr -> $a) (o= unaryPostfixOp -> ^( $o $unaryPostfixExpr) )* ;
     public final BqlParser.unaryPostfixExpr_return unaryPostfixExpr() throws RecognitionException {
         BqlParser.unaryPostfixExpr_return retval = new BqlParser.unaryPostfixExpr_return();
         retval.start = input.LT(1);
@@ -4083,11 +4083,11 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_unaryPostfixOp=new RewriteRuleSubtreeStream(adaptor,"rule unaryPostfixOp");
         RewriteRuleSubtreeStream stream_atomExpr=new RewriteRuleSubtreeStream(adaptor,"rule atomExpr");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:85:20: ( (a= atomExpr -> $a) (o= unaryPostfixOp -> ^( $o $unaryPostfixExpr) )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:85:22: (a= atomExpr -> $a) (o= unaryPostfixOp -> ^( $o $unaryPostfixExpr) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:85:20: ( (a= atomExpr -> $a) (o= unaryPostfixOp -> ^( $o $unaryPostfixExpr) )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:85:22: (a= atomExpr -> $a) (o= unaryPostfixOp -> ^( $o $unaryPostfixExpr) )*
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:85:22: (a= atomExpr -> $a)
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:85:23: a= atomExpr
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:85:22: (a= atomExpr -> $a)
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:85:23: a= atomExpr
             {
             pushFollow(FOLLOW_atomExpr_in_unaryPostfixExpr1396);
             a=atomExpr();
@@ -4118,7 +4118,7 @@ public class BqlParser extends Parser {
             retval.tree = root_0;
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:85:39: (o= unaryPostfixOp -> ^( $o $unaryPostfixExpr) )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:85:39: (o= unaryPostfixOp -> ^( $o $unaryPostfixExpr) )*
             loop30:
             do {
                 int alt30=2;
@@ -4131,7 +4131,7 @@ public class BqlParser extends Parser {
 
                 switch (alt30) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:85:40: o= unaryPostfixOp
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:85:40: o= unaryPostfixOp
             	    {
             	    pushFollow(FOLLOW_unaryPostfixOp_in_unaryPostfixExpr1405);
             	    o=unaryPostfixOp();
@@ -4155,7 +4155,7 @@ public class BqlParser extends Parser {
             	    root_0 = (CommonTree)adaptor.nil();
             	    // 85:61: -> ^( $o $unaryPostfixExpr)
             	    {
-            	        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:85:65: ^( $o $unaryPostfixExpr)
+            	        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:85:65: ^( $o $unaryPostfixExpr)
             	        {
             	        CommonTree root_1 = (CommonTree)adaptor.nil();
             	        root_1 = (CommonTree)adaptor.becomeRoot(stream_o.nextNode(), root_1);
@@ -4203,7 +4203,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "atomExpr"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:86:1: atomExpr : ( INT -> ^( N_INT INT ) | FLOAT -> ^( N_FLOAT FLOAT ) | STRING -> ^( N_STRING STRING ) | ( LPAREN expression RPAREN ) -> expression | columnPath );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:86:1: atomExpr : ( INT -> ^( N_INT INT ) | FLOAT -> ^( N_FLOAT FLOAT ) | STRING -> ^( N_STRING STRING ) | ( LPAREN expression RPAREN ) -> expression | columnPath );
     public final BqlParser.atomExpr_return atomExpr() throws RecognitionException {
         BqlParser.atomExpr_return retval = new BqlParser.atomExpr_return();
         retval.start = input.LT(1);
@@ -4232,7 +4232,7 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_STRING=new RewriteRuleTokenStream(adaptor,"token STRING");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:86:14: ( INT -> ^( N_INT INT ) | FLOAT -> ^( N_FLOAT FLOAT ) | STRING -> ^( N_STRING STRING ) | ( LPAREN expression RPAREN ) -> expression | columnPath )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:86:14: ( INT -> ^( N_INT INT ) | FLOAT -> ^( N_FLOAT FLOAT ) | STRING -> ^( N_STRING STRING ) | ( LPAREN expression RPAREN ) -> expression | columnPath )
             int alt31=5;
             switch ( input.LA(1) ) {
             case INT:
@@ -4270,7 +4270,7 @@ public class BqlParser extends Parser {
 
             switch (alt31) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:86:16: INT
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:86:16: INT
                     {
                     INT56=(Token)match(input,INT,FOLLOW_INT_in_atomExpr1433);  
                     stream_INT.add(INT56);
@@ -4290,7 +4290,7 @@ public class BqlParser extends Parser {
                     root_0 = (CommonTree)adaptor.nil();
                     // 86:29: -> ^( N_INT INT )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:86:33: ^( N_INT INT )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:86:33: ^( N_INT INT )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_INT, "N_INT"), root_1);
@@ -4306,7 +4306,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:87:9: FLOAT
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:87:9: FLOAT
                     {
                     FLOAT57=(Token)match(input,FLOAT,FOLLOW_FLOAT_in_atomExpr1461);  
                     stream_FLOAT.add(FLOAT57);
@@ -4326,7 +4326,7 @@ public class BqlParser extends Parser {
                     root_0 = (CommonTree)adaptor.nil();
                     // 87:23: -> ^( N_FLOAT FLOAT )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:87:27: ^( N_FLOAT FLOAT )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:87:27: ^( N_FLOAT FLOAT )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_FLOAT, "N_FLOAT"), root_1);
@@ -4342,7 +4342,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:88:9: STRING
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:88:9: STRING
                     {
                     STRING58=(Token)match(input,STRING,FOLLOW_STRING_in_atomExpr1489);  
                     stream_STRING.add(STRING58);
@@ -4362,7 +4362,7 @@ public class BqlParser extends Parser {
                     root_0 = (CommonTree)adaptor.nil();
                     // 88:24: -> ^( N_STRING STRING )
                     {
-                        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:88:28: ^( N_STRING STRING )
+                        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:88:28: ^( N_STRING STRING )
                         {
                         CommonTree root_1 = (CommonTree)adaptor.nil();
                         root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_STRING, "N_STRING"), root_1);
@@ -4378,10 +4378,10 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:89:9: ( LPAREN expression RPAREN )
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:89:9: ( LPAREN expression RPAREN )
                     {
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:89:9: ( LPAREN expression RPAREN )
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:89:10: LPAREN expression RPAREN
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:89:9: ( LPAREN expression RPAREN )
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:89:10: LPAREN expression RPAREN
                     {
                     LPAREN59=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_atomExpr1519);  
                     stream_LPAREN.add(LPAREN59);
@@ -4421,7 +4421,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:90:9: columnPath
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:90:9: columnPath
                     {
                     root_0 = (CommonTree)adaptor.nil();
 
@@ -4460,7 +4460,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary11thPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:95:1: binary11thPrcdOp : LOGICAL_OR -> N_LOGICAL_OR ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:95:1: binary11thPrcdOp : LOGICAL_OR -> N_LOGICAL_OR ;
     public final BqlParser.binary11thPrcdOp_return binary11thPrcdOp() throws RecognitionException {
         BqlParser.binary11thPrcdOp_return retval = new BqlParser.binary11thPrcdOp_return();
         retval.start = input.LT(1);
@@ -4473,8 +4473,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_LOGICAL_OR=new RewriteRuleTokenStream(adaptor,"token LOGICAL_OR");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:95:20: ( LOGICAL_OR -> N_LOGICAL_OR )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:95:22: LOGICAL_OR
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:95:20: ( LOGICAL_OR -> N_LOGICAL_OR )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:95:22: LOGICAL_OR
             {
             LOGICAL_OR63=(Token)match(input,LOGICAL_OR,FOLLOW_LOGICAL_OR_in_binary11thPrcdOp1560);  
             stream_LOGICAL_OR.add(LOGICAL_OR63);
@@ -4525,7 +4525,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary10thPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:96:1: binary10thPrcdOp : LOGICAL_AND -> N_LOGICAL_AND ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:96:1: binary10thPrcdOp : LOGICAL_AND -> N_LOGICAL_AND ;
     public final BqlParser.binary10thPrcdOp_return binary10thPrcdOp() throws RecognitionException {
         BqlParser.binary10thPrcdOp_return retval = new BqlParser.binary10thPrcdOp_return();
         retval.start = input.LT(1);
@@ -4538,8 +4538,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_LOGICAL_AND=new RewriteRuleTokenStream(adaptor,"token LOGICAL_AND");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:96:20: ( LOGICAL_AND -> N_LOGICAL_AND )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:96:22: LOGICAL_AND
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:96:20: ( LOGICAL_AND -> N_LOGICAL_AND )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:96:22: LOGICAL_AND
             {
             LOGICAL_AND64=(Token)match(input,LOGICAL_AND,FOLLOW_LOGICAL_AND_in_binary10thPrcdOp1581);  
             stream_LOGICAL_AND.add(LOGICAL_AND64);
@@ -4590,7 +4590,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary9thPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:97:1: binary9thPrcdOp : BITWISE_OR -> N_BITWISE_OR ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:97:1: binary9thPrcdOp : BITWISE_OR -> N_BITWISE_OR ;
     public final BqlParser.binary9thPrcdOp_return binary9thPrcdOp() throws RecognitionException {
         BqlParser.binary9thPrcdOp_return retval = new BqlParser.binary9thPrcdOp_return();
         retval.start = input.LT(1);
@@ -4603,8 +4603,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_BITWISE_OR=new RewriteRuleTokenStream(adaptor,"token BITWISE_OR");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:97:20: ( BITWISE_OR -> N_BITWISE_OR )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:97:22: BITWISE_OR
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:97:20: ( BITWISE_OR -> N_BITWISE_OR )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:97:22: BITWISE_OR
             {
             BITWISE_OR65=(Token)match(input,BITWISE_OR,FOLLOW_BITWISE_OR_in_binary9thPrcdOp1602);  
             stream_BITWISE_OR.add(BITWISE_OR65);
@@ -4655,7 +4655,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary8thPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:98:1: binary8thPrcdOp : BITWISE_XOR -> N_BITWISE_XOR ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:98:1: binary8thPrcdOp : BITWISE_XOR -> N_BITWISE_XOR ;
     public final BqlParser.binary8thPrcdOp_return binary8thPrcdOp() throws RecognitionException {
         BqlParser.binary8thPrcdOp_return retval = new BqlParser.binary8thPrcdOp_return();
         retval.start = input.LT(1);
@@ -4668,8 +4668,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_BITWISE_XOR=new RewriteRuleTokenStream(adaptor,"token BITWISE_XOR");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:98:20: ( BITWISE_XOR -> N_BITWISE_XOR )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:98:22: BITWISE_XOR
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:98:20: ( BITWISE_XOR -> N_BITWISE_XOR )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:98:22: BITWISE_XOR
             {
             BITWISE_XOR66=(Token)match(input,BITWISE_XOR,FOLLOW_BITWISE_XOR_in_binary8thPrcdOp1623);  
             stream_BITWISE_XOR.add(BITWISE_XOR66);
@@ -4720,7 +4720,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary7thPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:99:1: binary7thPrcdOp : BITWISE_AND -> N_BITWISE_AND ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:99:1: binary7thPrcdOp : BITWISE_AND -> N_BITWISE_AND ;
     public final BqlParser.binary7thPrcdOp_return binary7thPrcdOp() throws RecognitionException {
         BqlParser.binary7thPrcdOp_return retval = new BqlParser.binary7thPrcdOp_return();
         retval.start = input.LT(1);
@@ -4733,8 +4733,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_BITWISE_AND=new RewriteRuleTokenStream(adaptor,"token BITWISE_AND");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:99:20: ( BITWISE_AND -> N_BITWISE_AND )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:99:22: BITWISE_AND
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:99:20: ( BITWISE_AND -> N_BITWISE_AND )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:99:22: BITWISE_AND
             {
             BITWISE_AND67=(Token)match(input,BITWISE_AND,FOLLOW_BITWISE_AND_in_binary7thPrcdOp1644);  
             stream_BITWISE_AND.add(BITWISE_AND67);
@@ -4785,7 +4785,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary6thPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:100:1: binary6thPrcdOp : ( EQUAL -> N_EQUAL | NOT_EQUAL -> N_NOT_EQUAL );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:100:1: binary6thPrcdOp : ( EQUAL -> N_EQUAL | NOT_EQUAL -> N_NOT_EQUAL );
     public final BqlParser.binary6thPrcdOp_return binary6thPrcdOp() throws RecognitionException {
         BqlParser.binary6thPrcdOp_return retval = new BqlParser.binary6thPrcdOp_return();
         retval.start = input.LT(1);
@@ -4801,7 +4801,7 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_EQUAL=new RewriteRuleTokenStream(adaptor,"token EQUAL");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:100:20: ( EQUAL -> N_EQUAL | NOT_EQUAL -> N_NOT_EQUAL )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:100:20: ( EQUAL -> N_EQUAL | NOT_EQUAL -> N_NOT_EQUAL )
             int alt32=2;
             int LA32_0 = input.LA(1);
 
@@ -4819,7 +4819,7 @@ public class BqlParser extends Parser {
             }
             switch (alt32) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:100:22: EQUAL
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:100:22: EQUAL
                     {
                     EQUAL68=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_binary6thPrcdOp1665);  
                     stream_EQUAL.add(EQUAL68);
@@ -4847,7 +4847,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:101:9: NOT_EQUAL
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:101:9: NOT_EQUAL
                     {
                     NOT_EQUAL69=(Token)match(input,NOT_EQUAL,FOLLOW_NOT_EQUAL_in_binary6thPrcdOp1688);  
                     stream_NOT_EQUAL.add(NOT_EQUAL69);
@@ -4900,7 +4900,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary5thPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:102:1: binary5thPrcdOp : ( LESS_THAN -> N_LESS_THAN | LESS_THAN_OR_EQUAL -> N_LESS_THAN_OR_EQUAL | GREATER_THAN -> N_GREATER_THAN | GREATER_THAN_OR_EQUAL -> N_GREATER_THAN_OR_EQUAL );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:102:1: binary5thPrcdOp : ( LESS_THAN -> N_LESS_THAN | LESS_THAN_OR_EQUAL -> N_LESS_THAN_OR_EQUAL | GREATER_THAN -> N_GREATER_THAN | GREATER_THAN_OR_EQUAL -> N_GREATER_THAN_OR_EQUAL );
     public final BqlParser.binary5thPrcdOp_return binary5thPrcdOp() throws RecognitionException {
         BqlParser.binary5thPrcdOp_return retval = new BqlParser.binary5thPrcdOp_return();
         retval.start = input.LT(1);
@@ -4922,7 +4922,7 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_LESS_THAN=new RewriteRuleTokenStream(adaptor,"token LESS_THAN");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:102:20: ( LESS_THAN -> N_LESS_THAN | LESS_THAN_OR_EQUAL -> N_LESS_THAN_OR_EQUAL | GREATER_THAN -> N_GREATER_THAN | GREATER_THAN_OR_EQUAL -> N_GREATER_THAN_OR_EQUAL )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:102:20: ( LESS_THAN -> N_LESS_THAN | LESS_THAN_OR_EQUAL -> N_LESS_THAN_OR_EQUAL | GREATER_THAN -> N_GREATER_THAN | GREATER_THAN_OR_EQUAL -> N_GREATER_THAN_OR_EQUAL )
             int alt33=4;
             switch ( input.LA(1) ) {
             case LESS_THAN:
@@ -4954,7 +4954,7 @@ public class BqlParser extends Parser {
 
             switch (alt33) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:102:22: LESS_THAN
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:102:22: LESS_THAN
                     {
                     LESS_THAN70=(Token)match(input,LESS_THAN,FOLLOW_LESS_THAN_in_binary5thPrcdOp1709);  
                     stream_LESS_THAN.add(LESS_THAN70);
@@ -4982,7 +4982,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:103:9: LESS_THAN_OR_EQUAL
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:103:9: LESS_THAN_OR_EQUAL
                     {
                     LESS_THAN_OR_EQUAL71=(Token)match(input,LESS_THAN_OR_EQUAL,FOLLOW_LESS_THAN_OR_EQUAL_in_binary5thPrcdOp1731);  
                     stream_LESS_THAN_OR_EQUAL.add(LESS_THAN_OR_EQUAL71);
@@ -5010,7 +5010,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:104:9: GREATER_THAN
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:104:9: GREATER_THAN
                     {
                     GREATER_THAN72=(Token)match(input,GREATER_THAN,FOLLOW_GREATER_THAN_in_binary5thPrcdOp1752);  
                     stream_GREATER_THAN.add(GREATER_THAN72);
@@ -5038,7 +5038,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:105:9: GREATER_THAN_OR_EQUAL
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:105:9: GREATER_THAN_OR_EQUAL
                     {
                     GREATER_THAN_OR_EQUAL73=(Token)match(input,GREATER_THAN_OR_EQUAL,FOLLOW_GREATER_THAN_OR_EQUAL_in_binary5thPrcdOp1774);  
                     stream_GREATER_THAN_OR_EQUAL.add(GREATER_THAN_OR_EQUAL73);
@@ -5091,7 +5091,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary4thPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:106:1: binary4thPrcdOp : ( BITWISE_LEFT_SHIFT -> N_BITWISE_LEFT_SHIFT | BITWISE_RIGHT_SHIFT -> N_BITWISE_RIGHT_SHIFT );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:106:1: binary4thPrcdOp : ( BITWISE_LEFT_SHIFT -> N_BITWISE_LEFT_SHIFT | BITWISE_RIGHT_SHIFT -> N_BITWISE_RIGHT_SHIFT );
     public final BqlParser.binary4thPrcdOp_return binary4thPrcdOp() throws RecognitionException {
         BqlParser.binary4thPrcdOp_return retval = new BqlParser.binary4thPrcdOp_return();
         retval.start = input.LT(1);
@@ -5107,7 +5107,7 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_BITWISE_RIGHT_SHIFT=new RewriteRuleTokenStream(adaptor,"token BITWISE_RIGHT_SHIFT");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:106:20: ( BITWISE_LEFT_SHIFT -> N_BITWISE_LEFT_SHIFT | BITWISE_RIGHT_SHIFT -> N_BITWISE_RIGHT_SHIFT )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:106:20: ( BITWISE_LEFT_SHIFT -> N_BITWISE_LEFT_SHIFT | BITWISE_RIGHT_SHIFT -> N_BITWISE_RIGHT_SHIFT )
             int alt34=2;
             int LA34_0 = input.LA(1);
 
@@ -5125,7 +5125,7 @@ public class BqlParser extends Parser {
             }
             switch (alt34) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:106:22: BITWISE_LEFT_SHIFT
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:106:22: BITWISE_LEFT_SHIFT
                     {
                     BITWISE_LEFT_SHIFT74=(Token)match(input,BITWISE_LEFT_SHIFT,FOLLOW_BITWISE_LEFT_SHIFT_in_binary4thPrcdOp1794);  
                     stream_BITWISE_LEFT_SHIFT.add(BITWISE_LEFT_SHIFT74);
@@ -5153,7 +5153,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:107:9: BITWISE_RIGHT_SHIFT
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:107:9: BITWISE_RIGHT_SHIFT
                     {
                     BITWISE_RIGHT_SHIFT75=(Token)match(input,BITWISE_RIGHT_SHIFT,FOLLOW_BITWISE_RIGHT_SHIFT_in_binary4thPrcdOp1815);  
                     stream_BITWISE_RIGHT_SHIFT.add(BITWISE_RIGHT_SHIFT75);
@@ -5206,7 +5206,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary3rdPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:108:1: binary3rdPrcdOp : ( ADD -> N_ADD | SUBSTRUCT -> N_SUBSTRUCT );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:108:1: binary3rdPrcdOp : ( ADD -> N_ADD | SUBSTRUCT -> N_SUBSTRUCT );
     public final BqlParser.binary3rdPrcdOp_return binary3rdPrcdOp() throws RecognitionException {
         BqlParser.binary3rdPrcdOp_return retval = new BqlParser.binary3rdPrcdOp_return();
         retval.start = input.LT(1);
@@ -5222,7 +5222,7 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_ADD=new RewriteRuleTokenStream(adaptor,"token ADD");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:108:20: ( ADD -> N_ADD | SUBSTRUCT -> N_SUBSTRUCT )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:108:20: ( ADD -> N_ADD | SUBSTRUCT -> N_SUBSTRUCT )
             int alt35=2;
             int LA35_0 = input.LA(1);
 
@@ -5240,7 +5240,7 @@ public class BqlParser extends Parser {
             }
             switch (alt35) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:108:22: ADD
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:108:22: ADD
                     {
                     ADD76=(Token)match(input,ADD,FOLLOW_ADD_in_binary3rdPrcdOp1835);  
                     stream_ADD.add(ADD76);
@@ -5268,7 +5268,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:109:9: SUBSTRUCT
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:109:9: SUBSTRUCT
                     {
                     SUBSTRUCT77=(Token)match(input,SUBSTRUCT,FOLLOW_SUBSTRUCT_in_binary3rdPrcdOp1858);  
                     stream_SUBSTRUCT.add(SUBSTRUCT77);
@@ -5321,7 +5321,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary2ndPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:110:1: binary2ndPrcdOp : ( multiplyOp -> N_MULTIPLY | divideOp -> N_DIVIDE | REMAINDER -> N_REMAINDER );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:110:1: binary2ndPrcdOp : ( multiplyOp -> N_MULTIPLY | divideOp -> N_DIVIDE | REMAINDER -> N_REMAINDER );
     public final BqlParser.binary2ndPrcdOp_return binary2ndPrcdOp() throws RecognitionException {
         BqlParser.binary2ndPrcdOp_return retval = new BqlParser.binary2ndPrcdOp_return();
         retval.start = input.LT(1);
@@ -5339,7 +5339,7 @@ public class BqlParser extends Parser {
         RewriteRuleSubtreeStream stream_divideOp=new RewriteRuleSubtreeStream(adaptor,"rule divideOp");
         RewriteRuleSubtreeStream stream_multiplyOp=new RewriteRuleSubtreeStream(adaptor,"rule multiplyOp");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:110:20: ( multiplyOp -> N_MULTIPLY | divideOp -> N_DIVIDE | REMAINDER -> N_REMAINDER )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:110:20: ( multiplyOp -> N_MULTIPLY | divideOp -> N_DIVIDE | REMAINDER -> N_REMAINDER )
             int alt36=3;
             switch ( input.LA(1) ) {
             case STAR:
@@ -5367,7 +5367,7 @@ public class BqlParser extends Parser {
 
             switch (alt36) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:110:22: multiplyOp
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:110:22: multiplyOp
                     {
                     pushFollow(FOLLOW_multiplyOp_in_binary2ndPrcdOp1870);
                     multiplyOp78=multiplyOp();
@@ -5398,7 +5398,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:111:9: divideOp
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:111:9: divideOp
                     {
                     pushFollow(FOLLOW_divideOp_in_binary2ndPrcdOp1892);
                     divideOp79=divideOp();
@@ -5429,7 +5429,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:112:9: REMAINDER
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:112:9: REMAINDER
                     {
                     REMAINDER80=(Token)match(input,REMAINDER,FOLLOW_REMAINDER_in_binary2ndPrcdOp1914);  
                     stream_REMAINDER.add(REMAINDER80);
@@ -5482,7 +5482,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "binary1stPrcdOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:113:1: binary1stPrcdOp : CONTAINS -> N_CONTAINS ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:113:1: binary1stPrcdOp : CONTAINS -> N_CONTAINS ;
     public final BqlParser.binary1stPrcdOp_return binary1stPrcdOp() throws RecognitionException {
         BqlParser.binary1stPrcdOp_return retval = new BqlParser.binary1stPrcdOp_return();
         retval.start = input.LT(1);
@@ -5495,8 +5495,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_CONTAINS=new RewriteRuleTokenStream(adaptor,"token CONTAINS");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:113:20: ( CONTAINS -> N_CONTAINS )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:113:22: CONTAINS
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:113:20: ( CONTAINS -> N_CONTAINS )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:113:22: CONTAINS
             {
             CONTAINS81=(Token)match(input,CONTAINS,FOLLOW_CONTAINS_in_binary1stPrcdOp1935);  
             stream_CONTAINS.add(CONTAINS81);
@@ -5547,7 +5547,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "unaryPrefixOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:114:1: unaryPrefixOp : ( BITWISE_NOT -> N_BITWISE_NOT | LOGICAL_NOT -> N_LOGICAL_NOT );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:114:1: unaryPrefixOp : ( BITWISE_NOT -> N_BITWISE_NOT | LOGICAL_NOT -> N_LOGICAL_NOT );
     public final BqlParser.unaryPrefixOp_return unaryPrefixOp() throws RecognitionException {
         BqlParser.unaryPrefixOp_return retval = new BqlParser.unaryPrefixOp_return();
         retval.start = input.LT(1);
@@ -5563,7 +5563,7 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_BITWISE_NOT=new RewriteRuleTokenStream(adaptor,"token BITWISE_NOT");
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:114:18: ( BITWISE_NOT -> N_BITWISE_NOT | LOGICAL_NOT -> N_LOGICAL_NOT )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:114:18: ( BITWISE_NOT -> N_BITWISE_NOT | LOGICAL_NOT -> N_LOGICAL_NOT )
             int alt37=2;
             int LA37_0 = input.LA(1);
 
@@ -5581,7 +5581,7 @@ public class BqlParser extends Parser {
             }
             switch (alt37) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:114:20: BITWISE_NOT
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:114:20: BITWISE_NOT
                     {
                     BITWISE_NOT82=(Token)match(input,BITWISE_NOT,FOLLOW_BITWISE_NOT_in_unaryPrefixOp1957);  
                     stream_BITWISE_NOT.add(BITWISE_NOT82);
@@ -5609,7 +5609,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:115:9: LOGICAL_NOT
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:115:9: LOGICAL_NOT
                     {
                     LOGICAL_NOT83=(Token)match(input,LOGICAL_NOT,FOLLOW_LOGICAL_NOT_in_unaryPrefixOp1979);  
                     stream_LOGICAL_NOT.add(LOGICAL_NOT83);
@@ -5662,7 +5662,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "unaryPostfixOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:116:1: unaryPostfixOp : ( unaryPostfixOpIn | unaryPostfixOpCall );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:116:1: unaryPostfixOp : ( unaryPostfixOpIn | unaryPostfixOpCall );
     public final BqlParser.unaryPostfixOp_return unaryPostfixOp() throws RecognitionException {
         BqlParser.unaryPostfixOp_return retval = new BqlParser.unaryPostfixOp_return();
         retval.start = input.LT(1);
@@ -5676,7 +5676,7 @@ public class BqlParser extends Parser {
 
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:116:19: ( unaryPostfixOpIn | unaryPostfixOpCall )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:116:19: ( unaryPostfixOpIn | unaryPostfixOpCall )
             int alt38=2;
             int LA38_0 = input.LA(1);
 
@@ -5694,7 +5694,7 @@ public class BqlParser extends Parser {
             }
             switch (alt38) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:116:21: unaryPostfixOpIn
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:116:21: unaryPostfixOpIn
                     {
                     root_0 = (CommonTree)adaptor.nil();
 
@@ -5708,7 +5708,7 @@ public class BqlParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:116:40: unaryPostfixOpCall
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:116:40: unaryPostfixOpCall
                     {
                     root_0 = (CommonTree)adaptor.nil();
 
@@ -5747,7 +5747,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "unaryPostfixOpIn"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:1: unaryPostfixOpIn : IN LPAREN ( expression ( COMMA expression )* )? RPAREN -> ^( N_IN_PARAMS ( expression )* ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:1: unaryPostfixOpIn : IN LPAREN ( expression ( COMMA expression )* )? RPAREN -> ^( N_IN_PARAMS ( expression )* ) ;
     public final BqlParser.unaryPostfixOpIn_return unaryPostfixOpIn() throws RecognitionException {
         BqlParser.unaryPostfixOpIn_return retval = new BqlParser.unaryPostfixOpIn_return();
         retval.start = input.LT(1);
@@ -5773,8 +5773,8 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_LPAREN=new RewriteRuleTokenStream(adaptor,"token LPAREN");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:20: ( IN LPAREN ( expression ( COMMA expression )* )? RPAREN -> ^( N_IN_PARAMS ( expression )* ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:22: IN LPAREN ( expression ( COMMA expression )* )? RPAREN
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:20: ( IN LPAREN ( expression ( COMMA expression )* )? RPAREN -> ^( N_IN_PARAMS ( expression )* ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:22: IN LPAREN ( expression ( COMMA expression )* )? RPAREN
             {
             IN86=(Token)match(input,IN,FOLLOW_IN_in_unaryPostfixOpIn2013);  
             stream_IN.add(IN86);
@@ -5782,7 +5782,7 @@ public class BqlParser extends Parser {
             LPAREN87=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_unaryPostfixOpIn2015);  
             stream_LPAREN.add(LPAREN87);
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:32: ( expression ( COMMA expression )* )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:32: ( expression ( COMMA expression )* )?
             int alt40=2;
             int LA40_0 = input.LA(1);
 
@@ -5791,7 +5791,7 @@ public class BqlParser extends Parser {
             }
             switch (alt40) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:33: expression ( COMMA expression )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:33: expression ( COMMA expression )*
                     {
                     pushFollow(FOLLOW_expression_in_unaryPostfixOpIn2018);
                     expression88=expression();
@@ -5799,7 +5799,7 @@ public class BqlParser extends Parser {
                     state._fsp--;
 
                     stream_expression.add(expression88.getTree());
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:44: ( COMMA expression )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:44: ( COMMA expression )*
                     loop39:
                     do {
                         int alt39=2;
@@ -5812,7 +5812,7 @@ public class BqlParser extends Parser {
 
                         switch (alt39) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:45: COMMA expression
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:45: COMMA expression
                     	    {
                     	    COMMA89=(Token)match(input,COMMA,FOLLOW_COMMA_in_unaryPostfixOpIn2021);  
                     	    stream_COMMA.add(COMMA89);
@@ -5856,12 +5856,12 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 117:75: -> ^( N_IN_PARAMS ( expression )* )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:78: ^( N_IN_PARAMS ( expression )* )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:78: ^( N_IN_PARAMS ( expression )* )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_IN_PARAMS, "N_IN_PARAMS"), root_1);
 
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:117:92: ( expression )*
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:117:92: ( expression )*
                 while ( stream_expression.hasNext() ) {
                     adaptor.addChild(root_1, stream_expression.nextTree());
 
@@ -5900,7 +5900,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "unaryPostfixOpCall"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:1: unaryPostfixOpCall : LPAREN ( expression ( COMMA expression )* )? RPAREN -> ^( N_CALL_PARAMS ( expression )* ) ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:1: unaryPostfixOpCall : LPAREN ( expression ( COMMA expression )* )? RPAREN -> ^( N_CALL_PARAMS ( expression )* ) ;
     public final BqlParser.unaryPostfixOpCall_return unaryPostfixOpCall() throws RecognitionException {
         BqlParser.unaryPostfixOpCall_return retval = new BqlParser.unaryPostfixOpCall_return();
         retval.start = input.LT(1);
@@ -5923,13 +5923,13 @@ public class BqlParser extends Parser {
         RewriteRuleTokenStream stream_LPAREN=new RewriteRuleTokenStream(adaptor,"token LPAREN");
         RewriteRuleSubtreeStream stream_expression=new RewriteRuleSubtreeStream(adaptor,"rule expression");
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:22: ( LPAREN ( expression ( COMMA expression )* )? RPAREN -> ^( N_CALL_PARAMS ( expression )* ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:24: LPAREN ( expression ( COMMA expression )* )? RPAREN
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:22: ( LPAREN ( expression ( COMMA expression )* )? RPAREN -> ^( N_CALL_PARAMS ( expression )* ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:24: LPAREN ( expression ( COMMA expression )* )? RPAREN
             {
             LPAREN92=(Token)match(input,LPAREN,FOLLOW_LPAREN_in_unaryPostfixOpCall2049);  
             stream_LPAREN.add(LPAREN92);
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:31: ( expression ( COMMA expression )* )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:31: ( expression ( COMMA expression )* )?
             int alt42=2;
             int LA42_0 = input.LA(1);
 
@@ -5938,7 +5938,7 @@ public class BqlParser extends Parser {
             }
             switch (alt42) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:32: expression ( COMMA expression )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:32: expression ( COMMA expression )*
                     {
                     pushFollow(FOLLOW_expression_in_unaryPostfixOpCall2052);
                     expression93=expression();
@@ -5946,7 +5946,7 @@ public class BqlParser extends Parser {
                     state._fsp--;
 
                     stream_expression.add(expression93.getTree());
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:43: ( COMMA expression )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:43: ( COMMA expression )*
                     loop41:
                     do {
                         int alt41=2;
@@ -5959,7 +5959,7 @@ public class BqlParser extends Parser {
 
                         switch (alt41) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:44: COMMA expression
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:44: COMMA expression
                     	    {
                     	    COMMA94=(Token)match(input,COMMA,FOLLOW_COMMA_in_unaryPostfixOpCall2055);  
                     	    stream_COMMA.add(COMMA94);
@@ -6003,12 +6003,12 @@ public class BqlParser extends Parser {
             root_0 = (CommonTree)adaptor.nil();
             // 118:75: -> ^( N_CALL_PARAMS ( expression )* )
             {
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:79: ^( N_CALL_PARAMS ( expression )* )
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:79: ^( N_CALL_PARAMS ( expression )* )
                 {
                 CommonTree root_1 = (CommonTree)adaptor.nil();
                 root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(N_CALL_PARAMS, "N_CALL_PARAMS"), root_1);
 
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:118:95: ( expression )*
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:118:95: ( expression )*
                 while ( stream_expression.hasNext() ) {
                     adaptor.addChild(root_1, stream_expression.nextTree());
 
@@ -6047,7 +6047,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "divideOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:121:1: divideOp : ( SLASH | DIV );
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:121:1: divideOp : ( SLASH | DIV );
     public final BqlParser.divideOp_return divideOp() throws RecognitionException {
         BqlParser.divideOp_return retval = new BqlParser.divideOp_return();
         retval.start = input.LT(1);
@@ -6059,8 +6059,8 @@ public class BqlParser extends Parser {
         CommonTree set97_tree=null;
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:121:13: ( SLASH | DIV )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:121:13: ( SLASH | DIV )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:
             {
             root_0 = (CommonTree)adaptor.nil();
 
@@ -6102,7 +6102,7 @@ public class BqlParser extends Parser {
     };
 
     // $ANTLR start "multiplyOp"
-    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:122:1: multiplyOp : STAR ;
+    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:122:1: multiplyOp : STAR ;
     public final BqlParser.multiplyOp_return multiplyOp() throws RecognitionException {
         BqlParser.multiplyOp_return retval = new BqlParser.multiplyOp_return();
         retval.start = input.LT(1);
@@ -6114,8 +6114,8 @@ public class BqlParser extends Parser {
         CommonTree STAR98_tree=null;
 
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:122:15: ( STAR )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:122:17: STAR
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:122:15: ( STAR )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:122:17: STAR
             {
             root_0 = (CommonTree)adaptor.nil();
 
@@ -6165,7 +6165,7 @@ public class BqlParser extends Parser {
     public static final BitSet FOLLOW_expression_in_columnExpr302 = new BitSet(new long[]{0x00C0000000000002L});
     public static final BitSet FOLLOW_withinClause_in_columnExpr304 = new BitSet(new long[]{0x0040000000000002L});
     public static final BitSet FOLLOW_AS_in_columnExpr308 = new BitSet(new long[]{0x0400000000000000L,0x00000000060000F4L});
-    public static final BitSet FOLLOW_columnName_in_columnExpr310 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_columnPath_in_columnExpr310 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_WITHIN_in_withinClause347 = new BitSet(new long[]{0x0500000000000000L,0x00000000060000F4L});
     public static final BitSet FOLLOW_RECORD_in_withinClause350 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_columnPath_in_withinClause376 = new BitSet(new long[]{0x0000000000000002L});
@@ -6180,14 +6180,14 @@ public class BqlParser extends Parser {
     public static final BitSet FOLLOW_WHERE_in_whereClause471 = new BitSet(new long[]{0x0400000000000000L,0x00000000060000F4L});
     public static final BitSet FOLLOW_expression_in_whereClause473 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_GROUPBY_in_groupbyClause502 = new BitSet(new long[]{0x0400000000000000L,0x00000000060000F4L});
-    public static final BitSet FOLLOW_columnName_in_groupbyClause504 = new BitSet(new long[]{0x0020000000000002L});
+    public static final BitSet FOLLOW_columnPath_in_groupbyClause504 = new BitSet(new long[]{0x0020000000000002L});
     public static final BitSet FOLLOW_COMMA_in_groupbyClause507 = new BitSet(new long[]{0x0400000000000000L,0x00000000060000F4L});
-    public static final BitSet FOLLOW_columnName_in_groupbyClause509 = new BitSet(new long[]{0x0020000000000002L});
+    public static final BitSet FOLLOW_columnPath_in_groupbyClause509 = new BitSet(new long[]{0x0020000000000002L});
     public static final BitSet FOLLOW_ORDERBY_in_orderbyClause541 = new BitSet(new long[]{0x0400000000000000L,0x00000000060000F4L});
     public static final BitSet FOLLOW_orderbyColumnName_in_orderbyClause543 = new BitSet(new long[]{0x0020000000000002L});
     public static final BitSet FOLLOW_COMMA_in_orderbyClause546 = new BitSet(new long[]{0x0400000000000000L,0x00000000060000F4L});
     public static final BitSet FOLLOW_orderbyColumnName_in_orderbyClause548 = new BitSet(new long[]{0x0020000000000002L});
-    public static final BitSet FOLLOW_columnName_in_orderbyColumnName571 = new BitSet(new long[]{0x8000000000000002L,0x0000000000000001L});
+    public static final BitSet FOLLOW_columnPath_in_orderbyColumnName571 = new BitSet(new long[]{0x8000000000000002L,0x0000000000000001L});
     public static final BitSet FOLLOW_ASC_in_orderbyColumnName574 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_DESC_in_orderbyColumnName601 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_LIMIT_in_limitClause669 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000004L});

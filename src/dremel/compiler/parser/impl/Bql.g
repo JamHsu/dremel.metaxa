@@ -38,7 +38,7 @@ selectStatement 			: 	selectClause fromClause whereClause?
 							groupbyClause? orderbyClause? limitClause?			-> 	^(N_SELECT_STATEMENT fromClause selectClause whereClause? groupbyClause? orderbyClause? limitClause?);
 
 selectClause  				:	SELECT columnExpr (COMMA columnExpr)*	 				-> 	^(N_SELECT columnExpr+);
-columnExpr		 		:	expression withinClause? (AS columnName)? 				-> 	^(N_CREATE_COLUMN expression ^(N_ALIAS columnName)? withinClause? );
+columnExpr		 		:	expression withinClause? (AS columnPath)? 				-> 	^(N_CREATE_COLUMN expression ^(N_ALIAS columnPath)? withinClause? );
 withinClause				:	(WITHIN (RECORD  							-> 	^(N_WITHIN_RECORD)
 							| columnPath							->	^(N_WITHIN columnPath)
 							));
@@ -48,12 +48,12 @@ subSelectStatement			:	(tableName | (LPAREN! selectStatement RPAREN!));			//embe
 
 whereClause				:	WHERE expression 							-> 	^(N_WHERE expression);
 
-groupbyClause  				:	GROUPBY columnName (COMMA columnName)* 					-> 	^(N_GROUPBY columnName+);
+groupbyClause  				:	GROUPBY columnPath (COMMA columnPath)* 					-> 	^(N_GROUPBY columnPath+);
 
 orderbyClause  				:	( ORDERBY orderbyColumnName (COMMA orderbyColumnName)*)			-> 	^(N_ORDERBY orderbyColumnName);
-orderbyColumnName			:	columnName (ASC 							-> 	^(N_ASC columnName)
-							| DESC								->	^(N_DESC columnName)
-							|				/* default sort order */	->	^(N_ASC columnName) 
+orderbyColumnName			:	columnPath (ASC 							-> 	^(N_ASC columnPath)
+							| DESC								->	^(N_DESC columnPath)
+							|				/* default sort order */	->	^(N_ASC columnPath) 
 							);						
 
 limitClause  				:	( LIMIT INT )								->	^(N_LIMIT INT);

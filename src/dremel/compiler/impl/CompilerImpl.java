@@ -90,7 +90,17 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		assert (count >= 2);
 		parseFromClause((AstNode) node.getChild(0), query);
 		parseSelectClause((AstNode) node.getChild(1), query);
-		parseWhereClause((AstNode) node.getChild(2), query);
+		int curNode = 2;
+		if (node.getChild(2) !=null && node.getChild(2).getType()==BqlParser.N_WHERE)
+		{
+			parseWhereClause((AstNode) node.getChild(2), query);
+			curNode++;
+		}
+		
+		if (node.getChild(curNode) !=null && node.getChild(curNode).getType()==BqlParser.N_GROUPBY)
+		{
+			parseGroupBy((AstNode) node.getChild(curNode), query);
+		}
 	}
 
 	void parseFromClause(AstNode node, Query query) {
@@ -209,9 +219,28 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		int count = node.getChildCount();
 		assert ((count == 1));
 		node = (AstNode) node.getChild(0);
-		assert (node.getType() == BqlParser.N_NAME);
-		assert (node.getChildCount() == 1);
-		alias.append(node.getChild(0).getText());
+		assert (node.getType() == BqlParser.N_ID);
+		alias.append(getID((AstNode)node));
+	}
+
+	private void parseGroupBy(AstNode node, Query query) {
+		if (node==null) return;
+		assert (node.getType() == BqlParser.N_GROUPBY);
+		int count = node.getChildCount();
+		assert ((count == 1)); //support for one integer field only
+		node = (AstNode) node.getChild(0);
+		assert (node.getType() == BqlParser.N_ID);
+		String colName = getID((AstNode)node);
+		if (query.getSymbolTable().containsKey(colName))
+		{
+			Symbol s = query.getSymbolTable().get(colName);
+			query.getGroupByExpressions().add(s);
+		}
+		else
+		{
+			Symbol s = new dremel.compiler.impl.Expression.Symbol(colName, query);
+			query.getGroupByExpressions().add(s);
+		}
 	}
 
 	/**
@@ -611,15 +640,24 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	public static void main(String[] args) throws Exception {
 
 		CompilerImpl compiler = new CompilerImpl();
-//		compiler.buildPaperSchema(5000000);
+//		compiler.buildPaperSchema(50);
 
 //		 AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
-		//AstNode nodes = Parser.parseBql("SELECT \ndocid, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");		
+		//AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.backward FROM [document] GROUP BY links.backward");		
 		final Query query = compiler.parse(nodes);
 		compiler.analyse(query);
-		String code = compiler.compileToScript(query);
-		MetaxaExecutor executor = new MetaxaExecutor(query, code);
-		executor.execute();
+		
+		assert (query.getGroupByExpressions().size()==1);
+//		String code = compiler.compileToScript(query);
+//		MetaxaExecutor executor = new MetaxaExecutor(query, code);
+//		executor.execute();
 	}
+
+	public static void main1(String[] args) throws Exception {
+
+		AstNode nodes = Parser.parseBql("SELECT count(docid) within record as c_id.abc FROM [document] group by abc.aaa, abc.bbb");
+		System.out.println(nodes.toStringTree());
+	}
+
 }

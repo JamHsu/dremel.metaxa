@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:45:30 /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g 2011-02-12 23:31:24
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g 2011-04-13 22:35:41
 package dremel.compiler.parser.impl;
 
 import org.antlr.runtime.*;
@@ -7,134 +7,134 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class BqlLexer extends Lexer {
-    public static final int EOF=-1;
-    public static final int N_SELECT_STATEMENT=4;
-    public static final int N_FROM=5;
-    public static final int N_SELECT=6;
-    public static final int N_WHERE=7;
-    public static final int N_GROUPBY=8;
-    public static final int N_ORDERBY=9;
-    public static final int N_LIMIT=10;
-    public static final int N_ID=11;
-    public static final int N_CREATE_COLUMN=12;
-    public static final int N_ALIAS=13;
-    public static final int N_WITHIN=14;
-    public static final int N_TABLE=15;
-    public static final int N_WITHIN_RECORD=16;
-    public static final int N_ASC=17;
-    public static final int N_DESC=18;
-    public static final int N_TABLE_NAME=19;
-    public static final int N_NAME=20;
-    public static final int N_IN=21;
-    public static final int N_CALL=22;
-    public static final int N_OP=23;
-    public static final int N_LOGICAL_OR=24;
-    public static final int N_LOGICAL_AND=25;
-    public static final int N_BITWISE_OR=26;
-    public static final int N_BITWISE_XOR=27;
-    public static final int N_BITWISE_AND=28;
-    public static final int N_EQUAL=29;
-    public static final int N_NOT_EQUAL=30;
-    public static final int N_LESS_THAN=31;
-    public static final int N_LESS_THAN_OR_EQUAL=32;
-    public static final int N_GREATER_THAN=33;
-    public static final int N_LOGICAL_NOT=34;
-    public static final int N_BITWISE_NOT=35;
-    public static final int N_CONTAINS=36;
-    public static final int N_REMAINDER=37;
-    public static final int N_GREATER_THAN_OR_EQUAL=38;
-    public static final int N_BITWISE_RIGHT_SHIFT=39;
-    public static final int N_DIVIDE=40;
-    public static final int N_MULTIPLY=41;
-    public static final int N_SUBSTRUCT=42;
-    public static final int N_ADD=43;
-    public static final int N_BITWISE_LEFT_SHIFT=44;
-    public static final int N_IN_PARAMS=45;
-    public static final int N_CALL_PARAMS=46;
-    public static final int N_INT=47;
-    public static final int N_FLOAT=48;
-    public static final int N_STRING=49;
-    public static final int N_EXPRESSION=50;
-    public static final int SEMICOLON=51;
-    public static final int SELECT=52;
-    public static final int COMMA=53;
-    public static final int AS=54;
-    public static final int WITHIN=55;
-    public static final int RECORD=56;
-    public static final int FROM=57;
-    public static final int LPAREN=58;
-    public static final int RPAREN=59;
-    public static final int WHERE=60;
-    public static final int GROUPBY=61;
-    public static final int ORDERBY=62;
-    public static final int ASC=63;
-    public static final int DESC=64;
-    public static final int LIMIT=65;
-    public static final int INT=66;
-    public static final int DOT=67;
-    public static final int ID=68;
     public static final int STAR=69;
-    public static final int FLOAT=70;
-    public static final int STRING=71;
-    public static final int LOGICAL_OR=72;
-    public static final int LOGICAL_AND=73;
-    public static final int BITWISE_OR=74;
-    public static final int BITWISE_XOR=75;
-    public static final int BITWISE_AND=76;
-    public static final int EQUAL=77;
-    public static final int NOT_EQUAL=78;
-    public static final int LESS_THAN=79;
-    public static final int LESS_THAN_OR_EQUAL=80;
-    public static final int GREATER_THAN=81;
-    public static final int GREATER_THAN_OR_EQUAL=82;
-    public static final int BITWISE_LEFT_SHIFT=83;
-    public static final int BITWISE_RIGHT_SHIFT=84;
-    public static final int ADD=85;
-    public static final int SUBSTRUCT=86;
-    public static final int REMAINDER=87;
-    public static final int CONTAINS=88;
-    public static final int BITWISE_NOT=89;
-    public static final int LOGICAL_NOT=90;
-    public static final int IN=91;
-    public static final int SLASH=92;
-    public static final int DIV=93;
-    public static final int S=94;
-    public static final int E=95;
-    public static final int L=96;
-    public static final int C=97;
-    public static final int T=98;
-    public static final int W=99;
-    public static final int I=100;
-    public static final int H=101;
-    public static final int N=102;
-    public static final int R=103;
-    public static final int O=104;
-    public static final int D=105;
-    public static final int A=106;
-    public static final int F=107;
-    public static final int M=108;
-    public static final int G=109;
-    public static final int U=110;
-    public static final int P=111;
-    public static final int WS=112;
-    public static final int B=113;
-    public static final int Y=114;
-    public static final int COLON=115;
     public static final int LSQUARE=116;
-    public static final int RSQUARE=117;
-    public static final int LCURLY=118;
-    public static final int RCURLY=119;
-    public static final int F_ID1=120;
-    public static final int F_ID2=121;
-    public static final int F_EXPONENT=122;
-    public static final int F_HEX_DIGIT=123;
+    public static final int N_CALL=22;
+    public static final int N_LIMIT=10;
+    public static final int CONTAINS=88;
+    public static final int N_DESC=18;
+    public static final int BITWISE_LEFT_SHIFT=83;
+    public static final int N_LOGICAL_NOT=34;
+    public static final int N_CREATE_COLUMN=12;
+    public static final int EOF=-1;
+    public static final int N_NOT_EQUAL=30;
+    public static final int LOGICAL_AND=73;
+    public static final int N_GROUPBY=8;
+    public static final int RPAREN=59;
+    public static final int N_EXPRESSION=50;
+    public static final int N_ADD=43;
+    public static final int N_BITWISE_NOT=35;
+    public static final int BITWISE_XOR=75;
+    public static final int NOT_EQUAL=78;
+    public static final int N_MULTIPLY=41;
+    public static final int N_ID=11;
+    public static final int N_IN=21;
     public static final int COMMENT=124;
+    public static final int SELECT=52;
+    public static final int N_BITWISE_XOR=27;
+    public static final int GROUPBY=61;
+    public static final int N_SUBSTRUCT=42;
+    public static final int N_INT=47;
+    public static final int D=105;
+    public static final int E=95;
+    public static final int F=107;
+    public static final int RECORD=56;
+    public static final int N_WHERE=7;
+    public static final int G=109;
+    public static final int N_LESS_THAN=31;
+    public static final int A=106;
+    public static final int B=113;
+    public static final int ASC=63;
+    public static final int C=97;
+    public static final int L=96;
+    public static final int M=108;
+    public static final int N=102;
+    public static final int O=104;
+    public static final int H=101;
+    public static final int I=100;
     public static final int J=125;
     public static final int K=126;
-    public static final int Q=127;
+    public static final int U=110;
+    public static final int T=98;
+    public static final int W=99;
     public static final int V=128;
+    public static final int LCURLY=118;
+    public static final int Q=127;
+    public static final int N_CALL_PARAMS=46;
+    public static final int SEMICOLON=51;
+    public static final int INT=66;
+    public static final int F_ID2=121;
+    public static final int P=111;
+    public static final int F_ID1=120;
+    public static final int S=94;
+    public static final int R=103;
+    public static final int Y=114;
     public static final int X=129;
     public static final int Z=130;
+    public static final int F_HEX_DIGIT=123;
+    public static final int WS=112;
+    public static final int REMAINDER=87;
+    public static final int N_STRING=49;
+    public static final int LESS_THAN=79;
+    public static final int WITHIN=55;
+    public static final int N_WITHIN=14;
+    public static final int N_TABLE=15;
+    public static final int FROM=57;
+    public static final int N_LESS_THAN_OR_EQUAL=32;
+    public static final int N_BITWISE_AND=28;
+    public static final int N_CONTAINS=36;
+    public static final int WHERE=60;
+    public static final int BITWISE_AND=76;
+    public static final int BITWISE_NOT=89;
+    public static final int LIMIT=65;
+    public static final int N_BITWISE_RIGHT_SHIFT=39;
+    public static final int BITWISE_OR=74;
+    public static final int LOGICAL_NOT=90;
+    public static final int FLOAT=70;
+    public static final int ORDERBY=62;
+    public static final int N_DIVIDE=40;
+    public static final int F_EXPONENT=122;
+    public static final int ID=68;
+    public static final int N_LOGICAL_AND=25;
+    public static final int LPAREN=58;
+    public static final int AS=54;
+    public static final int N_SELECT=6;
+    public static final int N_BITWISE_OR=26;
+    public static final int N_ORDERBY=9;
+    public static final int SLASH=92;
+    public static final int IN=91;
+    public static final int N_TABLE_NAME=19;
+    public static final int COMMA=53;
+    public static final int EQUAL=77;
+    public static final int N_NAME=20;
+    public static final int LOGICAL_OR=72;
+    public static final int DOT=67;
+    public static final int N_FROM=5;
+    public static final int ADD=85;
+    public static final int N_SELECT_STATEMENT=4;
+    public static final int LESS_THAN_OR_EQUAL=80;
+    public static final int N_REMAINDER=37;
+    public static final int N_EQUAL=29;
+    public static final int SUBSTRUCT=86;
+    public static final int GREATER_THAN=81;
+    public static final int N_WITHIN_RECORD=16;
+    public static final int N_GREATER_THAN_OR_EQUAL=38;
+    public static final int N_ALIAS=13;
+    public static final int N_IN_PARAMS=45;
+    public static final int N_LOGICAL_OR=24;
+    public static final int N_FLOAT=48;
+    public static final int RSQUARE=117;
+    public static final int N_BITWISE_LEFT_SHIFT=44;
+    public static final int BITWISE_RIGHT_SHIFT=84;
+    public static final int COLON=115;
+    public static final int GREATER_THAN_OR_EQUAL=82;
+    public static final int N_ASC=17;
+    public static final int RCURLY=119;
+    public static final int N_OP=23;
+    public static final int DESC=64;
+    public static final int DIV=93;
+    public static final int N_GREATER_THAN=33;
+    public static final int STRING=71;
 
     // delegates
     // delegators
@@ -147,15 +147,15 @@ public class BqlLexer extends Lexer {
         super(input,state);
 
     }
-    public String getGrammarFileName() { return "/home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g"; }
+    public String getGrammarFileName() { return "/home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g"; }
 
     // $ANTLR start "SELECT"
     public final void mSELECT() throws RecognitionException {
         try {
             int _type = SELECT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:126:13: ( S E L E C T )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:126:15: S E L E C T
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:126:13: ( S E L E C T )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:126:15: S E L E C T
             {
             mS(); 
             mE(); 
@@ -179,8 +179,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = WITHIN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:127:12: ( W I T H I N )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:127:14: W I T H I N
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:127:12: ( W I T H I N )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:127:14: W I T H I N
             {
             mW(); 
             mI(); 
@@ -204,8 +204,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = RECORD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:128:12: ( R E C O R D )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:128:14: R E C O R D
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:128:12: ( R E C O R D )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:128:14: R E C O R D
             {
             mR(); 
             mE(); 
@@ -229,8 +229,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = AS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:129:8: ( A S )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:129:10: A S
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:129:8: ( A S )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:129:10: A S
             {
             mA(); 
             mS(); 
@@ -250,8 +250,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = FROM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:130:10: ( F R O M )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:130:12: F R O M
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:130:10: ( F R O M )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:130:12: F R O M
             {
             mF(); 
             mR(); 
@@ -273,8 +273,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = WHERE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:131:11: ( W H E R E )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:131:13: W H E R E
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:131:11: ( W H E R E )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:131:13: W H E R E
             {
             mW(); 
             mH(); 
@@ -297,8 +297,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = GROUPBY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:132:13: ( G R O U P WS B Y )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:132:15: G R O U P WS B Y
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:132:13: ( G R O U P WS B Y )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:132:15: G R O U P WS B Y
             {
             mG(); 
             mR(); 
@@ -324,8 +324,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = ORDERBY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:133:13: ( O R D E R WS B Y )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:133:15: O R D E R WS B Y
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:133:13: ( O R D E R WS B Y )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:133:15: O R D E R WS B Y
             {
             mO(); 
             mR(); 
@@ -351,8 +351,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = DESC;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:134:10: ( D E S C )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:134:12: D E S C
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:134:10: ( D E S C )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:134:12: D E S C
             {
             mD(); 
             mE(); 
@@ -374,8 +374,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = ASC;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:135:9: ( A S C )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:135:11: A S C
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:135:9: ( A S C )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:135:11: A S C
             {
             mA(); 
             mS(); 
@@ -396,8 +396,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LIMIT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:136:11: ( L I M I T )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:136:13: L I M I T
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:136:11: ( L I M I T )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:136:13: L I M I T
             {
             mL(); 
             mI(); 
@@ -420,8 +420,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LOGICAL_OR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:138:16: ( O R )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:138:18: O R
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:138:16: ( O R )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:138:18: O R
             {
             mO(); 
             mR(); 
@@ -441,8 +441,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LOGICAL_AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:139:16: ( A N D )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:139:18: A N D
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:139:16: ( A N D )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:139:18: A N D
             {
             mA(); 
             mN(); 
@@ -463,8 +463,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LOGICAL_NOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:140:16: ( N O T )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:140:18: N O T
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:140:16: ( N O T )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:140:18: N O T
             {
             mN(); 
             mO(); 
@@ -485,8 +485,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = CONTAINS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:141:14: ( C O N T A I N S )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:141:16: C O N T A I N S
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:141:14: ( C O N T A I N S )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:141:16: C O N T A I N S
             {
             mC(); 
             mO(); 
@@ -512,8 +512,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = IN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:142:8: ( I N )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:142:10: I N
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:142:8: ( I N )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:142:10: I N
             {
             mI(); 
             mN(); 
@@ -533,8 +533,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = BITWISE_AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:145:17: ( '&' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:145:20: '&'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:145:17: ( '&' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:145:20: '&'
             {
             match('&'); 
 
@@ -553,8 +553,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = BITWISE_NOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:146:16: ( '~' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:146:19: '~'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:146:16: ( '~' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:146:19: '~'
             {
             match('~'); 
 
@@ -573,8 +573,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = BITWISE_OR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:147:15: ( '|' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:147:18: '|'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:147:15: ( '|' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:147:18: '|'
             {
             match('|'); 
 
@@ -593,8 +593,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = BITWISE_XOR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:148:17: ( '^' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:148:20: '^'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:148:17: ( '^' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:148:20: '^'
             {
             match('^'); 
 
@@ -613,7 +613,7 @@ public class BqlLexer extends Lexer {
         try {
             int _type = EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:149:12: ( '=' | '==' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:149:12: ( '=' | '==' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -634,14 +634,14 @@ public class BqlLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:149:15: '='
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:149:15: '='
                     {
                     match('='); 
 
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:149:21: '=='
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:149:21: '=='
                     {
                     match("=="); 
 
@@ -663,7 +663,7 @@ public class BqlLexer extends Lexer {
         try {
             int _type = NOT_EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:150:15: ( '<>' | '!=' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:150:15: ( '<>' | '!=' )
             int alt2=2;
             int LA2_0 = input.LA(1);
 
@@ -681,7 +681,7 @@ public class BqlLexer extends Lexer {
             }
             switch (alt2) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:150:18: '<>'
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:150:18: '<>'
                     {
                     match("<>"); 
 
@@ -689,7 +689,7 @@ public class BqlLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:150:25: '!='
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:150:25: '!='
                     {
                     match("!="); 
 
@@ -711,8 +711,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LESS_THAN_OR_EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:151:23: ( '<=' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:151:25: '<='
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:151:23: ( '<=' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:151:25: '<='
             {
             match("<="); 
 
@@ -732,8 +732,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LESS_THAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:152:15: ( '<' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:152:18: '<'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:152:15: ( '<' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:152:18: '<'
             {
             match('<'); 
 
@@ -752,8 +752,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = GREATER_THAN_OR_EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:153:26: ( '>=' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:153:29: '>='
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:153:26: ( '>=' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:153:29: '>='
             {
             match(">="); 
 
@@ -773,8 +773,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = GREATER_THAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:154:18: ( '>' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:154:21: '>'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:154:18: ( '>' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:154:21: '>'
             {
             match('>'); 
 
@@ -793,8 +793,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = SLASH;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:155:12: ( '/' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:155:15: '/'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:155:12: ( '/' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:155:15: '/'
             {
             match('/'); 
 
@@ -813,8 +813,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = DIV;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:156:9: ( ' D I V' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:156:11: ' D I V'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:156:9: ( ' D I V' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:156:11: ' D I V'
             {
             match(" D I V"); 
 
@@ -834,8 +834,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = STAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:157:10: ( '*' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:157:13: '*'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:157:10: ( '*' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:157:13: '*'
             {
             match('*'); 
 
@@ -854,8 +854,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = ADD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:158:10: ( '+' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:158:13: '+'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:158:10: ( '+' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:158:13: '+'
             {
             match('+'); 
 
@@ -874,8 +874,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = SUBSTRUCT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:159:15: ( '-' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:159:17: '-'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:159:15: ( '-' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:159:17: '-'
             {
             match('-'); 
 
@@ -894,8 +894,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = REMAINDER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:160:14: ( '%' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:160:17: '%'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:160:14: ( '%' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:160:17: '%'
             {
             match('%'); 
 
@@ -914,8 +914,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = BITWISE_LEFT_SHIFT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:161:23: ( '<<' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:161:26: '<<'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:161:23: ( '<<' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:161:26: '<<'
             {
             match("<<"); 
 
@@ -935,8 +935,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = BITWISE_RIGHT_SHIFT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:162:24: ( '>>' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:162:27: '>>'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:162:24: ( '>>' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:162:27: '>>'
             {
             match(">>"); 
 
@@ -956,8 +956,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = DOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:163:10: ( '.' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:163:13: '.'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:163:10: ( '.' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:163:13: '.'
             {
             match('.'); 
 
@@ -976,8 +976,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = COLON;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:164:12: ( ':' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:164:15: ':'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:164:12: ( ':' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:164:15: ':'
             {
             match(':'); 
 
@@ -996,8 +996,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = COMMA;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:165:12: ( ',' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:165:15: ','
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:165:12: ( ',' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:165:15: ','
             {
             match(','); 
 
@@ -1016,8 +1016,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = SEMICOLON;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:166:14: ( ';' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:166:17: ';'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:166:14: ( ';' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:166:17: ';'
             {
             match(';'); 
 
@@ -1036,8 +1036,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LPAREN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:167:13: ( '(' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:167:16: '('
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:167:13: ( '(' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:167:16: '('
             {
             match('('); 
 
@@ -1056,8 +1056,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = RPAREN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:168:13: ( ')' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:168:16: ')'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:168:13: ( ')' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:168:16: ')'
             {
             match(')'); 
 
@@ -1076,8 +1076,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LSQUARE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:169:13: ( '[' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:169:16: '['
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:169:13: ( '[' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:169:16: '['
             {
             match('['); 
 
@@ -1096,8 +1096,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = RSQUARE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:170:13: ( ']' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:170:16: ']'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:170:13: ( ']' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:170:16: ']'
             {
             match(']'); 
 
@@ -1116,8 +1116,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = LCURLY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:171:13: ( '{' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:171:16: '{'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:171:13: ( '{' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:171:16: '{'
             {
             match('{'); 
 
@@ -1136,8 +1136,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = RCURLY;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:172:13: ( '}' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:172:16: '}'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:172:13: ( '}' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:172:16: '}'
             {
             match('}'); 
 
@@ -1156,7 +1156,7 @@ public class BqlLexer extends Lexer {
         try {
             int _type = ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:175:8: ( F_ID1 | F_ID2 )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:175:8: ( F_ID1 | F_ID2 )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -1174,14 +1174,14 @@ public class BqlLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:175:10: F_ID1
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:175:10: F_ID1
                     {
                     mF_ID1(); 
 
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:175:18: F_ID2
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:175:18: F_ID2
                     {
                     mF_ID2(); 
 
@@ -1200,8 +1200,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "F_ID1"
     public final void mF_ID1() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:176:20: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:176:22: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:176:20: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:176:22: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1212,7 +1212,7 @@ public class BqlLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:176:46: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:176:46: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
             loop4:
             do {
                 int alt4=2;
@@ -1225,7 +1225,7 @@ public class BqlLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:
             	    {
             	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -1257,11 +1257,11 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "F_ID2"
     public final void mF_ID2() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:177:19: ( '[' ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | ' ' | '\\\\' | '/' | '-' | '+' | '*' | '.' | ':' | '$' )* ']' )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:177:22: '[' ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | ' ' | '\\\\' | '/' | '-' | '+' | '*' | '.' | ':' | '$' )* ']'
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:177:19: ( '[' ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | ' ' | '\\\\' | '/' | '-' | '+' | '*' | '.' | ':' | '$' )* ']' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:177:22: '[' ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | ' ' | '\\\\' | '/' | '-' | '+' | '*' | '.' | ':' | '$' )* ']'
             {
             match('['); 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:177:26: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | ' ' | '\\\\' | '/' | '-' | '+' | '*' | '.' | ':' | '$' )*
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:177:26: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' | ' ' | '\\\\' | '/' | '-' | '+' | '*' | '.' | ':' | '$' )*
             loop5:
             do {
                 int alt5=2;
@@ -1274,7 +1274,7 @@ public class BqlLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:
             	    {
             	    if ( input.LA(1)==' '||input.LA(1)=='$'||(input.LA(1)>='*' && input.LA(1)<='+')||(input.LA(1)>='-' && input.LA(1)<=':')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='\\'||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -1309,10 +1309,10 @@ public class BqlLexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:178:10: ( ( '0' .. '9' )+ )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:178:12: ( '0' .. '9' )+
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:178:10: ( ( '0' .. '9' )+ )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:178:12: ( '0' .. '9' )+
             {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:178:12: ( '0' .. '9' )+
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:178:12: ( '0' .. '9' )+
             int cnt6=0;
             loop6:
             do {
@@ -1326,7 +1326,7 @@ public class BqlLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:178:12: '0' .. '9'
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:178:12: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1358,14 +1358,14 @@ public class BqlLexer extends Lexer {
         try {
             int _type = FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:14: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( F_EXPONENT )? | '.' ( '0' .. '9' )+ ( F_EXPONENT )? | ( '0' .. '9' )+ F_EXPONENT )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:14: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( F_EXPONENT )? | '.' ( '0' .. '9' )+ ( F_EXPONENT )? | ( '0' .. '9' )+ F_EXPONENT )
             int alt13=3;
             alt13 = dfa13.predict(input);
             switch (alt13) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:19: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( F_EXPONENT )?
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:19: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( F_EXPONENT )?
                     {
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:19: ( '0' .. '9' )+
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:19: ( '0' .. '9' )+
                     int cnt7=0;
                     loop7:
                     do {
@@ -1379,7 +1379,7 @@ public class BqlLexer extends Lexer {
 
                         switch (alt7) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:20: '0' .. '9'
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:20: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1396,7 +1396,7 @@ public class BqlLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:35: ( '0' .. '9' )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:35: ( '0' .. '9' )*
                     loop8:
                     do {
                         int alt8=2;
@@ -1409,7 +1409,7 @@ public class BqlLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:36: '0' .. '9'
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:36: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1421,7 +1421,7 @@ public class BqlLexer extends Lexer {
                         }
                     } while (true);
 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:47: ( F_EXPONENT )?
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:47: ( F_EXPONENT )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1430,7 +1430,7 @@ public class BqlLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:47: F_EXPONENT
+                            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:47: F_EXPONENT
                             {
                             mF_EXPONENT(); 
 
@@ -1443,10 +1443,10 @@ public class BqlLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:66: '.' ( '0' .. '9' )+ ( F_EXPONENT )?
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:66: '.' ( '0' .. '9' )+ ( F_EXPONENT )?
                     {
                     match('.'); 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:70: ( '0' .. '9' )+
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:70: ( '0' .. '9' )+
                     int cnt10=0;
                     loop10:
                     do {
@@ -1460,7 +1460,7 @@ public class BqlLexer extends Lexer {
 
                         switch (alt10) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:71: '0' .. '9'
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:71: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1476,7 +1476,7 @@ public class BqlLexer extends Lexer {
                         cnt10++;
                     } while (true);
 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:82: ( F_EXPONENT )?
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:82: ( F_EXPONENT )?
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
@@ -1485,7 +1485,7 @@ public class BqlLexer extends Lexer {
                     }
                     switch (alt11) {
                         case 1 :
-                            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:82: F_EXPONENT
+                            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:82: F_EXPONENT
                             {
                             mF_EXPONENT(); 
 
@@ -1498,9 +1498,9 @@ public class BqlLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:101: ( '0' .. '9' )+ F_EXPONENT
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:101: ( '0' .. '9' )+ F_EXPONENT
                     {
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:101: ( '0' .. '9' )+
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:101: ( '0' .. '9' )+
                     int cnt12=0;
                     loop12:
                     do {
@@ -1514,7 +1514,7 @@ public class BqlLexer extends Lexer {
 
                         switch (alt12) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:179:102: '0' .. '9'
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:179:102: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1549,7 +1549,7 @@ public class BqlLexer extends Lexer {
         try {
             int _type = STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:16: ( ( '\"' (~ ( '\"' ) )* '\"' ) | ( '\\'' (~ ( '\\'' ) )* '\\'' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:16: ( ( '\"' (~ ( '\"' ) )* '\"' ) | ( '\\'' (~ ( '\\'' ) )* '\\'' ) )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1567,13 +1567,13 @@ public class BqlLexer extends Lexer {
             }
             switch (alt16) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:18: ( '\"' (~ ( '\"' ) )* '\"' )
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:18: ( '\"' (~ ( '\"' ) )* '\"' )
                     {
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:18: ( '\"' (~ ( '\"' ) )* '\"' )
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:19: '\"' (~ ( '\"' ) )* '\"'
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:18: ( '\"' (~ ( '\"' ) )* '\"' )
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:19: '\"' (~ ( '\"' ) )* '\"'
                     {
                     match('\"'); 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:23: (~ ( '\"' ) )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:23: (~ ( '\"' ) )*
                     loop14:
                     do {
                         int alt14=2;
@@ -1586,7 +1586,7 @@ public class BqlLexer extends Lexer {
 
                         switch (alt14) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:25: ~ ( '\"' )
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:25: ~ ( '\"' )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1614,13 +1614,13 @@ public class BqlLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:42: ( '\\'' (~ ( '\\'' ) )* '\\'' )
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:42: ( '\\'' (~ ( '\\'' ) )* '\\'' )
                     {
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:42: ( '\\'' (~ ( '\\'' ) )* '\\'' )
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:43: '\\'' (~ ( '\\'' ) )* '\\''
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:42: ( '\\'' (~ ( '\\'' ) )* '\\'' )
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:43: '\\'' (~ ( '\\'' ) )* '\\''
                     {
                     match('\''); 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:48: (~ ( '\\'' ) )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:48: (~ ( '\\'' ) )*
                     loop15:
                     do {
                         int alt15=2;
@@ -1633,7 +1633,7 @@ public class BqlLexer extends Lexer {
 
                         switch (alt15) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:180:50: ~ ( '\\'' )
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:180:50: ~ ( '\\'' )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1673,8 +1673,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "F_EXPONENT"
     public final void mF_EXPONENT() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:181:24: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:181:27: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:181:24: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:181:27: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -1685,7 +1685,7 @@ public class BqlLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:181:37: ( '+' | '-' )?
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:181:37: ( '+' | '-' )?
             int alt17=2;
             int LA17_0 = input.LA(1);
 
@@ -1694,7 +1694,7 @@ public class BqlLexer extends Lexer {
             }
             switch (alt17) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:
                     {
                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                         input.consume();
@@ -1711,7 +1711,7 @@ public class BqlLexer extends Lexer {
 
             }
 
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:181:48: ( '0' .. '9' )+
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:181:48: ( '0' .. '9' )+
             int cnt18=0;
             loop18:
             do {
@@ -1725,7 +1725,7 @@ public class BqlLexer extends Lexer {
 
                 switch (alt18) {
             	case 1 :
-            	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:181:49: '0' .. '9'
+            	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:181:49: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1753,8 +1753,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "F_HEX_DIGIT"
     public final void mF_HEX_DIGIT() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:182:25: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:182:28: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:182:25: ( ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:182:28: ( '0' .. '9' | 'a' .. 'f' | 'A' .. 'F' )
             {
             if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='F')||(input.LA(1)>='a' && input.LA(1)<='f') ) {
                 input.consume();
@@ -1779,8 +1779,8 @@ public class BqlLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:185:10: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:185:15: ( ' ' | '\\t' | '\\r' | '\\n' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:185:10: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:185:15: ( ' ' | '\\t' | '\\r' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -1808,7 +1808,7 @@ public class BqlLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:13: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' | '/*' ( options {greedy=false; } : . )* '*/' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:13: ( '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n' | '/*' ( options {greedy=false; } : . )* '*/' )
             int alt22=2;
             int LA22_0 = input.LA(1);
 
@@ -1836,11 +1836,11 @@ public class BqlLexer extends Lexer {
             }
             switch (alt22) {
                 case 1 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:18: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:18: '//' (~ ( '\\n' | '\\r' ) )* ( '\\r' )? '\\n'
                     {
                     match("//"); 
 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:23: (~ ( '\\n' | '\\r' ) )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:23: (~ ( '\\n' | '\\r' ) )*
                     loop19:
                     do {
                         int alt19=2;
@@ -1853,7 +1853,7 @@ public class BqlLexer extends Lexer {
 
                         switch (alt19) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:23: ~ ( '\\n' | '\\r' )
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:23: ~ ( '\\n' | '\\r' )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1873,7 +1873,7 @@ public class BqlLexer extends Lexer {
                         }
                     } while (true);
 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:37: ( '\\r' )?
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:37: ( '\\r' )?
                     int alt20=2;
                     int LA20_0 = input.LA(1);
 
@@ -1882,7 +1882,7 @@ public class BqlLexer extends Lexer {
                     }
                     switch (alt20) {
                         case 1 :
-                            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:37: '\\r'
+                            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:37: '\\r'
                             {
                             match('\r'); 
 
@@ -1897,11 +1897,11 @@ public class BqlLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:69: '/*' ( options {greedy=false; } : . )* '*/'
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:69: '/*' ( options {greedy=false; } : . )* '*/'
                     {
                     match("/*"); 
 
-                    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:74: ( options {greedy=false; } : . )*
+                    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:74: ( options {greedy=false; } : . )*
                     loop21:
                     do {
                         int alt21=2;
@@ -1926,7 +1926,7 @@ public class BqlLexer extends Lexer {
 
                         switch (alt21) {
                     	case 1 :
-                    	    // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:188:102: .
+                    	    // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:188:102: .
                     	    {
                     	    matchAny(); 
 
@@ -1957,8 +1957,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "A"
     public final void mA() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:191:11: ( ( 'a' | 'A' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:191:12: ( 'a' | 'A' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:191:11: ( ( 'a' | 'A' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:191:12: ( 'a' | 'A' )
             {
             if ( input.LA(1)=='A'||input.LA(1)=='a' ) {
                 input.consume();
@@ -1981,8 +1981,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "B"
     public final void mB() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:192:11: ( ( 'b' | 'B' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:192:12: ( 'b' | 'B' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:192:11: ( ( 'b' | 'B' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:192:12: ( 'b' | 'B' )
             {
             if ( input.LA(1)=='B'||input.LA(1)=='b' ) {
                 input.consume();
@@ -2005,8 +2005,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "C"
     public final void mC() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:193:11: ( ( 'c' | 'C' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:193:12: ( 'c' | 'C' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:193:11: ( ( 'c' | 'C' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:193:12: ( 'c' | 'C' )
             {
             if ( input.LA(1)=='C'||input.LA(1)=='c' ) {
                 input.consume();
@@ -2029,8 +2029,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "D"
     public final void mD() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:194:11: ( ( 'd' | 'D' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:194:12: ( 'd' | 'D' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:194:11: ( ( 'd' | 'D' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:194:12: ( 'd' | 'D' )
             {
             if ( input.LA(1)=='D'||input.LA(1)=='d' ) {
                 input.consume();
@@ -2053,8 +2053,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "E"
     public final void mE() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:195:11: ( ( 'e' | 'E' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:195:12: ( 'e' | 'E' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:195:11: ( ( 'e' | 'E' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:195:12: ( 'e' | 'E' )
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -2077,8 +2077,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "F"
     public final void mF() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:196:11: ( ( 'f' | 'F' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:196:12: ( 'f' | 'F' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:196:11: ( ( 'f' | 'F' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:196:12: ( 'f' | 'F' )
             {
             if ( input.LA(1)=='F'||input.LA(1)=='f' ) {
                 input.consume();
@@ -2101,8 +2101,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "G"
     public final void mG() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:197:11: ( ( 'g' | 'G' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:197:12: ( 'g' | 'G' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:197:11: ( ( 'g' | 'G' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:197:12: ( 'g' | 'G' )
             {
             if ( input.LA(1)=='G'||input.LA(1)=='g' ) {
                 input.consume();
@@ -2125,8 +2125,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "H"
     public final void mH() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:198:11: ( ( 'h' | 'H' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:198:12: ( 'h' | 'H' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:198:11: ( ( 'h' | 'H' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:198:12: ( 'h' | 'H' )
             {
             if ( input.LA(1)=='H'||input.LA(1)=='h' ) {
                 input.consume();
@@ -2149,8 +2149,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "I"
     public final void mI() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:199:11: ( ( 'i' | 'I' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:199:12: ( 'i' | 'I' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:199:11: ( ( 'i' | 'I' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:199:12: ( 'i' | 'I' )
             {
             if ( input.LA(1)=='I'||input.LA(1)=='i' ) {
                 input.consume();
@@ -2173,8 +2173,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "J"
     public final void mJ() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:200:11: ( ( 'j' | 'J' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:200:12: ( 'j' | 'J' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:200:11: ( ( 'j' | 'J' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:200:12: ( 'j' | 'J' )
             {
             if ( input.LA(1)=='J'||input.LA(1)=='j' ) {
                 input.consume();
@@ -2197,8 +2197,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "K"
     public final void mK() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:201:11: ( ( 'k' | 'K' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:201:12: ( 'k' | 'K' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:201:11: ( ( 'k' | 'K' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:201:12: ( 'k' | 'K' )
             {
             if ( input.LA(1)=='K'||input.LA(1)=='k' ) {
                 input.consume();
@@ -2221,8 +2221,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "L"
     public final void mL() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:202:11: ( ( 'l' | 'L' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:202:12: ( 'l' | 'L' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:202:11: ( ( 'l' | 'L' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:202:12: ( 'l' | 'L' )
             {
             if ( input.LA(1)=='L'||input.LA(1)=='l' ) {
                 input.consume();
@@ -2245,8 +2245,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "M"
     public final void mM() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:203:11: ( ( 'm' | 'M' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:203:12: ( 'm' | 'M' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:203:11: ( ( 'm' | 'M' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:203:12: ( 'm' | 'M' )
             {
             if ( input.LA(1)=='M'||input.LA(1)=='m' ) {
                 input.consume();
@@ -2269,8 +2269,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "N"
     public final void mN() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:204:11: ( ( 'n' | 'N' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:204:12: ( 'n' | 'N' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:204:11: ( ( 'n' | 'N' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:204:12: ( 'n' | 'N' )
             {
             if ( input.LA(1)=='N'||input.LA(1)=='n' ) {
                 input.consume();
@@ -2293,8 +2293,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "O"
     public final void mO() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:205:11: ( ( 'o' | 'O' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:205:12: ( 'o' | 'O' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:205:11: ( ( 'o' | 'O' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:205:12: ( 'o' | 'O' )
             {
             if ( input.LA(1)=='O'||input.LA(1)=='o' ) {
                 input.consume();
@@ -2317,8 +2317,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "P"
     public final void mP() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:206:11: ( ( 'p' | 'P' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:206:12: ( 'p' | 'P' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:206:11: ( ( 'p' | 'P' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:206:12: ( 'p' | 'P' )
             {
             if ( input.LA(1)=='P'||input.LA(1)=='p' ) {
                 input.consume();
@@ -2341,8 +2341,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "Q"
     public final void mQ() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:207:11: ( ( 'q' | 'Q' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:207:12: ( 'q' | 'Q' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:207:11: ( ( 'q' | 'Q' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:207:12: ( 'q' | 'Q' )
             {
             if ( input.LA(1)=='Q'||input.LA(1)=='q' ) {
                 input.consume();
@@ -2365,8 +2365,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "R"
     public final void mR() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:208:11: ( ( 'r' | 'R' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:208:12: ( 'r' | 'R' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:208:11: ( ( 'r' | 'R' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:208:12: ( 'r' | 'R' )
             {
             if ( input.LA(1)=='R'||input.LA(1)=='r' ) {
                 input.consume();
@@ -2389,8 +2389,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "S"
     public final void mS() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:209:11: ( ( 's' | 'S' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:209:12: ( 's' | 'S' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:209:11: ( ( 's' | 'S' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:209:12: ( 's' | 'S' )
             {
             if ( input.LA(1)=='S'||input.LA(1)=='s' ) {
                 input.consume();
@@ -2413,8 +2413,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "T"
     public final void mT() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:210:11: ( ( 't' | 'T' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:210:12: ( 't' | 'T' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:210:11: ( ( 't' | 'T' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:210:12: ( 't' | 'T' )
             {
             if ( input.LA(1)=='T'||input.LA(1)=='t' ) {
                 input.consume();
@@ -2437,8 +2437,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "U"
     public final void mU() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:211:11: ( ( 'u' | 'U' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:211:12: ( 'u' | 'U' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:211:11: ( ( 'u' | 'U' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:211:12: ( 'u' | 'U' )
             {
             if ( input.LA(1)=='U'||input.LA(1)=='u' ) {
                 input.consume();
@@ -2461,8 +2461,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "V"
     public final void mV() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:212:11: ( ( 'v' | 'V' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:212:12: ( 'v' | 'V' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:212:11: ( ( 'v' | 'V' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:212:12: ( 'v' | 'V' )
             {
             if ( input.LA(1)=='V'||input.LA(1)=='v' ) {
                 input.consume();
@@ -2485,8 +2485,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "W"
     public final void mW() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:213:11: ( ( 'w' | 'W' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:213:12: ( 'w' | 'W' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:213:11: ( ( 'w' | 'W' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:213:12: ( 'w' | 'W' )
             {
             if ( input.LA(1)=='W'||input.LA(1)=='w' ) {
                 input.consume();
@@ -2509,8 +2509,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "X"
     public final void mX() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:214:11: ( ( 'x' | 'X' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:214:12: ( 'x' | 'X' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:214:11: ( ( 'x' | 'X' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:214:12: ( 'x' | 'X' )
             {
             if ( input.LA(1)=='X'||input.LA(1)=='x' ) {
                 input.consume();
@@ -2533,8 +2533,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "Y"
     public final void mY() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:215:11: ( ( 'y' | 'Y' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:215:12: ( 'y' | 'Y' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:215:11: ( ( 'y' | 'Y' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:215:12: ( 'y' | 'Y' )
             {
             if ( input.LA(1)=='Y'||input.LA(1)=='y' ) {
                 input.consume();
@@ -2557,8 +2557,8 @@ public class BqlLexer extends Lexer {
     // $ANTLR start "Z"
     public final void mZ() throws RecognitionException {
         try {
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:216:11: ( ( 'z' | 'Z' ) )
-            // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:216:12: ( 'z' | 'Z' )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:216:11: ( ( 'z' | 'Z' ) )
+            // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:216:12: ( 'z' | 'Z' )
             {
             if ( input.LA(1)=='Z'||input.LA(1)=='z' ) {
                 input.consume();
@@ -2579,355 +2579,355 @@ public class BqlLexer extends Lexer {
     // $ANTLR end "Z"
 
     public void mTokens() throws RecognitionException {
-        // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:8: ( SELECT | WITHIN | RECORD | AS | FROM | WHERE | GROUPBY | ORDERBY | DESC | ASC | LIMIT | LOGICAL_OR | LOGICAL_AND | LOGICAL_NOT | CONTAINS | IN | BITWISE_AND | BITWISE_NOT | BITWISE_OR | BITWISE_XOR | EQUAL | NOT_EQUAL | LESS_THAN_OR_EQUAL | LESS_THAN | GREATER_THAN_OR_EQUAL | GREATER_THAN | SLASH | DIV | STAR | ADD | SUBSTRUCT | REMAINDER | BITWISE_LEFT_SHIFT | BITWISE_RIGHT_SHIFT | DOT | COLON | COMMA | SEMICOLON | LPAREN | RPAREN | LSQUARE | RSQUARE | LCURLY | RCURLY | ID | INT | FLOAT | STRING | WS | COMMENT )
+        // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:8: ( SELECT | WITHIN | RECORD | AS | FROM | WHERE | GROUPBY | ORDERBY | DESC | ASC | LIMIT | LOGICAL_OR | LOGICAL_AND | LOGICAL_NOT | CONTAINS | IN | BITWISE_AND | BITWISE_NOT | BITWISE_OR | BITWISE_XOR | EQUAL | NOT_EQUAL | LESS_THAN_OR_EQUAL | LESS_THAN | GREATER_THAN_OR_EQUAL | GREATER_THAN | SLASH | DIV | STAR | ADD | SUBSTRUCT | REMAINDER | BITWISE_LEFT_SHIFT | BITWISE_RIGHT_SHIFT | DOT | COLON | COMMA | SEMICOLON | LPAREN | RPAREN | LSQUARE | RSQUARE | LCURLY | RCURLY | ID | INT | FLOAT | STRING | WS | COMMENT )
         int alt23=50;
         alt23 = dfa23.predict(input);
         switch (alt23) {
             case 1 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:10: SELECT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:10: SELECT
                 {
                 mSELECT(); 
 
                 }
                 break;
             case 2 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:17: WITHIN
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:17: WITHIN
                 {
                 mWITHIN(); 
 
                 }
                 break;
             case 3 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:24: RECORD
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:24: RECORD
                 {
                 mRECORD(); 
 
                 }
                 break;
             case 4 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:31: AS
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:31: AS
                 {
                 mAS(); 
 
                 }
                 break;
             case 5 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:34: FROM
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:34: FROM
                 {
                 mFROM(); 
 
                 }
                 break;
             case 6 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:39: WHERE
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:39: WHERE
                 {
                 mWHERE(); 
 
                 }
                 break;
             case 7 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:45: GROUPBY
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:45: GROUPBY
                 {
                 mGROUPBY(); 
 
                 }
                 break;
             case 8 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:53: ORDERBY
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:53: ORDERBY
                 {
                 mORDERBY(); 
 
                 }
                 break;
             case 9 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:61: DESC
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:61: DESC
                 {
                 mDESC(); 
 
                 }
                 break;
             case 10 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:66: ASC
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:66: ASC
                 {
                 mASC(); 
 
                 }
                 break;
             case 11 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:70: LIMIT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:70: LIMIT
                 {
                 mLIMIT(); 
 
                 }
                 break;
             case 12 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:76: LOGICAL_OR
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:76: LOGICAL_OR
                 {
                 mLOGICAL_OR(); 
 
                 }
                 break;
             case 13 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:87: LOGICAL_AND
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:87: LOGICAL_AND
                 {
                 mLOGICAL_AND(); 
 
                 }
                 break;
             case 14 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:99: LOGICAL_NOT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:99: LOGICAL_NOT
                 {
                 mLOGICAL_NOT(); 
 
                 }
                 break;
             case 15 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:111: CONTAINS
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:111: CONTAINS
                 {
                 mCONTAINS(); 
 
                 }
                 break;
             case 16 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:120: IN
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:120: IN
                 {
                 mIN(); 
 
                 }
                 break;
             case 17 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:123: BITWISE_AND
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:123: BITWISE_AND
                 {
                 mBITWISE_AND(); 
 
                 }
                 break;
             case 18 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:135: BITWISE_NOT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:135: BITWISE_NOT
                 {
                 mBITWISE_NOT(); 
 
                 }
                 break;
             case 19 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:147: BITWISE_OR
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:147: BITWISE_OR
                 {
                 mBITWISE_OR(); 
 
                 }
                 break;
             case 20 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:158: BITWISE_XOR
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:158: BITWISE_XOR
                 {
                 mBITWISE_XOR(); 
 
                 }
                 break;
             case 21 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:170: EQUAL
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:170: EQUAL
                 {
                 mEQUAL(); 
 
                 }
                 break;
             case 22 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:176: NOT_EQUAL
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:176: NOT_EQUAL
                 {
                 mNOT_EQUAL(); 
 
                 }
                 break;
             case 23 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:186: LESS_THAN_OR_EQUAL
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:186: LESS_THAN_OR_EQUAL
                 {
                 mLESS_THAN_OR_EQUAL(); 
 
                 }
                 break;
             case 24 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:205: LESS_THAN
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:205: LESS_THAN
                 {
                 mLESS_THAN(); 
 
                 }
                 break;
             case 25 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:215: GREATER_THAN_OR_EQUAL
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:215: GREATER_THAN_OR_EQUAL
                 {
                 mGREATER_THAN_OR_EQUAL(); 
 
                 }
                 break;
             case 26 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:237: GREATER_THAN
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:237: GREATER_THAN
                 {
                 mGREATER_THAN(); 
 
                 }
                 break;
             case 27 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:250: SLASH
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:250: SLASH
                 {
                 mSLASH(); 
 
                 }
                 break;
             case 28 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:256: DIV
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:256: DIV
                 {
                 mDIV(); 
 
                 }
                 break;
             case 29 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:260: STAR
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:260: STAR
                 {
                 mSTAR(); 
 
                 }
                 break;
             case 30 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:265: ADD
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:265: ADD
                 {
                 mADD(); 
 
                 }
                 break;
             case 31 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:269: SUBSTRUCT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:269: SUBSTRUCT
                 {
                 mSUBSTRUCT(); 
 
                 }
                 break;
             case 32 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:279: REMAINDER
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:279: REMAINDER
                 {
                 mREMAINDER(); 
 
                 }
                 break;
             case 33 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:289: BITWISE_LEFT_SHIFT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:289: BITWISE_LEFT_SHIFT
                 {
                 mBITWISE_LEFT_SHIFT(); 
 
                 }
                 break;
             case 34 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:308: BITWISE_RIGHT_SHIFT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:308: BITWISE_RIGHT_SHIFT
                 {
                 mBITWISE_RIGHT_SHIFT(); 
 
                 }
                 break;
             case 35 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:328: DOT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:328: DOT
                 {
                 mDOT(); 
 
                 }
                 break;
             case 36 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:332: COLON
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:332: COLON
                 {
                 mCOLON(); 
 
                 }
                 break;
             case 37 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:338: COMMA
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:338: COMMA
                 {
                 mCOMMA(); 
 
                 }
                 break;
             case 38 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:344: SEMICOLON
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:344: SEMICOLON
                 {
                 mSEMICOLON(); 
 
                 }
                 break;
             case 39 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:354: LPAREN
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:354: LPAREN
                 {
                 mLPAREN(); 
 
                 }
                 break;
             case 40 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:361: RPAREN
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:361: RPAREN
                 {
                 mRPAREN(); 
 
                 }
                 break;
             case 41 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:368: LSQUARE
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:368: LSQUARE
                 {
                 mLSQUARE(); 
 
                 }
                 break;
             case 42 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:376: RSQUARE
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:376: RSQUARE
                 {
                 mRSQUARE(); 
 
                 }
                 break;
             case 43 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:384: LCURLY
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:384: LCURLY
                 {
                 mLCURLY(); 
 
                 }
                 break;
             case 44 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:391: RCURLY
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:391: RCURLY
                 {
                 mRCURLY(); 
 
                 }
                 break;
             case 45 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:398: ID
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:398: ID
                 {
                 mID(); 
 
                 }
                 break;
             case 46 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:401: INT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:401: INT
                 {
                 mINT(); 
 
                 }
                 break;
             case 47 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:405: FLOAT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:405: FLOAT
                 {
                 mFLOAT(); 
 
                 }
                 break;
             case 48 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:411: STRING
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:411: STRING
                 {
                 mSTRING(); 
 
                 }
                 break;
             case 49 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:418: WS
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:418: WS
                 {
                 mWS(); 
 
                 }
                 break;
             case 50 :
-                // /home/nhsan/dremel/workspace/DremelParser/src/dremel/parser/impl/Bql.g:1:421: COMMENT
+                // /home/nhsan/dremel/workspace/Metaxa/src/dremel/compiler/parser/impl/Bql.g:1:421: COMMENT
                 {
                 mCOMMENT(); 
 
@@ -2995,7 +2995,7 @@ public class BqlLexer extends Lexer {
         }
     }
     static final String DFA23_eotS =
-        "\1\uffff\14\45\5\uffff\1\71\1\uffff\1\74\1\76\1\50\4\uffff\1\100"+
+        "\1\uffff\14\45\5\uffff\1\71\1\uffff\1\74\1\76\1\50\4\uffff\1\101"+
         "\5\uffff\1\102\4\uffff\1\103\2\uffff\4\45\1\110\3\45\1\115\4\45"+
         "\1\123\15\uffff\4\45\1\uffff\1\130\1\131\2\45\1\uffff\3\45\1\137"+
         "\1\45\1\uffff\4\45\2\uffff\1\145\2\45\1\150\1\45\1\uffff\3\45\1"+
@@ -3026,7 +3026,7 @@ public class BqlLexer extends Lexer {
         "\15\uffff\1\21\1\22\1\23\1\24\1\25\1\uffff\1\26\3\uffff\1\35\1\36"+
         "\1\37\1\40\1\uffff\1\44\1\45\1\46\1\47\1\50\1\uffff\1\52\1\53\1"+
         "\54\1\55\1\uffff\1\60\1\61\16\uffff\1\27\1\41\1\30\1\31\1\42\1\32"+
-        "\1\62\1\33\1\34\1\43\1\57\1\51\1\56\4\uffff\1\4\4\uffff\1\14\5\uffff"+
+        "\1\62\1\33\1\34\1\57\1\43\1\51\1\56\4\uffff\1\4\4\uffff\1\14\5\uffff"+
         "\1\20\4\uffff\1\12\1\15\5\uffff\1\16\5\uffff\1\5\2\uffff\1\11\4"+
         "\uffff\1\6\1\uffff\1\7\1\10\1\13\1\uffff\1\1\1\2\1\3\2\uffff\1\17";
     static final String DFA23_specialS =
@@ -3065,7 +3065,7 @@ public class BqlLexer extends Lexer {
             "",
             "",
             "",
-            "\12\101",
+            "\12\100",
             "",
             "",
             "",
@@ -3077,7 +3077,7 @@ public class BqlLexer extends Lexer {
             "",
             "",
             "",
-            "\1\101\1\uffff\12\46\13\uffff\1\101\37\uffff\1\101",
+            "\1\100\1\uffff\12\46\13\uffff\1\100\37\uffff\1\100",
             "",
             "",
             "\1\104\37\uffff\1\104",
