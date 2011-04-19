@@ -31,8 +31,10 @@ public class QueryImpl implements Query {
 	SchemaColumnar sourceSchema;
 	SchemaColumnar targetSchema;
 	List<AggFunction> aggregationFunctions;
+	Query parent;
+	int id;
 
-	public QueryImpl() {
+	public QueryImpl(int id) {
 		tables = new LinkedList<Tablet>();
 		subQueries = new LinkedList<dremel.compiler.Query>();
 		selectExps = new LinkedList<Expression>();
@@ -40,6 +42,20 @@ public class QueryImpl implements Query {
 		orderByExps = new LinkedList<Symbol>();
 		symbolTable = new HashMap<String, dremel.compiler.Expression.Symbol>();
 		aggregationFunctions = new LinkedList<AggFunction>();
+		parent = null;
+		this.id = id;
+	}
+
+	public QueryImpl(int id, Query parent) {
+		tables = new LinkedList<Tablet>();
+		subQueries = new LinkedList<dremel.compiler.Query>();
+		selectExps = new LinkedList<Expression>();
+		groupByExps = new LinkedList<Symbol>();
+		orderByExps = new LinkedList<Symbol>();
+		symbolTable = new HashMap<String, dremel.compiler.Expression.Symbol>();
+		aggregationFunctions = new LinkedList<AggFunction>();
+		this.parent = parent;
+		this.id = id;
 	}
 
 	@Override
@@ -73,12 +89,12 @@ public class QueryImpl implements Query {
 	}
 
 	@Override
-	public SchemaColumnar getSourceSchema() {
+	public SchemaColumnar getSourceSchemaColumnar() {
 		return sourceSchema;
 	}
 
 	@Override
-	public SchemaColumnar getTargetSchema() {
+	public SchemaColumnar getTargetSchemaColumnar() {
 		return targetSchema;
 	}
 
@@ -108,8 +124,33 @@ public class QueryImpl implements Query {
 	public List<AggFunction> getAggregationFunctions() {
 		return aggregationFunctions;
 	}
-	
+
 	public void setFilter(Expression filter) {
 		this.filter = filter;
+	}
+
+	@Override
+	public Query getParent() {
+		return parent;
+	}
+
+	@Override
+	public int getID() {
+		return this.id;
+	}
+	
+	@Override
+	public String getStringID() {
+		return "QUERY"+this.id;
+	}
+
+	@Override
+	public SchemaTree getSourceSchemaTree() {
+		return null;
+	}
+
+	@Override
+	public SchemaTree getTargetSchemaTree() {
+		return null;
 	}
 }

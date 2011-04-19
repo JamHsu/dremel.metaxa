@@ -19,28 +19,44 @@ import dremel.tableton.Tablet;
  * 
  */
 public interface Query {
-	 public List<Tablet> getTables(); // FROM clause
+	public List<Tablet> getTables(); // FROM clause
 
 	public List<Query> getSubQueries(); // FROM clause
 
 	public List<Expression> getSelectExpressions();// SELECT clause
 
-	public List<Symbol> getGroupByExpressions();// GROUP BY clause (field or alias)
+	public List<Symbol> getGroupByExpressions();// GROUP BY clause (field or
+												// alias)
 
-	public List<Symbol> getOrderByExpressions();// ORDER BY clause (field or alias)
+	public List<Symbol> getOrderByExpressions();// ORDER BY clause (field or
+												// alias)
 
 	public Expression getFilter(); // WHERE clause
 
-	public SchemaColumnar getSourceSchema(); // common schema of tables or
-											// sub-queries in FROM clause
+	public SchemaColumnar getSourceSchemaColumnar(); // common schema of tables
+														// or
+	// sub-queries in FROM clause
 
-	public SchemaColumnar getTargetSchema(); // schema for result set, can be source
-											// schema for parent query if this
-											// query is sub-queries
+	public SchemaColumnar getTargetSchemaColumnar(); // schema for result set,
+														// can be
+	// source
+	// schema for parent query if
+	// this
+	// query is sub-queries
+
+	public SchemaTree getSourceSchemaTree();
+
+	public SchemaTree getTargetSchemaTree();
 
 	public int getLimitCount(); // LIMIT clause
 
 	public Map<String, Symbol> getSymbolTable(); // field name + alias
 
 	public List<AggFunction> getAggregationFunctions();
+
+	public Query getParent();
+
+	public int getID();
+
+	public String getStringID();
 }

@@ -77,7 +77,7 @@ public class MetaxaExecutor implements Executor {
 
 	@Override
 	public void execute() {
-		SchemaColumnar schema = query.getTargetSchema();
+		SchemaColumnar schema = query.getTargetSchemaColumnar();
 
 		script.evaluate(new Object[] { query.getTables().get(0), schema });
 

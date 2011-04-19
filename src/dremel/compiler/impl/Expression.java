@@ -58,7 +58,7 @@ public class Expression implements dremel.compiler.Expression {
 		assert (count >= 1);
 		AstNode id = (AstNode) node.getChild(count - 1);
 		assert (id.getType() == BqlParser.N_ID);
-		String name = CompilerImpl.getID(id);
+		String name = CompilerImpl.idNode2String(id);
 
 		if (name.equalsIgnoreCase("length")) {
 			return new StringLengthFunc(node, query);
@@ -88,7 +88,7 @@ public class Expression implements dremel.compiler.Expression {
 			return (Node) (buildFunction(node2, query));
 		} else if (node2.getType() == BqlParser.N_ID) {
 			Map<String, dremel.compiler.Expression.Symbol> symbolTable = query.getSymbolTable();
-			String id = CompilerImpl.getID(node2);
+			String id = CompilerImpl.idNode2String(node2);
 			if (symbolTable.containsKey(id)) {
 				Object o = symbolTable.get(id);
 				assert (o instanceof Node);
@@ -380,7 +380,7 @@ public class Expression implements dremel.compiler.Expression {
 			assert (count >= 1);
 			AstNode id = (AstNode) node.getChild(count - 1);
 			assert (id.getType() == BqlParser.N_ID);
-			functionName = CompilerImpl.getID(id);
+			functionName = CompilerImpl.idNode2String(id);
 
 			for (int i = 0; i < count - 1; i++) {
 				nodes.add(buildNode((AstNode) node.getChild(i), getQuery()));

@@ -31,6 +31,7 @@ import dremel.compiler.parser.impl.BqlParser;
 import dremel.dataset.SchemaTree;
 import dremel.dataset.Slice;
 import dremel.dataset.Table;
+import dremel.dataset.impl.SchemaTreeImpl;
 import dremel.dataset.impl.SchemaTreeLoader;
 import dremel.executor.Executor;
 import dremel.executor.Executor.Script;
@@ -52,20 +53,14 @@ import dremel.tableton.impl.TabletImpl;
  * 
  */
 public class CompilerImpl implements dremel.compiler.Compiler {
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see dremel.compiler.Compiler#parse(dremel.parser.AstNode)
-	 */
-	@Override
-	public Query parse(AstNode root) {
-		Query query = new QueryImpl();
-		parseSelectStatement(root, query);
-		return query;
+	static int gid=0;
+	
+	public static int getNextId()
+	{
+		return gid++;
 	}
-
-	public static String getID(AstNode node) {
+	
+	public static String idNode2String(AstNode node) {
 		StringBuilder ret = new StringBuilder();
 		assert (node.getType() == BqlParser.N_ID);
 		assert (node.getChildCount() >= 1);
@@ -82,6 +77,13 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			ret.append(node2.getChild(0).toString());
 		}
 		return ret.toString();
+	}
+	
+	@Override
+	public Query parse(AstNode root) {
+		Query query = new QueryImpl(getNextId());
+		parseSelectStatement(root, query);
+		return query;
 	}
 
 	void parseSelectStatement(AstNode node, Query query) {
@@ -173,7 +175,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				assert (false);
 			}
 		} else if (node.getChild(0).getChildCount() == 1 && node.getChild(0).getChild(0).getType() == BqlParser.N_ID) {
-			alias.append(getID((AstNode) node.getChild(0).getChild(0)));
+			alias.append(idNode2String((AstNode) node.getChild(0).getChild(0)));
 		}
 
 		assert (node.getChild(0).getType() == BqlParser.N_EXPRESSION);
@@ -211,7 +213,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		assert (node.getType() == BqlParser.N_WITHIN);
 		int count = node.getChildCount();
 		assert ((count == 1));
-		within.append(getID((AstNode) node.getChild(0)));
+		within.append(idNode2String((AstNode) node.getChild(0)));
 	}
 
 	private void parseColumnAlias(AstNode node, StringBuffer alias) {
@@ -220,7 +222,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		assert ((count == 1));
 		node = (AstNode) node.getChild(0);
 		assert (node.getType() == BqlParser.N_ID);
-		alias.append(getID((AstNode)node));
+		alias.append(idNode2String((AstNode)node));
 	}
 
 	private void parseGroupBy(AstNode node, Query query) {
@@ -230,7 +232,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		assert ((count == 1)); //support for one integer field only
 		node = (AstNode) node.getChild(0);
 		assert (node.getType() == BqlParser.N_ID);
-		String colName = getID((AstNode)node);
+		String colName = idNode2String((AstNode)node);
 		if (query.getSymbolTable().containsKey(colName))
 		{
 			Symbol s = query.getSymbolTable().get(colName);
@@ -505,11 +507,11 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 																// logical
 																// expression
 		}
-		SchemaColumnar resultSchema = generateResultSchema(query);
+		SchemaColumnar resultSchema = generateResultSchemaColumnar(query);
 		((QueryImpl) query).setTargetSchema(resultSchema);
 	}
 
-	public SchemaColumnar generateResultSchema(Query query) {
+	public SchemaColumnar generateResultSchemaColumnar(Query query) {
 		ColumnType type = ColumnType.INT;
 		SchemaColumnar schema = new SchemaColumnarImpl();
 		for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
@@ -522,6 +524,14 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		}
 		return schema;
 	}
+	
+	public SchemaTree generateResultSchemaTree(Query query) {
+		SchemaTree inSchema = query.getSourceSchemaTree();
+		SchemaTree schema = SchemaTreeImpl.createRecord(query.getStringID());
+		
+		return schema;
+	}
+
 
 	@Override
 	public Executor compile(Query query) {
@@ -649,6 +659,8 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		compiler.analyse(query);
 		
 		assert (query.getGroupByExpressions().size()==1);
+		
+		
 //		String code = compiler.compileToScript(query);
 //		MetaxaExecutor executor = new MetaxaExecutor(query, code);
 //		executor.execute();
@@ -659,5 +671,4 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		AstNode nodes = Parser.parseBql("SELECT count(docid) within record as c_id.abc FROM [document] group by abc.aaa, abc.bbb");
 		System.out.println(nodes.toStringTree());
 	}
-
 }
