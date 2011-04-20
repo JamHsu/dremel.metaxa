@@ -23,6 +23,7 @@ import dremel.compiler.Expression.Node;
 import dremel.compiler.Expression.ReturnType;
 import dremel.compiler.Expression.Symbol;
 import dremel.compiler.Compiler;
+import dremel.compiler.ParserTest;
 import dremel.compiler.Query;
 import dremel.compiler.impl.Expression.AggFunction;
 import dremel.compiler.parser.AstNode;
@@ -53,13 +54,12 @@ import dremel.tableton.impl.TabletImpl;
  * 
  */
 public class CompilerImpl implements dremel.compiler.Compiler {
-	static int gid=0;
-	
-	public static int getNextId()
-	{
+	static int gid = 0;
+
+	public static int getNextId() {
 		return gid++;
 	}
-	
+
 	public static String idNode2String(AstNode node) {
 		StringBuilder ret = new StringBuilder();
 		assert (node.getType() == BqlParser.N_ID);
@@ -78,11 +78,12 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		}
 		return ret.toString();
 	}
-	
+
 	@Override
 	public Query parse(AstNode root) {
 		Query query = new QueryImpl(getNextId());
 		parseSelectStatement(root, query);
+		analyse(query);
 		return query;
 	}
 
@@ -93,14 +94,12 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		parseFromClause((AstNode) node.getChild(0), query);
 		parseSelectClause((AstNode) node.getChild(1), query);
 		int curNode = 2;
-		if (node.getChild(2) !=null && node.getChild(2).getType()==BqlParser.N_WHERE)
-		{
+		if (node.getChild(2) != null && node.getChild(2).getType() == BqlParser.N_WHERE) {
 			parseWhereClause((AstNode) node.getChild(2), query);
 			curNode++;
 		}
-		
-		if (node.getChild(curNode) !=null && node.getChild(curNode).getType()==BqlParser.N_GROUPBY)
-		{
+
+		if (node.getChild(curNode) != null && node.getChild(curNode).getType() == BqlParser.N_GROUPBY) {
 			parseGroupBy((AstNode) node.getChild(curNode), query);
 		}
 	}
@@ -222,24 +221,22 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		assert ((count == 1));
 		node = (AstNode) node.getChild(0);
 		assert (node.getType() == BqlParser.N_ID);
-		alias.append(idNode2String((AstNode)node));
+		alias.append(idNode2String((AstNode) node));
 	}
 
 	private void parseGroupBy(AstNode node, Query query) {
-		if (node==null) return;
+		if (node == null)
+			return;
 		assert (node.getType() == BqlParser.N_GROUPBY);
 		int count = node.getChildCount();
-		assert ((count == 1)); //support for one integer field only
+		assert ((count == 1)); // support for one integer field only
 		node = (AstNode) node.getChild(0);
 		assert (node.getType() == BqlParser.N_ID);
-		String colName = idNode2String((AstNode)node);
-		if (query.getSymbolTable().containsKey(colName))
-		{
+		String colName = idNode2String((AstNode) node);
+		if (query.getSymbolTable().containsKey(colName)) {
 			Symbol s = query.getSymbolTable().get(colName);
 			query.getGroupByExpressions().add(s);
-		}
-		else
-		{
+		} else {
 			Symbol s = new dremel.compiler.impl.Expression.Symbol(colName, query);
 			query.getGroupByExpressions().add(s);
 		}
@@ -524,14 +521,25 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		}
 		return schema;
 	}
-	
+
 	public SchemaTree generateResultSchemaTree(Query query) {
 		SchemaTree inSchema = query.getSourceSchemaTree();
 		SchemaTree schema = SchemaTreeImpl.createRecord(query.getStringID());
-		
+
+		for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
+			for (Symbol sym : exp.getSymbols()) {
+				assert (sym.isColumnID());
+				SchemaTree field = (SchemaTree) sym.getReference();
+				
+			}
+
+			if (exp.getAlias() == null) {
+
+			}
+		}
+
 		return schema;
 	}
-
 
 	@Override
 	public Executor compile(Query query) {
@@ -576,12 +584,11 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		} else
 			throw new RuntimeException("Can not get tablet");
 	}
-	
+
 	private void buildLinkBackwardData(ColumnMetaData columnMetaData, int m) {
 		SimpleIntColumnWriter columnBuilder = new SimpleIntColumnWriter(columnMetaData);
 		// write data
-		for (int i=0;i<m;i++)
-		{
+		for (int i = 0; i < m; i++) {
 			columnBuilder.addIntDataTriple(0, ColumnReader.NULL, (byte) 0, (byte) 1);
 			columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
 			columnBuilder.addIntDataTriple(30, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
@@ -594,8 +601,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	private void buildLinksForwardData(ColumnMetaData columnMetaData, int m) {
 		SimpleIntColumnWriter columnBuilder = new SimpleIntColumnWriter(columnMetaData);
 		// write data
-		for (int i=0;i<m;i++)
-		{
+		for (int i = 0; i < m; i++) {
 			columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
 			columnBuilder.addIntDataTriple(40, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
 			columnBuilder.addIntDataTriple(60, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
@@ -609,8 +615,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 		SimpleIntColumnWriter columnBuilder = new SimpleIntColumnWriter(docidMetaData);
 		// write data
-		for (int i=0;i<m;i++)
-		{
+		for (int i = 0; i < m; i++) {
 			columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
 			columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
 		}
@@ -618,17 +623,16 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		columnBuilder.close();
 
 	}
-	
-	public void buildPaperSchema(int m)
-	{
+
+	public void buildPaperSchema(int m) {
 		ColumnMetaData linksBackwardMetaData = new ColumnMetaData("Links.Backward", ColumnType.INT, EncodingType.NONE, "testdata/LinksBackward", (byte) 1, (byte) 2);
 		buildLinkBackwardData(linksBackwardMetaData, m);
 
 		ColumnMetaData linksForwardMetaData = new ColumnMetaData("Links.Forward", ColumnType.INT, EncodingType.NONE, "testdata/LinksForward", (byte) 1, (byte) 2);
-		buildLinksForwardData(linksForwardMetaData,m);
+		buildLinksForwardData(linksForwardMetaData, m);
 
 		ColumnMetaData docidMetaData = new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata/docid", (byte) 0, (byte) 0);
-		buildDocIDData(docidMetaData,m);
+		buildDocIDData(docidMetaData, m);
 	}
 
 	public Tablet getPaperSchemaTablet() {
@@ -650,24 +654,25 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	public static void main(String[] args) throws Exception {
 
 		CompilerImpl compiler = new CompilerImpl();
-//		compiler.buildPaperSchema(50);
+		// compiler.buildPaperSchema(50);
 
-//		 AstNode nodes = Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		//AstNode nodes = Parser.parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, links.backward FROM [document] GROUP BY links.backward");		
-		final Query query = compiler.parse(nodes);
-		compiler.analyse(query);
-		
-		assert (query.getGroupByExpressions().size()==1);
-		
-		
-//		String code = compiler.compileToScript(query);
-//		MetaxaExecutor executor = new MetaxaExecutor(query, code);
-//		executor.execute();
+		// AstNode nodes =
+		// Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
+		// AstNode nodes =
+		// Parser.parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+		// AstNode nodes =
+		// Parser.parseBql("SELECT \ndocid, links.backward FROM [document] GROUP BY links.backward");
+		// final Query query = compiler.parse(nodes);
+		// compiler.analyse(query);
+		//
+		// assert (query.getGroupByExpressions().size()==1);
+
+		// String code = compiler.compileToScript(query);
+		// MetaxaExecutor executor = new MetaxaExecutor(query, code);
+		// executor.execute();
 	}
 
 	public static void main1(String[] args) throws Exception {
-
 		AstNode nodes = Parser.parseBql("SELECT count(docid) within record as c_id.abc FROM [document] group by abc.aaa, abc.bbb");
 		System.out.println(nodes.toStringTree());
 	}
