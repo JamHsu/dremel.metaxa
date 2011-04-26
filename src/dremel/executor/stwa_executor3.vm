@@ -176,12 +176,12 @@ while (hasMoreSlices)
 			intVal = slicePool.readInt();
 			state = slicePool.getLastState();
 			writer = $exp.getJavaName()_writer;
-			//if (state == 0) writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
+			if (state == 0) writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
 #elseif ($exp.isTypeFloat())
 #elseif ($exp.isTypeBool())
 #elseif ($exp.isTypeString())
 #end
-			//else if (state == 1) writer.addIntDataTriple(0,ColumnReader.NULL, level, (byte)($exp.getJavaName()_def-1)); //need verify def level
+			else if (state == 1) writer.addIntDataTriple(0,ColumnReader.NULL, level, (byte)($exp.getJavaName()_def-1)); //need verify def level
 #end
 			slicePool.endSliceRead();
 		}

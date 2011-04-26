@@ -1,0 +1,8 @@
+/*
+* This file is template for complex query (including subquery and within aggregation)
+*
+*/
+
+#foreach ($query in $queries)
+#parse("src/dremel/executor/query_declare.vm")
+#end

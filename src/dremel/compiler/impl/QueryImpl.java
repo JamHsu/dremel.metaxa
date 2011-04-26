@@ -30,6 +30,10 @@ public class QueryImpl implements Query {
 	int limit;
 	SchemaColumnar sourceSchema;
 	SchemaColumnar targetSchema;
+	
+	SchemaTree sourceSchemaTree;
+	SchemaTree targetSchemaTree;
+
 	List<AggFunction> aggregationFunctions;
 	Query parent;
 	int id;
@@ -146,11 +150,20 @@ public class QueryImpl implements Query {
 
 	@Override
 	public SchemaTree getSourceSchemaTree() {
-		return null;
+		return sourceSchemaTree;
 	}
 
 	@Override
 	public SchemaTree getTargetSchemaTree() {
-		return null;
+		return targetSchemaTree;
 	}
+	
+	public void setSourceSchemaTree(SchemaTree sourceSchema) {
+		this.sourceSchemaTree = sourceSchema;
+	}
+
+	public void setTargetSchemaTree(SchemaTree targetSchema) {
+		this.targetSchemaTree = targetSchema;
+	}
+
 }

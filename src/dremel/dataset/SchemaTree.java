@@ -25,6 +25,10 @@ import java.util.List;
 public interface SchemaTree {
 
 	public abstract String getName();
+	public abstract String getFullName();
+	public int getDefLevel();
+	public int getRepLevel();
+	public SchemaTree getParent();
 
 	/**
 	 * @return

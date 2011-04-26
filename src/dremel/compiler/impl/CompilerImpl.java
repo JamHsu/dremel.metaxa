@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.antlr.runtime.RecognitionException;
+import org.apache.avro.Schema;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -34,6 +35,9 @@ import dremel.dataset.Slice;
 import dremel.dataset.Table;
 import dremel.dataset.impl.SchemaTreeImpl;
 import dremel.dataset.impl.SchemaTreeLoader;
+import dremel.dataset.impl.SimpleSchemaTreeImpl;
+import dremel.dataset.impl.SimpleSchemaTreeImpl.DataType;
+import dremel.dataset.impl.SimpleSchemaTreeImpl.NodeType;
 import dremel.executor.Executor;
 import dremel.executor.Executor.Script;
 import dremel.executor.impl.MetaxaExecutor;
@@ -54,6 +58,7 @@ import dremel.tableton.impl.TabletImpl;
  * 
  */
 public class CompilerImpl implements dremel.compiler.Compiler {
+
 	static int gid = 0;
 
 	public static int getNextId() {
@@ -86,6 +91,14 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		analyse(query);
 		return query;
 	}
+	
+	private Query parse(AstNode root, Query parent) {
+		Query query = new QueryImpl(getNextId(), parent);
+		parseSelectStatement(root, query);
+		analyse(query);
+		return query;
+	}
+	
 
 	void parseSelectStatement(AstNode node, Query query) {
 		assert (node.getType() == BqlParser.N_SELECT_STATEMENT);
@@ -118,7 +131,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				tables.add(getTablet(node3.getText())); // get tablet
 			} else if (node2.getType() == BqlParser.N_SELECT_STATEMENT) {
 				List<dremel.compiler.Query> queries = query.getSubQueries();
-				queries.add(parse(node2));
+				queries.add(parse(node2, query));
 			} else
 				assert (false);
 		}
@@ -243,61 +256,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	}
 
 	/**
-	 * calMaxLevel is a recursive function to calculate repetition level of
-	 * fields in schema
-	 * 
-	 * @param desc
-	 * @param rlevel
-	 * @param maxRLevels
-	 */
-	private void calMaxRLevel(SchemaTree desc, int rlevel, Map<SchemaTree, Integer> maxRLevels) {
-		List<SchemaTree> fs = desc.getFieldsList();
-		for (int i = 0; i < fs.size(); i++) {
-			SchemaTree d = fs.get(i);
-			if (d.isRepeated()) {
-
-				if (d.isRecord()) {
-					calMaxRLevel(d, rlevel + 1, maxRLevels);
-					maxRLevels.put(d, rlevel + 1);
-				} else {
-					maxRLevels.put(d, rlevel + 1);
-				}
-			} else {
-				if (d.isRecord()) {
-					calMaxRLevel(d, rlevel, maxRLevels);
-					maxRLevels.put(d, rlevel);
-				} else {
-					maxRLevels.put(d, rlevel);
-				}
-			}
-		}
-	}
-
-	private void calMaxDLevel(SchemaTree desc, int dlevel, Map<SchemaTree, Integer> maxDLevels) {
-		List<SchemaTree> fs = desc.getFieldsList();
-		for (int i = 0; i < fs.size(); i++) {
-			SchemaTree d = fs.get(i);
-			if (d.isRepeated()) {
-
-				if (d.isRecord()) {
-					calMaxRLevel(d, dlevel + 1, maxDLevels);
-					maxDLevels.put(d, dlevel + 1);
-				} else {
-					maxDLevels.put(d, dlevel + 1);
-				}
-			} else {
-				if (d.isRecord()) {
-					calMaxRLevel(d, dlevel, maxDLevels);
-					maxDLevels.put(d, dlevel);
-				} else {
-					maxDLevels.put(d, dlevel);
-				}
-			}
-		}
-	}
-
-	/**
-	 * calculate repetition level of an expression= max repetition level of
+	 * calculate repetition level of an expression = max repetition level of
 	 * fields used in expression
 	 * 
 	 * @param node
@@ -305,12 +264,13 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param maxLevels
 	 * @return
 	 */
-	int getRLevel(Node node, int level, Map<SchemaTree, Integer> maxLevels) {
+	int getRepLevel(Node node, int level) {
 		if (node instanceof Symbol) {
 			Symbol symbol = (Symbol) node;
 			Object o = symbol.getReference();
 			if (o instanceof SchemaTree) {
-				int l = maxLevels.get(o);
+				SchemaTree t = (SchemaTree) o;
+				int l = t.getRepLevel();
 				if (l > level)
 					level = l;
 			} else if (o instanceof Expression) {
@@ -322,18 +282,19 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		} else {
 			for (int i = 0; i < node.getChildCount(); i++) {
 				Node n = node.getChild(i);
-				level = getRLevel(n, level, maxLevels);
+				level = getRepLevel(n, level);
 			}
 		}
 		return level;
 	}
 
-	int getDLevel(Node node, int level, Map<SchemaTree, Integer> maxLevels) {
+	int getDefLevel(Node node, int level) {
 		if (node instanceof Symbol) {
 			Symbol symbol = (Symbol) node;
 			Object o = symbol.getReference();
 			if (o instanceof SchemaTree) {
-				int l = maxLevels.get(o);
+				SchemaTree t = (SchemaTree) o;
+				int l = t.getDefLevel();
 				if (l > level)
 					level = l;
 			} else if (o instanceof Expression) {
@@ -345,10 +306,21 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		} else {
 			for (int i = 0; i < node.getChildCount(); i++) {
 				Node n = node.getChild(i);
-				level = getDLevel(n, level, maxLevels);
+				level = getDefLevel(n, level);
 			}
 		}
 		return level;
+	}
+
+	void getFieldList(SchemaTree node, List<SchemaTree> fieldList) {
+		List<SchemaTree> fs = node.getFieldsList();
+		for (int i = 0; i < fs.size(); i++) {
+			SchemaTree d = fs.get(i);
+			fieldList.add(d);
+			if (d.isRecord()) {
+				getFieldList(d, fieldList);
+			}
+		}
 	}
 
 	void getRelatedFields(Node node, List<Symbol> symbols) {
@@ -403,13 +375,13 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 	 * @param maxLevels
 	 * @return
 	 */
-	int getWithinLevel(String nodeName, Map<SchemaTree, Integer> maxLevels) {
+	int getWithinLevel(String nodeName, List<SchemaTree> fieldList) {
 		if (nodeName == null)
 			return -1;
 		if (nodeName.equalsIgnoreCase("record"))
 			return 0;
 
-		Iterator<SchemaTree> it = maxLevels.keySet().iterator();
+		Iterator<SchemaTree> it = fieldList.iterator();
 
 		while (it.hasNext()) {
 			SchemaTree d = it.next();
@@ -418,14 +390,10 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 			{
 				String name = d.getName();
 				if (name.equalsIgnoreCase(nodeName))
-					return maxLevels.get(d);
+					return d.getRepLevel();
 			}
 		}
 		return -1;
-	}
-
-	SchemaTree getCommonRoot(List<SchemaTree> fields) {
-		return null;
 	}
 
 	/*
@@ -449,19 +417,28 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	@Override
 	public void analyse(Query query) {
-		assert (query.getTables().size() == 1);// one table only
-		assert (query.getSubQueries().size() == 0);// no sub-queries
-		SchemaTree SchemaTree = query.getTables().get(0).getSchemaTree();
-		Map<SchemaTree, Integer> maxRLevels = new HashMap<SchemaTree, Integer>();
-		Map<SchemaTree, Integer> maxDLevels = new HashMap<SchemaTree, Integer>();
+		// assert (query.getTables().size() == 1);// one table only
+		// assert (query.getSubQueries().size() == 0);// no sub-queries
 
-		// bind field+exp to symbols
-		calMaxRLevel(SchemaTree, 0, maxRLevels);
-		calMaxDLevel(SchemaTree, 0, maxDLevels);
-		Iterator<SchemaTree> fIt = maxRLevels.keySet().iterator();
+		// TODO: validation of schema (compare schema of tables and sub-queries)
+
+		if (query.getTables().size() >= 1) {
+			SchemaTree schemaTree = query.getTables().get(0).getSchemaTree();
+			((QueryImpl) query).setSourceSchemaTree(schemaTree);
+		} else if (query.getSubQueries().size() >= 1) {
+			SchemaTree schemaTree = query.getSubQueries().get(0).getTargetSchemaTree();
+			((QueryImpl) query).setSourceSchemaTree(schemaTree);
+		}
+
+		assert (query.getSourceSchemaTree() != null);
+
+		List<SchemaTree> fieldList = new LinkedList<SchemaTree>();
+		getFieldList(query.getSourceSchemaTree(), fieldList);
+
+		Iterator<SchemaTree> fIt = fieldList.iterator();
 		while (fIt.hasNext()) {
 			SchemaTree d = fIt.next();
-			String name = d.getName();
+			String name = d.getFullName();
 
 			Symbol symbol = query.getSymbolTable().get(name.toLowerCase());
 			if (symbol != null) {
@@ -483,12 +460,12 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		Iterator eIt = query.getSelectExpressions().iterator();
 		while (eIt.hasNext()) {
 			Expression exp = (Expression) eIt.next();
-			int level = getRLevel(exp.getRoot(), 0, maxRLevels);
+			int level = getRepLevel(exp.getRoot(), 0);
 			exp.setRLevel(level);
-			level = getDLevel(exp.getRoot(), 0, maxDLevels);
+			level = getDefLevel(exp.getRoot(), 0);
 			exp.setDLelel(level);
 			getAggregationFunction(exp.getRoot(), query.getAggregationFunctions());
-			int scopeLevel = getWithinLevel(exp.getWithin(), maxRLevels);
+			int scopeLevel = getWithinLevel(exp.getWithin(), fieldList);
 			exp.setWithinLevel(scopeLevel);
 			getRelatedFields(exp.getRoot(), exp.getSymbols());
 
@@ -497,7 +474,7 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 		Expression exp = (Expression) query.getFilter();
 		if (exp != null) {
-			int level = getRLevel(exp.getRoot(), 0, maxRLevels);
+			int level = getRepLevel(exp.getRoot(), 0);
 			exp.setRLevel(level);
 			getAggregationFunction(exp.getRoot(), query.getAggregationFunctions());
 			assert (exp.getReturnType() == ReturnType.BOOL); // filter must be
@@ -506,6 +483,10 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		}
 		SchemaColumnar resultSchema = generateResultSchemaColumnar(query);
 		((QueryImpl) query).setTargetSchema(resultSchema);
+
+		SchemaTree outSchemaTree = generateResultSchemaTree(query);
+		((QueryImpl) query).setTargetSchemaTree(outSchemaTree);
+		System.out.println(outSchemaTree.toString());
 	}
 
 	public SchemaColumnar generateResultSchemaColumnar(Query query) {
@@ -522,27 +503,114 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		return schema;
 	}
 
-	public SchemaTree generateResultSchemaTree(Query query) {
-		SchemaTree inSchema = query.getSourceSchemaTree();
-		SchemaTree schema = SchemaTreeImpl.createRecord(query.getStringID());
+	void copySchemaStructure(SchemaTree in, SchemaTree out) {
+		assert (in.isRecord());
 
-		for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
-			for (Symbol sym : exp.getSymbols()) {
-				assert (sym.isColumnID());
-				SchemaTree field = (SchemaTree) sym.getReference();
-				
-			}
-
-			if (exp.getAlias() == null) {
-
+		for (SchemaTree field : in.getFieldsList()) {
+			if (field.isRecord()) {
+				// System.out.println(field.getName());
+				SchemaTree fieldOut = null;
+				if (field.isRepeated()) {
+					fieldOut = new SimpleSchemaTreeImpl(out, field.getName(), DataType.RECORD, NodeType.REPEATED);
+				} else if (field.isOptional()) {
+					fieldOut = new SimpleSchemaTreeImpl(out, field.getName(), DataType.RECORD, NodeType.OPTIONAL);
+				} else if (field.isRequired()) {
+					// System.out.println(field.getName());
+					fieldOut = new SimpleSchemaTreeImpl(out, field.getName(), DataType.RECORD, NodeType.REQUIRED);
+				}
+				copySchemaStructure(field, fieldOut);
 			}
 		}
+	}
 
-		return schema;
+	public SchemaTree generateResultSchemaTree(Query query) {
+		SchemaTree inSchema = query.getSourceSchemaTree();
+		SchemaTree outSchema = new SimpleSchemaTreeImpl(null, query.getStringID(), DataType.RECORD, NodeType.REQUIRED);
+
+		copySchemaStructure(inSchema, outSchema);
+
+		for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
+
+			NodeType ntype = NodeType.REQUIRED; // required
+			DataType dtype = DataType.INT;
+			String name = "";
+			SchemaTree parent = outSchema;
+
+			// node type: {REPEATED, OPTIONAL, REQUIRED}
+
+			if (exp.getWithin() != null) // scoped aggregation
+			{
+				ntype = NodeType.REQUIRED;
+			} else {
+				for (Symbol sym : exp.getSymbols()) {
+					assert (sym.isColumnID());
+					SchemaTree field = (SchemaTree) sym.getReference();
+					assert (!field.isRecord());
+					if (field.isRepeated()) {
+						ntype = NodeType.REPEATED;
+						break;
+					} else if (field.isOptional()) {
+						ntype = NodeType.OPTIONAL;
+					}
+				}
+			}
+
+			// data type
+			if (exp.isTypeBool())
+				dtype = DataType.BOOLEAN;
+			else if (exp.isTypeString())
+				dtype = DataType.STRING;
+			else if (exp.isTypeFloat())
+				dtype = DataType.FLOAT;
+
+			// parent and name
+			if (exp.getAlias() != null) {
+				String[] lst = exp.getAlias().split("\\.");
+				for (int i = 0; i < lst.length - 1; i++) {
+					List<SchemaTree> fieldList = parent.getFieldsList();
+					SchemaTree newParent = parent;
+					for (SchemaTree f : fieldList) {
+						if (f.getName().equalsIgnoreCase(lst[i])) {
+							newParent = f;
+							break;
+						}
+					}
+					assert (newParent != parent);
+					parent = newParent;
+				}
+				name = lst[lst.length - 1];
+			} else {
+				// put this field as child of root0
+				name = exp.getJavaName();
+			}
+
+			new SimpleSchemaTreeImpl(parent, name, dtype, ntype);
+		}
+
+		return outSchema;
 	}
 
 	@Override
 	public Executor compile(Query query) {
+		return null;
+	}
+
+	void getQueryList(Query query, List<Query> queries) {
+
+		for (Query q : query.getSubQueries()) {
+			getQueryList(q, queries);
+		}
+		assert (query.getTables().size() + query.getSubQueries().size() == 1);
+		queries.add(query);
+	}
+
+	Tablet getTablet(Query query) {
+		if (query.getTables().size() == 1)
+			return query.getTables().get(0);
+
+		for (Query q : query.getSubQueries()) {
+			return getTablet(q);
+		}
 		return null;
 	}
 
@@ -551,20 +619,21 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		VelocityContext context = new VelocityContext();
 
 		try {
-			context.put("query", query);
-			context.put("sourceTablet", query.getTables().get(0));
-
 			Template template = null;
-
-			try {
+			if (query.getSubQueries().size() == 0) {
+				context.put("query", query);
 				if (query.getAggregationFunctions().size() == 0)
 					template = Velocity.getTemplate("src/dremel/executor/stna_executor.vm");
 				else if (query.getGroupByExpressions().size() == 0) {
 					template = Velocity.getTemplate("src/dremel/executor/stwa_executor3.vm");
-				} else
+				} else {
 					throw new RuntimeException("Not support query type");
-			} catch (Exception e) {
-				e.printStackTrace();
+				}
+			} else {
+				List<Query> queries = new LinkedList<Query>();
+				getQueryList(query, queries);
+				context.put("queries", queries);
+				template = Velocity.getTemplate("src/dremel/executor/query_main.vm");
 			}
 
 			StringWriter sw = new StringWriter();
@@ -579,101 +648,27 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 
 	Tablet getTablet(String name) {
 		if (name.equalsIgnoreCase("[document]")) {
-			return getPaperSchemaTablet();
-
+			return SimpleSchemaTreeImpl.getPaperSchemaTablet();
 		} else
 			throw new RuntimeException("Can not get tablet");
-	}
-
-	private void buildLinkBackwardData(ColumnMetaData columnMetaData, int m) {
-		SimpleIntColumnWriter columnBuilder = new SimpleIntColumnWriter(columnMetaData);
-		// write data
-		for (int i = 0; i < m; i++) {
-			columnBuilder.addIntDataTriple(0, ColumnReader.NULL, (byte) 0, (byte) 1);
-			columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
-			columnBuilder.addIntDataTriple(30, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
-		}
-
-		columnBuilder.close();
-
-	}
-
-	private void buildLinksForwardData(ColumnMetaData columnMetaData, int m) {
-		SimpleIntColumnWriter columnBuilder = new SimpleIntColumnWriter(columnMetaData);
-		// write data
-		for (int i = 0; i < m; i++) {
-			columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
-			columnBuilder.addIntDataTriple(40, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
-			columnBuilder.addIntDataTriple(60, ColumnReader.NOT_NULL, (byte) 1, (byte) 2);
-			columnBuilder.addIntDataTriple(80, ColumnReader.NOT_NULL, (byte) 0, (byte) 2);
-		}
-
-		columnBuilder.close();
-	}
-
-	private void buildDocIDData(ColumnMetaData docidMetaData, int m) {
-
-		SimpleIntColumnWriter columnBuilder = new SimpleIntColumnWriter(docidMetaData);
-		// write data
-		for (int i = 0; i < m; i++) {
-			columnBuilder.addIntDataTriple(10, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
-			columnBuilder.addIntDataTriple(20, ColumnReader.NOT_NULL, (byte) 0, (byte) 0);
-		}
-
-		columnBuilder.close();
-
-	}
-
-	public void buildPaperSchema(int m) {
-		ColumnMetaData linksBackwardMetaData = new ColumnMetaData("Links.Backward", ColumnType.INT, EncodingType.NONE, "testdata/LinksBackward", (byte) 1, (byte) 2);
-		buildLinkBackwardData(linksBackwardMetaData, m);
-
-		ColumnMetaData linksForwardMetaData = new ColumnMetaData("Links.Forward", ColumnType.INT, EncodingType.NONE, "testdata/LinksForward", (byte) 1, (byte) 2);
-		buildLinksForwardData(linksForwardMetaData, m);
-
-		ColumnMetaData docidMetaData = new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata/docid", (byte) 0, (byte) 0);
-		buildDocIDData(docidMetaData, m);
-	}
-
-	public Tablet getPaperSchemaTablet() {
-		// build single column tablet for the input
-		ColumnMetaData linksBackwardMetaData = new ColumnMetaData("Links.Backward", ColumnType.INT, EncodingType.NONE, "testdata/LinksBackward", (byte) 1, (byte) 2);
-		ColumnMetaData linksForwardMetaData = new ColumnMetaData("Links.Forward", ColumnType.INT, EncodingType.NONE, "testdata/LinksForward", (byte) 1, (byte) 2);
-		ColumnMetaData docidMetaData = new ColumnMetaData("DocId", ColumnType.INT, EncodingType.NONE, "testdata/docid", (byte) 0, (byte) 0);
-
-		SchemaColumnar schema = new SchemaColumnarImpl();
-		schema.addColumnMetaData(linksBackwardMetaData);
-		schema.addColumnMetaData(linksForwardMetaData);
-		schema.addColumnMetaData(docidMetaData);
-		SchemaTree schemaTree = SchemaTreeLoader.loadSchema("[document]");
-		Tablet tablet = new TabletImpl(schemaTree, schema);
-
-		return tablet;
 	}
 
 	public static void main(String[] args) throws Exception {
 
 		CompilerImpl compiler = new CompilerImpl();
-		// compiler.buildPaperSchema(50);
+		SimpleSchemaTreeImpl.buildPaperSchema(1);
 
-		// AstNode nodes =
-		// Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
-		// AstNode nodes =
-		// Parser.parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
-		// AstNode nodes =
-		// Parser.parseBql("SELECT \ndocid, links.backward FROM [document] GROUP BY links.backward");
-		// final Query query = compiler.parse(nodes);
-		// compiler.analyse(query);
-		//
-		// assert (query.getGroupByExpressions().size()==1);
+//		 AstNode nodes =
+//		 Parser.parseBql("SELECT \ndocid, links.forward, links.backward, links.backward+\ndocid, \ndocid+links.forward, links.forward+links.backward, 3+2 FROM [document] where \ndocid>0 and links.forward>30");
 
-		// String code = compiler.compileToScript(query);
-		// MetaxaExecutor executor = new MetaxaExecutor(query, code);
+//		 AstNode nodes = Parser
+//		 .parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
+
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(links.forward) as links.fwd  FROM (SELECT \tdocid, links.forward FROM [document]) WHERE \ndocid>0 and links.forward>30");
+
+		final Query query = compiler.parse(nodes);
+		String code = compiler.compileToScript(query);
+		MetaxaExecutor executor = new MetaxaExecutor(query, code);
 		// executor.execute();
-	}
-
-	public static void main1(String[] args) throws Exception {
-		AstNode nodes = Parser.parseBql("SELECT count(docid) within record as c_id.abc FROM [document] group by abc.aaa, abc.bbb");
-		System.out.println(nodes.toStringTree());
 	}
 }

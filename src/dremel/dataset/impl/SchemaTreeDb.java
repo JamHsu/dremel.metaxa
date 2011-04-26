@@ -125,5 +125,39 @@ public class SchemaTreeDb implements SchemaTree {
 			return true;
 		return false;
 	}
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#getFullName()
+	 */
+	@Override
+	public String getFullName() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#getDefLevel()
+	 */
+	@Override
+	public int getDefLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#getRepLevel()
+	 */
+	@Override
+	public int getRepLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#getParent()
+	 */
+	@Override
+	public SchemaTree getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 

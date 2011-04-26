@@ -49,7 +49,7 @@ public class TabletImpl implements Tablet {
 		
 		for(String columnName : schemaColumnar.getColumnsMetaData().keySet())
 		{
-			SimpleIntColumnReader reader = new SimpleIntColumnReader(schemaColumnar.getColumnMetaData(columnName));
+			ColumnReaderImpl reader = new ColumnReaderImpl(schemaColumnar.getColumnMetaData(columnName));
 			columnReaders.put(columnName, reader);
 		}
 		

@@ -28,6 +28,7 @@ import java.util.Map;
 import org.apache.avro.Schema;
 
 import dremel.dataset.SchemaTree;
+import dremel.dataset.impl.SimpleSchemaTreeImpl.DataType;
 
 /**
  * This class can be see as wrapper around the AvroSchema, which is a place to add functionality we are missing.
@@ -139,7 +140,7 @@ public class SchemaTreeImpl implements SchemaTree
 		fields.put(fieldName, field);
 		fieldList.add(field);
 	}
-			
+	
 	/**
 	 * Export schema tree as AVRO schema
 	 * @return 
@@ -447,8 +448,10 @@ public class SchemaTreeImpl implements SchemaTree
 	
 	@Override
 	public boolean isRecord() {
-		if (type == NodeType.RECORD)
+		
+		if ((type == NodeType.RECORD) || (type==NodeType.ARRAY && arrayElementType.getType()==NodeType.RECORD)) 
 			return true;
+				
 		return false;
 	}
 
@@ -508,6 +511,42 @@ public class SchemaTreeImpl implements SchemaTree
 	public boolean isOptional() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#getFullName()
+	 */
+	@Override
+	public String getFullName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#getDefLevel()
+	 */
+	@Override
+	public int getDefLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#getRepLevel()
+	 */
+	@Override
+	public int getRepLevel() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	/* (non-Javadoc)
+	 * @see dremel.dataset.SchemaTree#getParent()
+	 */
+	@Override
+	public SchemaTree getParent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

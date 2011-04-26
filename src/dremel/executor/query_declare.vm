@@ -1,0 +1,83 @@
+/*****BEGIN DECLARATIONS FOR QUERY: $query.getID() ****************/
+#set($qid=$query.getID())
+
+//inSlice declaration
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+#if ($symbol.isTypeInt())
+int $symbol.getJavaName()_$qid = 0;
+#elseif ($symbol.isTypeFloat())
+double $symbol.getJavaName()_$qid = 0.0;
+#elseif ($symbol.isTypeBool())
+boolean $symbol.getJavaName()_$qid = false;
+#elseif ($symbol.isTypeString())
+String $symbol.getJavaName()_$qid = null;
+#end
+boolean is_$symbol.getJavaName()_null_$qid = true;
+#end
+#end
+
+//outSlice declaration
+#foreach ($exp in $query.getSelectExpressions())
+#set($isCol = 0)
+#if ($exp.getAlias())
+#set($symbol=$query.getSymbolTable().get($exp.getAlias()))
+#if($symbol && $symbol.isColumnID())
+#set($isCol = 1)
+#end
+#end
+#if($isCol == 0)
+#if ($exp.isTypeInt())
+int $exp.getJavaName()_$qid = 0;
+#elseif ($exp.isTypeFloat())
+double $exp.getJavaName()_$qid = 0.0;
+#elseif ($exp.isTypeBool())
+boolean $exp.getJavaName()_$qid = false;
+#elseif ($exp.isTypeString())
+String $exp.getJavaName()_$qid = null;
+#end
+#end
+boolean input_changed_$exp.getJavaName()_$qid = false;
+int $exp.getJavaName()_state_$qid = 3;
+
+#end
+
+#if ($query.getAggregationFunctions().size()>0)
+//aggregation function variables
+byte missingCount_$qid = $query.getAggregationFunctions().size();
+#foreach ($func in $query.getAggregationFunctions())
+#if ($func.isTypeInt())
+int $func.getSymbol().getJavaName()_$func.hashCode()_$qid = 0;
+#elseif ($exp.isTypeFloat())
+double $func.getSymbol().getJavaName()_$func.hashCode()_$qid  = 0.0;
+#elseif ($exp.isTypeBool())
+boolean $func.getSymbol().getJavaName()_$func.hashCode()_$qid = false;
+#elseif ($exp.isTypeString())
+String $func.getSymbol().getJavaName()_$func.hashCode()_$qid = null;
+#end
+int $func.getSymbol().getJavaName()_slice_marker_$qid = -1; //is negative for first time 
+int $func.getSymbol().getJavaName()_field_marker_$qid = 0;
+
+#end
+#end 
+#if ($query.getTables().size()==1)
+//data input is a tablet
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+ColumnReader $symbol.getJavaName()_reader_$qid = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
+#end
+#end
+ColumnReader reader_$qid = null;
+#end
+
+#if ($query.getParent())
+//declare for result tablet
+#else
+#foreach ($exp in $query.getSelectExpressions())
+ColumnWriter $exp.getJavaName()_writer_$qid = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
+#end
+ColumnWriter writer_$qid = null;
+#end
+/*****END DECLARATIONS FOR QUERY: $query.getID() *****************/
+
+
