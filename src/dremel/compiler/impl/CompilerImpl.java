@@ -503,9 +503,9 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 		return schema;
 	}
 
-	void copySchemaStructure(SchemaTree in, SchemaTree out) {
+	void copySchemaStructure(SchemaTree in, SchemaTree out, Map<SchemaTree, SchemaTree> schemaMapping) {
 		assert (in.isRecord());
-
+		schemaMapping.put(in, out);
 		for (SchemaTree field : in.getFieldsList()) {
 			if (field.isRecord()) {
 				// System.out.println(field.getName());
@@ -518,23 +518,47 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 					// System.out.println(field.getName());
 					fieldOut = new SimpleSchemaTreeImpl(out, field.getName(), DataType.RECORD, NodeType.REQUIRED);
 				}
-				copySchemaStructure(field, fieldOut);
+				copySchemaStructure(field, fieldOut, schemaMapping);
 			}
 		}
 	}
 
 	public SchemaTree generateResultSchemaTree(Query query) {
+		
+		Map<dremel.compiler.Expression, SchemaTree> resultParent = new HashMap<dremel.compiler.Expression, SchemaTree>();
+		
+		for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
+			List<SchemaTree> fields = new LinkedList<SchemaTree>();
+			for (Symbol s: exp.getSymbols())
+			{
+				assert (s.getReference() instanceof SchemaTree);
+				SchemaTree f = (SchemaTree) s.getReference();
+				fields.add(f);
+			}
+			SchemaTree parent = SimpleSchemaTreeImpl.commonAncestor(fields);
+			resultParent.put(exp, parent);
+		}
+		
+		Map<SchemaTree, SchemaTree> schemaMapping = new HashMap<SchemaTree, SchemaTree>();
+		
 		SchemaTree inSchema = query.getSourceSchemaTree();
 		SchemaTree outSchema = new SimpleSchemaTreeImpl(null, query.getStringID(), DataType.RECORD, NodeType.REQUIRED);
 
-		copySchemaStructure(inSchema, outSchema);
+		copySchemaStructure(inSchema, outSchema, schemaMapping);
+		
+		for (dremel.compiler.Expression exp : query.getSelectExpressions())
+		{
+			SchemaTree t = schemaMapping.get(resultParent.get(exp));
+			resultParent.put(exp, t);
+		}
 
 		for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
 
 			NodeType ntype = NodeType.REQUIRED; // required
 			DataType dtype = DataType.INT;
 			String name = "";
-			SchemaTree parent = outSchema;
+			SchemaTree parent = resultParent.get(exp);
+			//SchemaTree parent = outSchema;
 
 			// node type: {REPEATED, OPTIONAL, REQUIRED}
 
@@ -564,20 +588,22 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 				dtype = DataType.FLOAT;
 
 			// parent and name
+			
 			if (exp.getAlias() != null) {
+				
 				String[] lst = exp.getAlias().split("\\.");
-				for (int i = 0; i < lst.length - 1; i++) {
-					List<SchemaTree> fieldList = parent.getFieldsList();
-					SchemaTree newParent = parent;
-					for (SchemaTree f : fieldList) {
-						if (f.getName().equalsIgnoreCase(lst[i])) {
-							newParent = f;
-							break;
-						}
-					}
-					assert (newParent != parent);
-					parent = newParent;
-				}
+//				for (int i = 0; i < lst.length - 1; i++) {
+//					List<SchemaTree> fieldList = parent.getFieldsList();
+//					SchemaTree newParent = parent;
+//					for (SchemaTree f : fieldList) {
+//						if (f.getName().equalsIgnoreCase(lst[i])) {
+//							newParent = f;
+//							break;
+//						}
+//					}
+//					assert (newParent != parent);
+//					parent = newParent;
+//				}
 				name = lst[lst.length - 1];
 			} else {
 				// put this field as child of root0
@@ -664,11 +690,11 @@ public class CompilerImpl implements dremel.compiler.Compiler {
 //		 AstNode nodes = Parser
 //		 .parseBql("SELECT \ndocid, count(docid) within record as c_id, links.forward as exp3, sum(links.forward) within links, links.backward, count(links.backward) within record, 2*3+5 FROM [document] where \ndocid>0 and links.forward>30");
 
-		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(links.forward) as links.fwd  FROM (SELECT \tdocid, links.forward FROM [document]) WHERE \ndocid>0 and links.forward>30");
+		AstNode nodes = Parser.parseBql("SELECT \ndocid, count(links.forward) as count_fwd,  \tdocid+links.backward FROM (SELECT \tdocid, links.forward, links.backward FROM [document]) WHERE \ndocid>0");
 
 		final Query query = compiler.parse(nodes);
-		String code = compiler.compileToScript(query);
-		MetaxaExecutor executor = new MetaxaExecutor(query, code);
+		//String code = compiler.compileToScript(query);
+		//MetaxaExecutor executor = new MetaxaExecutor(query, code);
 		// executor.execute();
 	}
 }

@@ -83,16 +83,14 @@ public class SimpleSchemaTreeImpl implements SchemaTree {
 				}
 			}
 			parent.getFieldsList().add(this);
-			
+
 			if (parent.getDefLevel() >= 0) {
 				this.fullName = parent.getFullName() + "." + name;
-			}
-			else
-			{
+			} else {
 				this.fullName = name;
 			}
 		}
-		//System.out.println(fullName+":"+defLevel+","+repLevel);
+		// System.out.println(fullName+":"+defLevel+","+repLevel);
 	}
 
 	@Override
@@ -165,39 +163,81 @@ public class SimpleSchemaTreeImpl implements SchemaTree {
 		return (nodeType == NodeType.OPTIONAL);
 	}
 
-	void printSchema(SchemaTree t, StringBuilder builder, int level)
-	{
-		for (int i=0;i<level;i++) builder.append("  ");
-			
-		if (t.isOptional()) builder.append("optional ");
-		else if (t.isRepeated()) builder.append("repeated ");
-		else if (t.isRequired()) builder.append("required ");
-		
+	void printSchema(SchemaTree t, StringBuilder builder, int level) {
+		for (int i = 0; i < level; i++)
+			builder.append("  ");
+
+		if (t.isOptional())
+			builder.append("optional ");
+		else if (t.isRepeated())
+			builder.append("repeated ");
+		else if (t.isRequired())
+			builder.append("required ");
+
 		builder.append(t.getName());
-		
-		if (t.isRecord())
-		{
+
+		if (t.isRecord()) {
 			builder.append(" {\n");
-			for (SchemaTree f: t.getFieldsList())
-			{
-				printSchema(f, builder, level+1);
+			for (SchemaTree f : t.getFieldsList()) {
+				printSchema(f, builder, level + 1);
 			}
-			for (int i=0;i<level;i++) builder.append("  ");
+			for (int i = 0; i < level; i++)
+				builder.append("  ");
 			builder.append("}\n");
-		}
-		else
-		{
+		} else {
 			builder.append(";\n");
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		printSchema(this, builder, 0);
 		return builder.toString();
-		
+
 	}
+
+	public static SchemaTree commonAncestor(List<SchemaTree> fields) {
+		List<SchemaTree> ancestors = new LinkedList<SchemaTree>();
+		int mindef = 1000;
+		for (SchemaTree f : fields) {
+			SchemaTree a = f.getParent();
+			ancestors.add(a);
+			if (a.getDefLevel() < mindef)
+				mindef = a.getDefLevel();
+		}
+		
+		for (int i=0;i<ancestors.size();i++)
+		{
+			SchemaTree t = ancestors.get(i);
+			while (t.getDefLevel() > mindef)
+				t = t.getParent();
+			ancestors.set(i, t);
+			//System.out.println(t.getName());
+		}
+
+		boolean found = false;
+
+		SchemaTree ref = ancestors.get(0);
+		while (!found) {
+			for (int i = 0; i < ancestors.size(); i++) {
+				SchemaTree a = ancestors.get(i);
+				if (a != ref) {
+					for (int j = 0; j < ancestors.size(); j++) {
+						ancestors.set(j, a.getParent());
+					}
+					found = false;
+					ref = ancestors.get(0);
+					break;
+				} else {
+					found = true;
+				}
+			}
+		}
+		
+		return ref;
+	}
+
 	// FOR PAPER SCHEMA
 	public static SchemaTree buildPaperSchemaTree() {
 		SimpleSchemaTreeImpl root = new SimpleSchemaTreeImpl(null, "Document", DataType.RECORD, NodeType.REQUIRED);

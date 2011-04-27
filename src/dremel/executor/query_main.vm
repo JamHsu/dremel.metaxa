@@ -3,6 +3,70 @@
 *
 */
 
+ColumnReader reader = null;
+ColumnWriter writer = null;
+
 #foreach ($query in $queries)
 #parse("src/dremel/executor/query_declare.vm")
+#end
+
+#foreach ($query in $queries)
+#set($qid=$query.getID())
+/*QUERY $qid*/
+#if ($query.getTables().size()==1)
+//leaf query
+	nextLevel_$qid = 0;
+	hasMoreSlices_$qid = false;
+#foreach ($symbol in $query.getSymbolTable().values())
+#if ($symbol.isColumnID())
+	reader = $symbol.getJavaName()_reader_$qid;
+	if(reader.nextRepetitionLevel() >= fetchLevel_$qid)
+	{
+#foreach ($exp in $query.getSelectExpressions())
+#if ($exp.getSymbols().contains($symbol))
+		input_changed_$exp.getJavaName()_$qid = true;
+#end
+#end	
+		boolean isLastInReader_$qid = reader.next();
+		hasMoreSlices_$qid = hasMoreSlices_$qid || isLastInReader_$qid;
+		
+		if(reader.isNull())
+		{
+			is_$symbol.getJavaName()_null_$qid = true;
+#if ($symbol.isTypeInt())
+			$symbol.getJavaName()_$qid = 0;
+#elseif ($symbol.isTypeFloat())
+			$symbol.getJavaName()_$qid = 0.0;
+#elseif ($symbol.isTypeBool())
+			$symbol.getJavaName()_$qid = false;
+#elseif ($symbol.isTypeString())
+			$symbol.getJavaName()_$qid = "";
+#end			
+		}
+		else
+		{
+			is_$symbol.getJavaName()_null_$qid = false;
+#if ($symbol.isTypeInt())
+			$symbol.getJavaName()_$qid = reader.getIntValue();
+#elseif ($symbol.isTypeFloat())
+			//$symbol.getJavaName()_$qid = reader.getFloatValue();
+#elseif ($symbol.isTypeBool())
+			//$symbol.getJavaName()_$qid = reader.getBoolValue();
+#elseif ($symbol.isTypeString())
+			$symbol.getJavaName()_$qid = reader.getStringValue();
+#end
+		}
+	}
+	nextLevel_$qid = Math.max(nextLevel_$qid, reader.nextRepetitionLevel());
+#end
+#end	
+
+	fetchLevel_$qid = nextLevel_$qid;
+
+#elseif (!$query.getParent())
+//root query
+#else
+//intermediate query
+#end
+
 #end

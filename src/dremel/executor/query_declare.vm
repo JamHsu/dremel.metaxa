@@ -1,6 +1,9 @@
 /*****BEGIN DECLARATIONS FOR QUERY: $query.getID() ****************/
 #set($qid=$query.getID())
 
+int selectLevel_$qid = 0;
+int fetchLevel_$qid = 0;
+
 //inSlice declaration
 #foreach ($symbol in $query.getSymbolTable().values())
 #if ($symbol.isColumnID())
@@ -67,7 +70,9 @@ int $func.getSymbol().getJavaName()_field_marker_$qid = 0;
 ColumnReader $symbol.getJavaName()_reader_$qid = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
 #end
 #end
-ColumnReader reader_$qid = null;
+
+int nextLevel_$qid = 0;
+boolean hasMoreSlices_$qid = true;
 #end
 
 #if ($query.getParent())
@@ -76,7 +81,6 @@ ColumnReader reader_$qid = null;
 #foreach ($exp in $query.getSelectExpressions())
 ColumnWriter $exp.getJavaName()_writer_$qid = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
 #end
-ColumnWriter writer_$qid = null;
 #end
 /*****END DECLARATIONS FOR QUERY: $query.getID() *****************/
 
