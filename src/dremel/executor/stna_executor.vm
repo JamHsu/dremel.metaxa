@@ -48,14 +48,14 @@ boolean input_changed_$exp.getJavaName() = false;
 
 #foreach ($symbol in $query.getSymbolTable().values())
 #if ($symbol.isColumnID())
-ColumnReader $symbol.getJavaName()_reader = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
+ColumnReader $symbol.getJavaName()_reader = new ColumnReaderImpl(query.getSourceSchemaColumnar().getColumnMetaData("$symbol.getSymbol()"));
 #end
 #end
 ColumnReader reader = null;
 
 #foreach ($exp in $query.getSelectExpressions())
-ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
-byte $exp.getJavaName()_def = resultSchema.getColumnMetaData("$exp.getJavaName()").getMaxDefinitionLevel();
+ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(query.getTargetSchemaColumnar().getColumnMetaData("$exp.getResultNode().getFullName()"));
+byte $exp.getJavaName()_def = query.getTargetSchemaColumnar().getColumnMetaData("$exp.getResultNode().getFullName()").getMaxDefinitionLevel();
 #end
 ColumnWriter writer = null;
 
@@ -121,14 +121,18 @@ while (hasMoreSlices)
 #if ($exp.getSymbols().size()>0)
 		if (selectLevel <= $exp.getRepetitionLevel() && input_changed_$exp.getJavaName())
 		{
+			int my_level = selectLevel;
+			if (my_level > $exp.getResultNode().getRepLevel()) my_level =  $exp.getResultNode().getRepLevel();
 			if(#foreach ($symbol in $exp.getSymbols()) is_$symbol.getJavaName()_null && #end true) //all input are null
 			{
-				writer.addIntDataTriple(0,ColumnReader.NULL, (byte)selectLevel, (byte)($exp.getJavaName()_def-1)); //need verify def level
+				//writer.addIntDataTriple(0,ColumnReader.NULL, (byte)selectLevel, (byte)($exp.getJavaName()_def-1)); //need verify def level
+				writer.addIntDataTriple(0,ColumnReader.NULL, (byte)my_level, (byte)($exp.getResultNode().getDefLevel()-1)); //need verify def level
 			}
 			else
 			{ 
 				$exp.getJavaName() = $exp.getRoot().generateCode();
-				writer.addIntDataTriple($exp.getJavaName(),ColumnReader.NOT_NULL, (byte)selectLevel, $exp.getJavaName()_def);
+				//writer.addIntDataTriple($exp.getJavaName(),ColumnReader.NOT_NULL, (byte)selectLevel, $exp.getJavaName()_def);
+				writer.addIntDataTriple($exp.getJavaName(),ColumnReader.NOT_NULL, (byte)my_level, (byte)$exp.getResultNode().getDefLevel());
 			}
 			input_changed_$exp.getJavaName() = false;	
 		}

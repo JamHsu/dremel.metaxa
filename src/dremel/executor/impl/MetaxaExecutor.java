@@ -36,7 +36,7 @@ public class MetaxaExecutor implements Executor {
 			se.setReturnType(void.class);
 
 			se.setDefaultImports(new String[] { "dremel.compiler.*", "dremel.compiler.expression.*", "dremel.executor.*", "dremel.tableton.*", "dremel.tableton.impl.*", "java.util.List", "java.util.LinkedList", "java.nio.ByteBuffer" });
-			se.setParameters(new String[] { "sourceTablet", "resultSchema" }, new Class[] { Tablet.class, SchemaColumnar.class });
+			se.setParameters(new String[] { "query"}, new Class[] { Query.class});
 			se.cook(code);
 		}
 
@@ -77,11 +77,10 @@ public class MetaxaExecutor implements Executor {
 
 	@Override
 	public void execute() {
-		SchemaColumnar schema = query.getTargetSchemaColumnar();
-
-		script.evaluate(new Object[] { query.getTables().get(0), schema });
+		script.evaluate(new Object[] { query});
 
 		//print result tablet
+		SchemaColumnar schema = query.getTargetSchemaColumnar();
 		Tablet tablet = new TabletImpl(schema);
 
 		boolean hasMoreSlices = true;
@@ -91,7 +90,7 @@ public class MetaxaExecutor implements Executor {
 			int nextLevel = 0;
 			hasMoreSlices = false;
 			for (dremel.compiler.Expression exp : query.getSelectExpressions()) {
-				ColumnReader nextReader = tablet.getColumns().get(exp.getJavaName());
+				ColumnReader nextReader = tablet.getColumns().get(exp.getResultNode().getFullName());
 
 				if (nextReader.nextRepetitionLevel() >= fetchLevel) {
 					boolean isLastInReader = nextReader.next();

@@ -73,14 +73,14 @@ int $func.getSymbol().getJavaName()_field_marker = 0;
 
 #foreach ($symbol in $query.getSymbolTable().values())
 #if ($symbol.isColumnID())
-ColumnReader $symbol.getJavaName()_reader = (ColumnReader)sourceTablet.getColumns().get("$symbol.getSymbol()");
+ColumnReader $symbol.getJavaName()_reader = new ColumnReaderImpl(query.getSourceSchemaColumnar().getColumnMetaData("$symbol.getSymbol()"));
 #end
 #end
 ColumnReader reader = null;
 
 #foreach ($exp in $query.getSelectExpressions())
-ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(resultSchema.getColumnMetaData("$exp.getJavaName()"));
-byte $exp.getJavaName()_def = resultSchema.getColumnMetaData("$exp.getJavaName()").getMaxDefinitionLevel();
+ColumnWriter $exp.getJavaName()_writer = new ColumnWriterImpl(query.getTargetSchemaColumnar().getColumnMetaData("$exp.getResultNode().getFullName()"));
+byte $exp.getJavaName()_def = query.getTargetSchemaColumnar().getColumnMetaData("$exp.getResultNode().getFullName()").getMaxDefinitionLevel();
 #end
 ColumnWriter writer = null;
 
@@ -171,17 +171,23 @@ while (hasMoreSlices)
 			byte level = slicePool.getLevel();
 			byte state = 0;
 			int intVal = 0;
+			int my_level = 0;
 #foreach ($exp in $query.getSelectExpressions())
 #if ($exp.isTypeInt())
+			my_level = level;
+			if (my_level > $exp.getResultNode().getRepLevel()) my_level =  $exp.getResultNode().getRepLevel();
+
 			intVal = slicePool.readInt();
 			state = slicePool.getLastState();
 			writer = $exp.getJavaName()_writer;
-			if (state == 0) writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
+			//if (state == 0) writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, level, $exp.getJavaName()_def);
+			if (state == 0) writer.addIntDataTriple(intVal,ColumnReader.NOT_NULL, (byte)my_level, (byte)$exp.getResultNode().getDefLevel());
 #elseif ($exp.isTypeFloat())
 #elseif ($exp.isTypeBool())
 #elseif ($exp.isTypeString())
 #end
-			else if (state == 1) writer.addIntDataTriple(0,ColumnReader.NULL, level, (byte)($exp.getJavaName()_def-1)); //need verify def level
+			//else if (state == 1) writer.addIntDataTriple(0,ColumnReader.NULL, level, (byte)($exp.getJavaName()_def-1)); //need verify def level
+			else if (state == 1) writer.addIntDataTriple(0,ColumnReader.NULL, (byte)my_level, (byte)($exp.getResultNode().getDefLevel()-1)); //need verify def level
 #end
 			slicePool.endSliceRead();
 		}
@@ -192,7 +198,6 @@ while (hasMoreSlices)
 	if ($query.getFilter().getRoot().generateCode())
 	{
 #end
-		
 		//calculate expressions for outSlice
 		sliceBuffer[0]=missingCount; //first byte is missingCount
 		sliceBuffer[1]=((byte)selectLevel); //second byte is selectLevel

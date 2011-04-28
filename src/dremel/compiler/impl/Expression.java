@@ -646,6 +646,7 @@ public class Expression implements dremel.compiler.Expression {
 	int withinLevel;
 	List<dremel.compiler.Expression.Symbol> symbols;
 	ReturnType type;
+	SchemaTree resultNode;
 
 	public Expression() {
 		symbols = new LinkedList<dremel.compiler.Expression.Symbol>();
@@ -755,5 +756,15 @@ public class Expression implements dremel.compiler.Expression {
 	@Override
 	public boolean isTypeString() {
 		return (getReturnType() == ReturnType.STRING);
+	}
+
+	@Override
+	public SchemaTree getResultNode() {
+		return resultNode;
+	}
+
+	@Override
+	public void setResultNode(SchemaTree node) {
+		resultNode = node;
 	}
 }

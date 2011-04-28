@@ -111,11 +111,11 @@ public class QueryImpl implements Query {
 		this.limit = limit;
 	}
 
-	public void setSourceSchema(SchemaColumnar sourceSchema) {
+	public void setSourceSchemaColumnar(SchemaColumnar sourceSchema) {
 		this.sourceSchema = sourceSchema;
 	}
 
-	public void setTargetSchema(SchemaColumnar targetSchema) {
+	public void setTargetSchemaColumnar(SchemaColumnar targetSchema) {
 		this.targetSchema = targetSchema;
 	}
 

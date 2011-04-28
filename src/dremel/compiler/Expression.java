@@ -103,4 +103,7 @@ public interface Expression {
 	public boolean isTypeBool();
 
 	public boolean isTypeString();
+	
+	public SchemaTree getResultNode();
+	public void setResultNode(SchemaTree node);
 }

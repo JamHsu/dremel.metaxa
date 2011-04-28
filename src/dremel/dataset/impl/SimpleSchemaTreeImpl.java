@@ -65,7 +65,7 @@ public class SimpleSchemaTreeImpl implements SchemaTree {
 		if (parent == null) {
 			defLevel = -1;
 			repLevel = 0;
-			this.fullName = name;
+			this.fullName = name.toLowerCase();
 		} else {
 			assert (parent.isRecord());
 			defLevel = parent.getDefLevel() + 1;
@@ -85,9 +85,9 @@ public class SimpleSchemaTreeImpl implements SchemaTree {
 			parent.getFieldsList().add(this);
 
 			if (parent.getDefLevel() >= 0) {
-				this.fullName = parent.getFullName() + "." + name;
+				this.fullName = parent.getFullName() + "." + name.toLowerCase();
 			} else {
-				this.fullName = name;
+				this.fullName = name.toLowerCase();
 			}
 		}
 		// System.out.println(fullName+":"+defLevel+","+repLevel);
